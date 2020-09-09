@@ -18,6 +18,8 @@
 
 + [Milestone 2 Slides (google)](https://docs.google.com/presentation/d/16wIpZq6ggjT4Zc5qzPJ7bWmaoIFKIDAL9BQJAHFqY_8/edit?usp=sharing)
 
++ [Functional requirements trace table](https://docs.google.com/spreadsheets/d/12MNHNBLpua7JKZgzUn659UX3Vem6uwC5s8AvLvTkWRY/edit?usp=sharing)
+
 + Milestone Todo list
     + [ ] Checklist (a copy of this deliverables checklist sheet with checks showing completion of each item)
     + [ ] Customer’s Evaluation Cover Sheet completed by Customer (and Tech Advisor), or, copies of emails showing your attempts to contact them for this at least two days prior
