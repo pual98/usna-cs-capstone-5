@@ -1,23 +1,26 @@
 # Collaborative Intrusion Detection System
 ## usna-cs-capstone-5
 
-[CIDS Project Description](https://docs.google.com/document/d/1ki9luk6sC0ZzgENpXCqu-mrU-Dhr2qbfWsS2IenPK80/edit?usp=sharing)
+[CIDS Project Description](https://docs.google.com/document/d/1AltDS4fwZcJ97G-Sn9JZIy09c0HGSWz--HddGbEU25w/edit?usp=sharing)
 
-[Group Capstone Question/Meeting Notes](https://docs.google.com/document/d/1CH3iNmh6tKZV-lYqKFm6U0KQVDOsNC7vgE5shs7phrY/edit?usp=sharing)
+[Group Capstone Meeting Notes](meeting_notes.md)
+
+# Other
 
 + Background material:
     + [CollaborativeIDS code (2020)](https://github.com/CooperGuzzi/CollaborativeIDS)
     + [Privacy Preserving Collaborative IDS - Mokry, Guzzi, Oni, Crainiceanu, Chen, Joshi, Needham](research/Privacy_Preserving_Collaborative_IDS.pdf) 
     + [Secure Multi-Party Computation Tutorial](research/tutorial-secure-computation.pdf)
+    + [Homomorphic Encryption](research/When_Homomorphic_Cryptosystem_Meets_Differential_Privacy.pdf)
+    + [Summary of Homomorphic Differential Privacy](https://docs.google.com/document/d/19XImfqUX-phXZn_5oWGkPs97NRoG7dks_SjsjLCiTSo/edit?usp=sharing)
+    + [Differential Privacy Tutorial](research/differential_privacy_tutorial.pdf)
 
 ## Milestones
 
 ### Milestone 2 Analysis and Ethics
 
 + [Milestone 2 assignment](milestone-assignments/Mile2_AnalysisAndEthics.pdf) 
-
 + [Milestone 2 Slides (google)](https://docs.google.com/presentation/d/16wIpZq6ggjT4Zc5qzPJ7bWmaoIFKIDAL9BQJAHFqY_8/edit?usp=sharing)
-
 + [Functional requirements trace table](https://docs.google.com/spreadsheets/d/12MNHNBLpua7JKZgzUn659UX3Vem6uwC5s8AvLvTkWRY/edit?usp=sharing)
 
 + Milestone Todo list
