@@ -10,43 +10,29 @@ import javax.swing.*;     // Using Swing components and containers
  * - Swing Gui application;  java.swing.JFrame
  * @author Bishop, Mokry, Quiroz, Slife
  **/
-public class IDS extends JFrame {
- 
-   // Private instance variables
-   // ......
- 
-   // Constructor to setup the GUI components and event handlers
-   public IDS() {
-      // Retrieve the top-level content-pane from JFrame
-      Container cp = getContentPane();
- 
-      // Content-pane sets layout
-      cp.setLayout(new FlowLayout());
- 
-      // Allocate the GUI components
-      // .....
- 
-      // Content-pane adds components
-      cp.add(new JLabel("Intrusion Detection System"));
- 
-      // Source object adds listener
-      // .....
- 
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      // Exit the program when the close-window button clicked
-      setTitle("Intrusion Detection System");// "super" JFrame sets title
-      setSize(300, 150);   // "super" JFrame sets initial size
-      setVisible(true);    // "super" JFrame shows
-   }
- 
-   public static void main(String[] args) {
-      // Run GUI codes in Event-Dispatching thread for thread-safety
-      SwingUtilities.invokeLater(new Runnable() {
-         @Override
-         public void run() {
-            new IDS();
-         }
-      });
-   }
-}
+public class IDS {
+    
+    public static void main(String[] args) {
 
+        // Create components
+        JFrame f = new JFrame();
+        f.setTitle("Intrusion detection system");
+
+        Menu menu = new Menu();
+        Display display = new Display();
+
+        // Add listener
+        BarListener r = new BarListener(menu, display);
+        menu.addListener(r);
+
+        // Add components
+        f.getContentPane().add(BorderLayout.NORTH, menu);
+        f.setJMenuBar(menu);
+        f.getContentPane().add(BorderLayout.CENTER, display); 
+
+        // Minor settings.
+        f.pack();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
+    }
+}
