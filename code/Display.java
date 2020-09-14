@@ -25,12 +25,11 @@ public class Display extends JPanel implements Runnable {
         actionPanel.setBackground(Color.green);
         eventPanel.setBackground(Color.red);
 
-
-        for (int i=0; i< 100; i++){
-            eventPanel.addText("something");
-            eventPanel.updatePanel();
-            this.resize();
-        }
+//        for (int i=0; i< 100; i++){
+//            eventPanel.addText("something");
+//            eventPanel.updatePanel();
+//            this.resize();
+//        }
 
         //Action panel buttons i.e. actions
         //JButton display alert data button
@@ -63,9 +62,18 @@ public class Display extends JPanel implements Runnable {
      **/
     public void run() {
         try{
+              RandomAccessFile in = new RandomAccessFile("file.txt", "r");
+              String line;
             while(true){
                 try{
-                    Thread.sleep(20);
+                     if((line = in.readLine()) != null) {
+                        eventPanel.addText(line);
+                        eventPanel.updatePanel();
+                        this.resize();
+                        this.revalidate();
+                     } else {
+                        Thread.sleep(20);
+                     }
                 }catch(InterruptedException e){}
             }
         } catch(Throwable e){}

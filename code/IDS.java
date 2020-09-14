@@ -30,6 +30,9 @@ public class IDS {
         f.setJMenuBar(menu);
         f.getContentPane().add(BorderLayout.CENTER, display); 
 
+        Thread displayThread = new Thread(display);
+        displayThread.start();
+
         // Minor settings.
         f.pack();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

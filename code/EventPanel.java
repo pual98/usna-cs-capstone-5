@@ -44,6 +44,7 @@ public class EventPanel extends JPanel implements Runnable {
             label.setBackground(this.col);
             this.alternateColor();
             this.inside.add(label);
+            this.repaint();
         }
         this.events = new ArrayList<String>();
     }
