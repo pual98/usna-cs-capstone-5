@@ -9,7 +9,7 @@ import java.util.*;
 public class Display extends JPanel implements Runnable {
 
     private BarListener r = null;
-    private JPanel actionPanel = new JPanel();
+    private ControlPanel controlPanel = new ControlPanel();
     private EventPanel eventPanel = new EventPanel();
 
 
@@ -18,39 +18,31 @@ public class Display extends JPanel implements Runnable {
         this.setBackground(new Color(245, 243, 213));
         this.setVisible(true);
         
-        //Box layout is basically a stack. As things add, they grow downword
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.doLayout();
-
-        actionPanel.setBackground(Color.green);
-        eventPanel.setBackground(Color.red);
-
-//        for (int i=0; i< 100; i++){
-//            eventPanel.addText("something");
-//            eventPanel.updatePanel();
-//            this.resize();
-//        }
-
-        //Action panel buttons i.e. actions
-        //JButton display alert data button
-        JButton alertButton = new JButton("Display Alert Data");
-
-        //JButton display high 
-        JButton highAlertButton = new JButton("Display High Alert Data");
-        
-        actionPanel.add(alertButton);
-        actionPanel.add(highAlertButton);
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
         // Add panels back into Display
-        this.add(actionPanel);
-        this.add(eventPanel);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.VERTICAL/3;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.ipady = 10;
+        gbc.insets = new Insets(10,10,10,10);
+
+        this.add(controlPanel,gbc);
+
+        gbc.ipady = 0;
+        gbc.weighty = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        this.add(eventPanel, gbc);
+        this.doLayout();
     }
     public void resize(){
-        Dimension size = this.getSize();
-        double height = size.getHeight();
-        double width = size.getWidth();
         // Fix this 
-        actionPanel.setMinimumSize(new Dimension(200,400));
+        //actionPanel.setMinimumSize(new Dimension(200,200));
     }
 
     public void addListener(BarListener r){

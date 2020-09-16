@@ -1,3 +1,6 @@
 *.vim
 alerts
 *.class
+fast-alerts
+*bbl
+*tex

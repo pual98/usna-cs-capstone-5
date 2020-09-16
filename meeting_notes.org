@@ -25,12 +25,12 @@
 ** 16 September 2020
 - GUI Demonstration and Feedback:
 
-  - The GUI for our Prototype is currently demonstrating layout,
-    specifically our *basic* model will look similar to a *SIEMS*
-    tool. Our scratch-up is below:
+  - The GUI for our Prototype is demonstrating layout;
+    specifically, that our *basic* model will look similar to a *SIEMS*
+    tool discussed in the previous meeting. Our scratch-up is below:
 
   #+CAPTION: Concept
-  [[file:imgs/concept.png]]
+  [[./imgs/concept.png]]
 
   - Our initial "prototye" is shown below. The prototype is meant to
     demonstrate three user areas:
@@ -43,35 +43,40 @@
        will be displayed. This is not currently broken into fields,
        but will be.
 
-  [[file:imgs/full-console.png]] [[file:imgs/search-console.png]]
+    #+CAPTION: Full console
+    [[./imgs/full-console.png]]
+
+    #+CAPTION: Conducting a search
+    [[./imgs/search-console.png]]
+
+  - More specifically, the prototype aims to complete the functional
+    requirements and acceptance testing shown in the table below.
+
+    [[./imgs/reqts.png]]
+
+  - The current milestone requires customer feedback on the milestone:
+    #+BEGIN_QUOTE
+    "Customer feedback: Customer Involvement Alert => Prior to
+    delivering this milestone, demo your operational Prototype and acceptance
+    test case for your Customer. Present the feedback from your Customer
+    regarding this demo to include whether your Customer agrees that you
+    have demonstrated completion of the applicable acceptance test cases and
+    any changes they want made."
+    #+END_QUOTE
 
   - Instructor feedback:
-
     - Separate clusters by color in the data panel
     - Data should be able to come from multiple sources
     - Be able to connect to other users. TCP/IP
+    - One user should be able to initiate collaboration
 
+*** Other discussion
 - Differential privacy review
-
   - Achieved via addition of random noise
   - Benefit -- provably secure
 
-- Research discussion
-
-  - In k-prototype, centroid of a cluster = mean of numerical
-    attributes, most frequent value for categorical attributes
-  - Secret sharing on Categorical attributes is expensive
-  - Can we do differential privacy on categorical attributes?
-  - Each party applies a differential privacy algorithm to replace the
-    categorical attributes with a noisy version of categorical
-    attribute values. Categorical attributes have been protected by
-    differential privacy
-  - Run the secret sharing algorithm to do k-prototype clustering ,
-    but only do secret sharing on numerical attributes, for
-    categorical attributes, just use the noisy value without
-    encryption. When you compute new cluster center, use secret share
-    for numerical attributes. For categorical, you compute the most
-    frequent value in each cluster without secret share.
+- The rest of the discussion was on clustering and on the differential privacy.
+  The discussion was included in the following link: https://docs.google.com/document/d/19XImfqUX-phXZn_5oWGkPs97NRoG7dks_SjsjLCiTSo/edit
 
 ** 09 September 2020
 

@@ -5,13 +5,18 @@ import java.awt.event.*;  // Using AWT event classes and listener interfaces
 import javax.swing.*;     // Using Swing components and containers
 
 public class Menu extends JMenuBar{
-    JMenu file, help;
+    JMenu file, help, options;
     public Menu(){
         file = new JMenu("File");
         help = new JMenu("help");
+        options = new JMenu("options");
         this.add(file);
         this.add(help);
-        this.setBackground(Color.gray);
+        this.add(options);
+        this.setBackground(Color.lightGray);
+        Font menuFont = new Font("Times New Roman", Font.PLAIN, 16);
+        UIManager.put("Menu.font",menuFont);
+        this.setFont(menuFont);
     }
     public void addListener(BarListener r){
         this.addMouseListener(r);

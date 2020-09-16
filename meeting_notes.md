@@ -1,4 +1,34 @@
-# Collaborative Intrusion Detection System
+# Collaborative Intrusion Detection System Meeting Notes
+
+## 16 September 2020
+
++ GUI Demonstration and Feedback:
+    + The GUI for our Prototype is currently demonstrating layout, specifically our **basic** model will look similar to a **SIEMS** tool. Our scratch-up is below:
+
+    ![Concept](imgs/concept.png)
+
+    + Our initial "prototye" is shown below. The prototype is meant to demonstrate three user areas:
+        1. Action panel (north). This is where the user selects actions to execute.
+        2. Filter panel (bottom left). This is where the user will select filters, clusters, etc to display on the right hand side.
+        3. Packet panel (bottom right). This is where the data packets will be displayed. This is not currently broken into fields, but will be.
+
+    ![Console](imgs/full-console.png)
+    ![Search Console](imgs/search-console.png)
+
+    + Instructor feedback:
+        + Separate clusters by color in the data panel
+        + Data should be able to come from multiple sources
+        + Be able to connect to other users. TCP/IP
++ Differential privacy review
+    + Achieved via addition of random noise
+    + Benefit -- provably secure
++ Research discussion
+    + In k-prototype, centroid of a cluster = mean of numerical attributes, most frequent value for categorical attributes
+    + Secret sharing on Categorical attributes is expensive
+    + Can we do differential privacy on categorical attributes?
+    + Each party applies a differential privacy algorithm to replace the categorical attributes with a noisy version of categorical attribute values. Categorical attributes have been protected by differential privacy
+    + Run the secret sharing algorithm to do k-prototype clustering , but only do secret sharing on numerical attributes, for categorical attributes, just use the noisy value without encryption. When you compute new cluster center, use secret share for numerical attributes. For categorical, you compute the most frequent value in each cluster without secret share.
+
 ## 09 September 2020
 
 + Improve implementation on categorical attributes (this is the bottleneck in latest implementation)
