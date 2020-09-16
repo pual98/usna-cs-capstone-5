@@ -1,0 +1,124 @@
+#+title: **Collaborative Intrusion Detection System**
+#+author: Laylon Mokry, Jose Quiroz, Patrick Bishop, Paul Slife
+#+date: \today
+#+options: toc:nil
+#+ATTR_LATEX: :width 5cm
+#+LATEX_HEADER: \usepackage[margin=1in]{geometry}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usepackage[utf8x]{inputenc}
+#+LaTeX_HEADER: \usepackage{tcolorbox}
+#+LaTeX_HEADER: \usemintedstyle{emacs}
+#+HTML_MATHJAX: align: left indent: 5em tagside: left font: Neo-Euler
+#+HTML_MATHJAX: cancel.js noErrors.js
+#+OPTIONS: ^:nil
+#+OPTIONS: num:nil
+
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\setminted[python]{samepage=false,frame=single, framerule=1pt, baselinestretch=1.2,bgcolor=bg,linenos,breaklines=true,breakanywhere=true}
+\setminted[bash]{samepage=false,frame=single, framerule=1pt, baselinestretch=1.2,bgcolor=bg,linenos,breaklines=true,breakanywhere=true,fontsize=\footnotesize}
+\setminted[text]{samepage=false,frame=single, framerule=1pt, baselinestretch=1.2,bgcolor=bg,linenos,breaklines=true,breakanywhere=true,fontsize=\footnotesize}
+
+\definecolor{mycolor}{rgb}{0.122, 0.435, 0.698}
+\newtcolorbox{mybox}{colback=blue!10!white,colframe=mycolor!60!white,sharp corners, coltitle=black}
+* Meeting Notes
+** 16 September 2020
+- GUI Demonstration and Feedback:
+
+  - The GUI for our Prototype is currently demonstrating layout,
+    specifically our *basic* model will look similar to a *SIEMS*
+    tool. Our scratch-up is below:
+
+  #+CAPTION: Concept
+  [[file:imgs/concept.png]]
+
+  - Our initial "prototye" is shown below. The prototype is meant to
+    demonstrate three user areas:
+
+    1. Action panel (north). This is where the user selects actions to
+       execute.
+    2. Filter panel (bottom left). This is where the user will select
+       filters, clusters, etc to display on the right hand side.
+    3. Packet panel (bottom right). This is where the data packets
+       will be displayed. This is not currently broken into fields,
+       but will be.
+
+  [[file:imgs/full-console.png]] [[file:imgs/search-console.png]]
+
+  - Instructor feedback:
+
+    - Separate clusters by color in the data panel
+    - Data should be able to come from multiple sources
+    - Be able to connect to other users. TCP/IP
+
+- Differential privacy review
+
+  - Achieved via addition of random noise
+  - Benefit -- provably secure
+
+- Research discussion
+
+  - In k-prototype, centroid of a cluster = mean of numerical
+    attributes, most frequent value for categorical attributes
+  - Secret sharing on Categorical attributes is expensive
+  - Can we do differential privacy on categorical attributes?
+  - Each party applies a differential privacy algorithm to replace the
+    categorical attributes with a noisy version of categorical
+    attribute values. Categorical attributes have been protected by
+    differential privacy
+  - Run the secret sharing algorithm to do k-prototype clustering ,
+    but only do secret sharing on numerical attributes, for
+    categorical attributes, just use the noisy value without
+    encryption. When you compute new cluster center, use secret share
+    for numerical attributes. For categorical, you compute the most
+    frequent value in each cluster without secret share.
+
+** 09 September 2020
+
+- Improve implementation on categorical attributes (this is the
+  bottleneck in latest implementation)
+
+- Combine differential privacy with secure sharing to achieve better
+  efficiency (differential privacy is more efficient but less accurate
+  due to noise added)
+  - [[file:research/When_Homomorphic_Cryptosystem_Meets_Differential_Privacy.pdf][Homomorphic Encryption]]
+  - [[https://docs.google.com/document/d/19XImfqUX-phXZn_5oWGkPs97NRoG7dks_SjsjLCiTSo/edit?usp=sharing][Summary of Homomorphic Differential Privacy]]
+  - [[file:research/differential_privacy_tutorial.pdf][Differential Privacy Tutorial]]
+
+- Privacy preserving solutions to other collaborative IDS tasks, e.g.,
+  rule-based, sequence-based. Currently we only do clustering of
+  similar alerts but users can use more complex rule/sequential
+  patterns. E.g., to identify a compromised machine used to launch
+  attacks. (so there will be two alerts, first showing attack on the
+  machine, second showing attack launched by that machine).
+
+- Implement a GUI that allow users to detect IDS collaboratively and
+  visualize results. It may look similar to SIEM tools. The following
+  link give you some idea common SIEM tools
+  [[https://www.dnsstuff.com/free-siem-tools][SIEM Tools (free)]]
+
+- Functional Requirements, in short:
+
+  - Improve implementation
+  - Implement differential privacy
+
+    - Combine with secret sharing
+
+  - Pattern based to determine attacks
+
+    - Rule based
+
+  - Snort alerts
+
+    - Different data sets
+    - Security data set repository
+
+  - GUI
+
+    - Take the low level alerts as input
+    - Take the sensors and file as input
+    - Tasks and result of tasks
+    - Display super alerts
+    - Same interfaces for everyone
+
+      - Communicating with peers
