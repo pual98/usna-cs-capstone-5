@@ -59,7 +59,7 @@ public class IDS {
         clientThread.start();
 
         // Add listener
-        BarListener r = new BarListener(menu, display);
+        BarListener r = new BarListener(menu, display, client);
         menu.addListener(r);
         display.addListener(r);
 

@@ -1,10 +1,13 @@
 // Java implementation for multithreaded chat client 
 // Save file as Client.java 
-
 import java.io.*; 
 import java.util.*;
 import java.net.*; 
 import java.util.Scanner; 
+import javax.swing.*;
+import java.awt.event.*;
+import java.lang.*;
+import javax.swing.event.*;
 
 public class Client implements Runnable
 { 
@@ -13,6 +16,7 @@ public class Client implements Runnable
     DataInputStream dis;
     DataOutputStream dos;
     Scanner scn;
+    ArrayList<Integer> collaborators = new ArrayList<Integer>();
     public Client() {
         boolean haveID = false;
         try{
@@ -34,6 +38,10 @@ public class Client implements Runnable
                 if (line.contains("id")){
                     String arr[] = line.split(":");
                     if (arr[0].equals("id")){ haveID = true; ID = Integer.parseInt(arr[1]); }
+                }
+                if (line.contains("collaborator")){
+                    String arr[] = line.split(":");
+                    if (arr[0].equals("collaborator")){ collaborators.add(Integer.parseInt(arr[1])); }
                 }
             }
         } catch (IOException e) { } catch (NullPointerException e) { }
@@ -62,6 +70,13 @@ public class Client implements Runnable
         }catch(UnknownHostException e) {} catch (IOException e) {}
 
     }
+    public void addCollaborator(int idCollab){
+        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".config", true))) {
+            String fileContent = "collaborator:"+idCollab;
+            bufferedWriter.write(fileContent);
+            collaborators.add(idCollab);
+        } catch (IOException e) { }
+    }
     public void run() {
 		// sendMessage thread 
 		Thread sendMessage = new Thread(new Runnable() 
@@ -78,7 +93,11 @@ public class Client implements Runnable
 
 					// read the message to deliver. 
 					String msg = scn.nextLine(); 
-					
+                    msg+="#";
+                    for ( int collab : collaborators ){
+                        msg+=collab+",";
+                    }
+                    msg = msg.substring(0, msg.length() - 1);
 					try { 
 						// write on the output stream 
 						dos.writeUTF(msg); 
@@ -99,7 +118,8 @@ public class Client implements Runnable
 					try { 
 						// read the message sent to this client 
 						String msg = dis.readUTF(); 
-						System.out.println(msg); 
+                        JFrame f = new JFrame();
+                        JOptionPane.showMessageDialog(f,msg);
 					} catch (IOException e) { 
 
 						e.printStackTrace(); 

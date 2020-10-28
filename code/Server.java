@@ -119,7 +119,7 @@ class ClientHandler implements Runnable
                 { 
                     // if the recipient is found, write on its 
                     // output stream 
-                    if (mc.name.equals(recipient) && mc.isloggedin==true) 
+                    if (recipient.contains(mc.name) && mc.isloggedin==true) 
                     { 
                         mc.dos.writeUTF(this.name+" : "+MsgToSend); 
                         break; 

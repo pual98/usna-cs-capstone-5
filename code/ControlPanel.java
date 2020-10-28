@@ -34,6 +34,10 @@ public class ControlPanel extends JPanel implements Runnable {
         this.addMouseListener(r);
         newCollaborator.addActionListener(r);
     }
+    public void requestCollaborator(){
+//        String name = JOptionPane.showInputDialog("What is the user ID you want to connect with");
+    }
+
 
     /**
      * Runnable method for threads.

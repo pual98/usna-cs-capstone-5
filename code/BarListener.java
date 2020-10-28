@@ -11,6 +11,7 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
     // Fields
     private Menu menubar;
     private Display d;
+    private Client client;
     private Thread th = null;
 
     /**
@@ -18,9 +19,10 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
      * @param t The TopBar being listened to.
      * @param d The display
      **/
-    public BarListener(Menu menubar, Display d){
+    public BarListener(Menu menubar, Display d, Client c){
         this.menubar = menubar;
         this.d = d;
+        this.client = c;
     }
 
     /**
@@ -28,8 +30,12 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
      * @param e ActionEvent that triggered the listener.
      **/
     public void actionPerformed(ActionEvent e){
-        System.out.println(e);
-        System.out.println("Hellp");
+        System.out.println(e.getActionCommand());
+        if (e.getActionCommand() == "New collaborator"){
+            String name = JOptionPane.showInputDialog("What is the user ID you want to connect with");
+            int idToCollaborate = Integer.parseInt(name);
+            this.client.addCollaborator(idToCollaborate);
+        }
     }
 
     /**
