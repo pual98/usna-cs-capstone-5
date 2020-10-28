@@ -125,10 +125,7 @@ class ClientHandler implements Runnable
                         break; 
                     } 
                 } 
-            } catch (IOException e) { 
-
-                e.printStackTrace(); 
-            } 
+            } catch (EOFException e) {} catch (IOException e) { e.printStackTrace(); }
 
         } 
         try

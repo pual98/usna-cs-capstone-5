@@ -54,6 +54,9 @@ public class IDS {
 
         Menu menu = new Menu();
         Display display = new Display();
+        Client client = new Client();
+        Thread clientThread = new Thread(client);
+        clientThread.start();
 
         // Add listener
         BarListener r = new BarListener(menu, display);

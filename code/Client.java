@@ -6,13 +6,14 @@ import java.util.*;
 import java.net.*; 
 import java.util.Scanner; 
 
-public class Client 
+public class Client implements Runnable
 { 
 	final static int ServerPort = 1234; 
-
     static int ID = 0;
-	public static void main(String args[]) throws UnknownHostException, IOException 
-	{ 
+    DataInputStream dis;
+    DataOutputStream dos;
+    Scanner scn;
+    public Client() {
         boolean haveID = false;
         try{
             File myFile = new File(".config");
@@ -45,19 +46,23 @@ public class Client
                 bufferedWriter.write(fileContent);
             } catch (IOException e) { }
         }
-		Scanner scn = new Scanner(System.in); 
+		scn = new Scanner(System.in); 
 		
-		// getting localhost ip 
-		// InetAddress ip = InetAddress.getByName("localhost"); 
-		InetAddress ip = InetAddress.getByName("midn.cs.usna.edu"); 
-		
-		// establish the connection 
-		Socket s = new Socket(ip, ServerPort); 
-		
-		// obtaining input and out streams 
-		DataInputStream dis = new DataInputStream(s.getInputStream()); 
-		DataOutputStream dos = new DataOutputStream(s.getOutputStream()); 
+        try {
+            // getting localhost ip 
+            // InetAddress ip = InetAddress.getByName("localhost"); 
+            InetAddress ip = InetAddress.getByName("midn.cs.usna.edu"); 
+            
+            // establish the connection 
+            Socket s = new Socket(ip, ServerPort); 
+            
+            // obtaining input and out streams 
+            dis = new DataInputStream(s.getInputStream()); 
+            dos = new DataOutputStream(s.getOutputStream()); 
+        }catch(UnknownHostException e) {} catch (IOException e) {}
 
+    }
+    public void run() {
 		// sendMessage thread 
 		Thread sendMessage = new Thread(new Runnable() 
 		{ 
@@ -106,5 +111,10 @@ public class Client
 		sendMessage.start(); 
 		readMessage.start(); 
 
+    }
+	public static void main(String args[]) throws UnknownHostException, IOException { 
+        Client client = new Client();
+        Thread clientThread = new Thread(client);
+        clientThread.start();
 	} 
 } 
