@@ -72,10 +72,23 @@ public class Client implements Runnable
     }
     public void addCollaborator(int idCollab){
         try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".config", true))) {
-            String fileContent = "collaborator:"+idCollab;
+            String fileContent = "\ncollaborator:"+idCollab;
             bufferedWriter.write(fileContent);
             collaborators.add(idCollab);
         } catch (IOException e) { }
+    }
+    public void sendMessage(String msg){
+        msg+="#";
+        for ( int collab : collaborators ){
+            msg+=collab+",";
+        }
+        msg = msg.substring(0, msg.length() - 1);
+        try { 
+            // write on the output stream 
+            dos.writeUTF(msg); 
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+        } 
     }
     public void run() {
 		// sendMessage thread 

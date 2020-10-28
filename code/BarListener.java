@@ -36,6 +36,9 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
             int idToCollaborate = Integer.parseInt(name);
             this.client.addCollaborator(idToCollaborate);
         }
+        if (e.getActionCommand() == "Ping collaborator"){
+            this.client.sendMessage("Hello this is a test");
+        }
     }
 
     /**

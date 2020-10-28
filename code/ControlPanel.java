@@ -10,7 +10,7 @@ public class ControlPanel extends JPanel implements Runnable {
 
 //    JButton kMeansButton = new JButton("Run K-means training");
     JButton newCollaborator = new JButton("New collaborator");
-    JButton alertButton = new JButton("Display Alert Data");
+    JButton pingCollaborator = new JButton("Ping collaborator");
     JButton runIDS = new JButton("Run intrusion detection");
 
     public ControlPanel() {
@@ -28,11 +28,12 @@ public class ControlPanel extends JPanel implements Runnable {
         this.add(runIDS,gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        this.add(alertButton,gbc);
+        this.add(pingCollaborator,gbc);
     }
     public void addListener(BarListener r){
         this.addMouseListener(r);
         newCollaborator.addActionListener(r);
+        pingCollaborator.addActionListener(r);
     }
     public void requestCollaborator(){
 //        String name = JOptionPane.showInputDialog("What is the user ID you want to connect with");
