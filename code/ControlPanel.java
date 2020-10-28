@@ -8,7 +8,8 @@ import java.util.*;
 
 public class ControlPanel extends JPanel implements Runnable {
 
-    JButton kMeansButton = new JButton("Run K-means training");
+//    JButton kMeansButton = new JButton("Run K-means training");
+    JButton newCollaborator = new JButton("New collaborator");
     JButton alertButton = new JButton("Display Alert Data");
     JButton runIDS = new JButton("Run intrusion detection");
 
@@ -21,7 +22,7 @@ public class ControlPanel extends JPanel implements Runnable {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(5,5,5,5);
-        this.add(kMeansButton,gbc);
+        this.add(newCollaborator,gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
         this.add(runIDS,gbc);
@@ -31,6 +32,7 @@ public class ControlPanel extends JPanel implements Runnable {
     }
     public void addListener(BarListener r){
         this.addMouseListener(r);
+        newCollaborator.addActionListener(r);
     }
 
     /**

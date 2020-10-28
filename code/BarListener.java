@@ -4,7 +4,6 @@ import java.lang.*;
 import javax.swing.event.*;
 
 /**
- * Listens for changes on the Fishtank selection bar.
  * @author MIDN Paul Slife
  **/
 public class BarListener implements ActionListener,ChangeListener,MouseListener {
@@ -29,6 +28,8 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
      * @param e ActionEvent that triggered the listener.
      **/
     public void actionPerformed(ActionEvent e){
+        System.out.println(e);
+        System.out.println("Hellp");
     }
 
     /**

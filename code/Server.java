@@ -100,6 +100,12 @@ class ClientHandler implements Runnable
                     this.s.close(); 
                     break; 
                 } 
+                if(received.contains("new name id:")){ 
+                    String arr[] = received.split(":");
+                    this.name = arr[1];
+                    System.out.println("Client id initialized: "+this.name);
+                    continue;
+                } 
 
                 // break the string into message and recipient part 
                 StringTokenizer st = new StringTokenizer(received, "#"); 

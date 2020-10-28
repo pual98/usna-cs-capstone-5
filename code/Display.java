@@ -47,6 +47,7 @@ public class Display extends JPanel implements Runnable {
 
     public void addListener(BarListener r){
         this.addMouseListener(r);
+        controlPanel.addListener(r);
     }
 
     /**
