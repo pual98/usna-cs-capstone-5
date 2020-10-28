@@ -90,6 +90,7 @@ class ClientHandler implements Runnable
         { 
             try
             { 
+                System.out.println("Now I am here. I am "+this.name);
                 // receive the string 
                 received = dis.readUTF(); 
 
@@ -100,7 +101,7 @@ class ClientHandler implements Runnable
                     this.s.close(); 
                     break; 
                 } 
-                if(received.contains("new name id:")){ 
+                if(received.contains("new name id")){ 
                     String arr[] = received.split(":");
                     this.name = arr[1];
                     System.out.println("Client id initialized: "+this.name);
