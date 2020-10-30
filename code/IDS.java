@@ -14,7 +14,7 @@ public class IDS {
     public static void main(String[] args) {
 
         boolean haveID = false;
-        int ID;
+        int ID=0;
         // Initialize ID
         try{
             File myFile = new File(".config");
@@ -45,13 +45,15 @@ public class IDS {
                 int random = rand.nextInt(10000);
                 String fileContent = "id:"+random;
                 bufferedWriter.write(fileContent);
+                ID = random;
             } catch (IOException e) { }
         }
 
         // Create components
         JFrame f = new JFrame();
-        f.setTitle("Intrusion detection system");
+        f.setTitle("Intrusion detection system -- ID:"+ID);
 
+        JLabel label1 = new JLabel("Intrusion detection system -- ID:"+ID); 
         Menu menu = new Menu();
         Display display = new Display();
         Client client = new Client();
@@ -66,6 +68,7 @@ public class IDS {
         // Add components
         f.getContentPane().add(BorderLayout.NORTH, menu);
         f.setJMenuBar(menu);
+        f.getContentPane().add(BorderLayout.NORTH, label1);
         f.getContentPane().add(BorderLayout.CENTER, display); 
 
         Thread displayThread = new Thread(display);

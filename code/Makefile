@@ -6,6 +6,7 @@ all: $(classes)
 
 clean :
 	rm -f *.class
+	rm -f .config
 
 %.class : %.java
 	$(JAVAC) $<

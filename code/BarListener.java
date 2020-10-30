@@ -34,10 +34,11 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
         if (e.getActionCommand() == "New collaborator"){
             String name = JOptionPane.showInputDialog("What is the user ID you want to connect with");
             int idToCollaborate = Integer.parseInt(name);
-            this.client.addCollaborator(idToCollaborate);
+            this.client.addRequest(idToCollaborate);
+//            this.client.addCollaborator(idToCollaborate);
         }
         if (e.getActionCommand() == "Ping collaborator"){
-            this.client.sendMessage("Hello this is a test");
+            this.client.sendMessageAll("Hello this is a test");
         }
     }
 

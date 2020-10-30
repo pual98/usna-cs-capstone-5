@@ -35,9 +35,6 @@ public class ControlPanel extends JPanel implements Runnable {
         newCollaborator.addActionListener(r);
         pingCollaborator.addActionListener(r);
     }
-    public void requestCollaborator(){
-//        String name = JOptionPane.showInputDialog("What is the user ID you want to connect with");
-    }
 
 
     /**

@@ -17,6 +17,7 @@ public class Client implements Runnable
     DataOutputStream dos;
     Scanner scn;
     ArrayList<Integer> collaborators = new ArrayList<Integer>();
+    ArrayList<Integer> requests = new ArrayList<Integer>();
     public Client() {
         boolean haveID = false;
         try{
@@ -58,8 +59,8 @@ public class Client implements Runnable
 		
         try {
             // getting localhost ip 
-            // InetAddress ip = InetAddress.getByName("localhost"); 
-            InetAddress ip = InetAddress.getByName("midn.cs.usna.edu"); 
+            InetAddress ip = InetAddress.getByName("localhost"); 
+//            InetAddress ip = InetAddress.getByName("midn.cs.usna.edu"); 
             
             // establish the connection 
             Socket s = new Socket(ip, ServerPort); 
@@ -77,12 +78,26 @@ public class Client implements Runnable
             collaborators.add(idCollab);
         } catch (IOException e) { }
     }
-    public void sendMessage(String msg){
-        msg+="#";
-        for ( int collab : collaborators ){
-            msg+=collab+",";
+    public int getID(){
+        return ID;
+    }
+    public void addRequest(int waitingRequest){
+        this.requests.add(waitingRequest);
+        this.sendMessage("Collaboration request:"+ID,waitingRequest);
+    }
+    public void sendMessageAll(String msg){
+        if (collaborators.size() < 2){
+            JFrame f = new JFrame();
+            JOptionPane.showMessageDialog(f,"You need three collaborators to send a message");
+            return;
         }
-        msg = msg.substring(0, msg.length() - 1);
+        for ( int collab : collaborators ){
+            sendMessage(msg, collab);
+        }
+    }
+    public void sendMessage(String msg, int toSendTo){
+        msg+="#";
+        msg+=toSendTo;
         try { 
             // write on the output stream 
             dos.writeUTF(msg); 
@@ -132,7 +147,25 @@ public class Client implements Runnable
 						// read the message sent to this client 
 						String msg = dis.readUTF(); 
                         JFrame f = new JFrame();
-                        JOptionPane.showMessageDialog(f,msg);
+                        if (msg.contains("Collaboration request")){
+                            String reqID = msg.split(":")[0];
+                            reqID = reqID.replaceAll("\\s+","");
+                            int reply = JOptionPane.showConfirmDialog(f, "Do you want to collaborate with ID: "+reqID+"\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
+                            if (reply == JOptionPane.YES_OPTION) {
+                                addCollaborator(Integer.parseInt(reqID));
+                                sendMessage("Collaboration approval:"+ID, Integer.parseInt(reqID));
+                            }
+                        }else if (msg.contains("Collaboration approval")){
+                            String reqID = msg.split(":")[0];
+                            reqID = reqID.replaceAll("\\s+","");
+                            int ireqID = Integer.parseInt(reqID);
+                            if (requests.contains(ireqID)){
+//                                requests.remove(ireqID);
+                                addCollaborator(ireqID);
+                            }
+                        }else {
+                            JOptionPane.showMessageDialog(f,msg);
+                        }
 					} catch (IOException e) { 
 
 						e.printStackTrace(); 

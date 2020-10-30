@@ -2,7 +2,7 @@
 // It contains two classes : Server and ClientHandler 
 // Save file as Server.java 
 
-// https://www.geeksforgeeks.org/multi-threaded-chat-application-set-2/?ref=lbp
+// https://www.geeksforgeeks.org/multi-threaded-chat-application-set-2/?ref=lb
 import java.io.*; 
 import java.util.*; 
 import java.net.*; 
@@ -90,7 +90,7 @@ class ClientHandler implements Runnable
         { 
             try
             { 
-                System.out.println("Now I am here. I am "+this.name);
+//                System.out.println("Now I am here. I am "+this.name);
                 // receive the string 
                 received = dis.readUTF(); 
 
