@@ -1,13 +1,22 @@
-// Java implementation of Server side 
-// It contains two classes : Server and ClientHandler 
-// Save file as Server.java 
-
-// https://www.geeksforgeeks.org/multi-threaded-chat-application-set-2/?ref=lb
 import java.io.*; 
 import java.util.*; 
 import java.net.*; 
+/*
+Most of this code is implemented from the following example
+https://www.geeksforgeeks.org/multi-threaded-chat-application-set-2/?ref=lb
 
-// Server class 
+Thank you, geeksforgreeks for the code example.
+Source code has been modified in the run() method to allow users to renaim
+themselves in the client vectos.
+
+TODO: Change main loop to be a function in a runnable class, with the main()
+      function simply making an instance and running a thread
+      1) Two course of action would follow: every IDS is also a server. If they
+      are the main "collaborator," they are the server reached out to.
+      - The IDS.java file would instatiate a new Server()
+      or 2) Server is run by calling `java Server`, with the main acting as a
+      central server
+*/
 public class Server 
 { 
 
@@ -81,16 +90,13 @@ class ClientHandler implements Runnable
         this.s = s; 
         this.isloggedin=true; 
     } 
-
     @Override
     public void run() { 
-
         String received; 
         while (true) 
         { 
             try
             { 
-//                System.out.println("Now I am here. I am "+this.name);
                 // receive the string 
                 received = dis.readUTF(); 
 
@@ -107,7 +113,6 @@ class ClientHandler implements Runnable
                     System.out.println("Client id initialized: "+this.name);
                     continue;
                 } 
-
                 // break the string into message and recipient part 
                 StringTokenizer st = new StringTokenizer(received, "#"); 
                 String MsgToSend = st.nextToken(); 
@@ -133,7 +138,6 @@ class ClientHandler implements Runnable
             // closing resources 
             this.dis.close(); 
             this.dos.close(); 
-
         }catch(IOException e){ 
             e.printStackTrace(); 
         } 

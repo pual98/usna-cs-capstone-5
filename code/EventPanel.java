@@ -12,13 +12,14 @@ public class EventPanel extends JPanel implements Runnable {
     private BarListener r = null;
     private ArrayList<String> events= new ArrayList<String>();
 
-//    private JPanel searchAndTable = new JPanel();
-//    private JPanel inside = new JPanel();
+    // private JPanel searchAndTable = new JPanel();
+    // private JPanel inside = new JPanel();
     private JPanel filterPanel = new JPanel();
-//    private JScrollPane eventPane = new JScrollPane(inside, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+    // private JScrollPane eventPane = new JScrollPane(inside, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     private Color col = Color.lightGray;
 
+    // Visuals
     private GridBagConstraints gbcEvent = new GridBagConstraints();
     private GridBagConstraints gbcMaster = new GridBagConstraints();
     private GridBagConstraints gbcSearch = new GridBagConstraints();
@@ -46,30 +47,6 @@ public class EventPanel extends JPanel implements Runnable {
         gbcMaster.gridy = 0;
 
         this.add(dataWithSearch,gbcMaster);
-//        this.add(searchAndTable,gbcMaster);
-
-
-//        searchAndTable.setLayout(new GridBagLayout());
-//        gbcSearch.fill = GridBagConstraints.BOTH;
-//        gbcSearch.gridy = 0;
-//        gbcSearch.gridx = 0;
-//        gbcSearch.ipady = 20;
-//        searchBox.add(searchField);
-//        searchBox.add(searchButton);
-//        this.searchAndTable.add(searchBox,gbcSearch);
-//        gbcSearch.gridy = 1;
-//        gbcSearch.weighty = 1;
-//        gbcSearch.weightx = 1;
-//        this.searchAndTable.add(eventPane,gbcSearch);
-//
-//        this.inside.setLayout(new GridBagLayout());
-//        gbcEvent.fill = GridBagConstraints.HORIZONTAL;
-//        gbcEvent.gridx = 0;
-//        gbcEvent.gridy = 0;
-//        gbcEvent.weightx = 1;
-//        inside.setVisible(true);
-//        eventPane.setVisible(true);
-
     }
 
     public void addListener(BarListener r){
@@ -86,15 +63,6 @@ public class EventPanel extends JPanel implements Runnable {
     }
     public void updatePanel(){
         for(String l : this.events){
-//            JLabel label = new JLabel(l);
-//            label.setOpaque(true);
-//            label.setBackground(this.col);
-//            gbcEvent.gridy = this.displayedCount;
-//            gbcEvent.fill = GridBagConstraints.HORIZONTAL;
-//            this.displayedCount++;
-//            this.alternateColor();
-//            this.inside.add(label,gbcEvent);
-//            this.repaint();
             this.dataWithSearch.model.addRow(new Object[]{l});
         }
         this.events = new ArrayList<String>();

@@ -6,6 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.*;
 
+/**
+ * The alert class processes alert data...this file has been minimally touched
+ * by the MIDN in the CIDS capstone group.
+ **/
 public class alert
 {
 	private int sid;

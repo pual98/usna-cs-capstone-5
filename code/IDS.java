@@ -16,6 +16,7 @@ public class IDS {
         boolean haveID = false;
         int ID=0;
         // Initialize ID
+        // If config doesn't exist, create it
         try{
             File myFile = new File(".config");
 
@@ -27,6 +28,7 @@ public class IDS {
         } catch (FileNotFoundException e) { } catch (IOException e) { }
         
         // Read the content from file
+        // Get the id and set variable
         try{
             Scanner scanner = new Scanner(new File(".config"));
             while (scanner.hasNext()) {
@@ -39,6 +41,8 @@ public class IDS {
             }
         } catch (IOException e) { } catch (NullPointerException e) { }
 
+        // If the file exists but there is no id, save a new id to the config
+        // file.
         if (haveID == false) {
             try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".config"))) {
                 Random rand = new Random();
@@ -54,13 +58,18 @@ public class IDS {
         f.setTitle("Intrusion detection system -- ID:"+ID);
 
         JLabel label1 = new JLabel("Intrusion detection system -- ID:"+ID); 
+
+        //An IDS system has a menu (top bar), a display area for all data, and
+        //a client (itself) to send data to other clients.
         Menu menu = new Menu();
         Display display = new Display();
         Client client = new Client();
+
+        //Start client thread
         Thread clientThread = new Thread(client);
         clientThread.start();
 
-        // Add listener
+        // Add listener to menu, display, client
         BarListener r = new BarListener(menu, display, client);
         menu.addListener(r);
         display.addListener(r);

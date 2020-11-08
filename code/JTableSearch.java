@@ -1,18 +1,28 @@
-//https://www.tutorialspoint.com/how-to-implement-the-search-functionality-of-a-jtable-in-java
-//
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+/*
+Much of the search functionality was pulled from the following link:
+https://www.tutorialspoint.com/how-to-implement-the-search-functionality-of-a-jtable-in-java
 
+This class allows searching a table. This is utilites in the "Event Panel", as
+that panel is where the filters and searching of data will take place.
+*/
 public class JTableSearch extends JPanel {
+    //Privates
+    //Field to actually type in
     private JTextField jtf;
+
+    //Label for searching
     private JLabel searchLbl;
-    public DefaultTableModel model;
     private JTable table;
+    public DefaultTableModel model;
     private TableRowSorter sorter;
+
     private JScrollPane jsp;
     private GridBagConstraints gbc = new GridBagConstraints();
+
     public JTableSearch() {
         jtf = new JTextField(15);
         searchLbl = new JLabel("Search");
@@ -25,6 +35,8 @@ public class JTableSearch extends JPanel {
                 Component comp = super.prepareRenderer(renderer, row, column);
                 Color alternateColor = new Color(200, 201, 210);
                 Color whiteColor = Color.WHITE;
+
+                //Alternating colors for visuals
                 if(!comp.getBackground().equals(getSelectionBackground())) {
                     Color c = (row % 2 == 0 ? alternateColor : whiteColor);
                     comp.setBackground(c);
@@ -34,6 +46,8 @@ public class JTableSearch extends JPanel {
             }
         };
         table.setRowSorter(sorter);
+
+        //Visuals:
         setLayout(new GridBagLayout());
         gbc.fill = GridBagConstraints.BOTH;
         jsp = new JScrollPane(table);
@@ -47,6 +61,8 @@ public class JTableSearch extends JPanel {
         gbc.gridy = 2;
         gbc.weighty = 1;
         add(jsp,gbc);
+
+        //Listener functionality
         jtf.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
