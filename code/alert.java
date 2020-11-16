@@ -24,6 +24,9 @@ public class alert
 	private String srcPort;
 	private String destPort;
 
+	//number of attributes within instance of data
+	private int qualityCount;
+
 	public alert()
 	{sid = -1;}
 
@@ -86,7 +89,10 @@ public class alert
 		}
 		else
 			destIP=list2[3];
-		}
+
+		//this is tentative
+		qualityCount = 7;
+	}
 
 
 
@@ -98,6 +104,29 @@ public class alert
 		return str;
 
 	}
+
+	public int getQualityCount() {
+		return qualityCount;
+	}
+
+
+	protected static double distanceEuclidean(alert a, alert b)
+  {
+    double sum = 0;
+    for(int i = 0; i  < a.getQualityCount(); i++ )
+    {
+			sum += Math.pow(a.getQual(i) - b.getQual(i),2);
+    }
+    for(int i = 0; i  < a.getCategoryCount(); i++)
+    {
+				if(a.getCat(i) != b.getCat(i))
+	  			sum+=1;
+    }
+    return Math.sqrt(sum);
+  }
+
+
+
 	/* read a snort full alert file, transfer it to a csv file */
 	public static void main(String[] args) {
 
@@ -167,9 +196,7 @@ public class alert
 
 
 			} catch (IOException ex) {
-
 				ex.printStackTrace();
-
 			}
 
 		}

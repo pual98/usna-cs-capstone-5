@@ -7,12 +7,12 @@ public class DKMeans
   private int DIMENSIONS;
   private int CATEGORIES;
 
-  private ArrayList<Entity> entities;
-  private ArrayList<EntityCluster> clusters;
+  private ArrayList<alert> alerts;
+  private ArrayList<AlertCluster> clusters;
 
   public DKMeans(int NUM_CLUSTERS, int NUM_ENTITIES, int DIMENSIONS, int CATEGORIES) {
-    this.entities = new ArrayList<Entity>();
-    this.clusters = new ArrayList<EntityCluster>();
+    this.alerts = new ArrayList<alert>();
+    this.clusters = new ArrayList<AlertCluster>();
 
     this.NUM_CLUSTERS = NUM_CLUSTERS;
     this.NUM_ENTITIES = NUM_ENTITIES;
@@ -22,20 +22,21 @@ public class DKMeans
 
   public void init() {
     //Create Points
-    entities = Entity.createRandomEntities(DIMENSIONS, CATEGORIES, NUM_ENTITIES);
+    //needs to be implemented still
+    alerts = alert.createRandomEntities(DIMENSIONS, CATEGORIES, NUM_ENTITIES);
 
     //Create Clusters
     //Set Random Centroids
     for (int i = 0; i < NUM_CLUSTERS; i++) {
-      EntityCluster cluster = new EntityCluster(i);
-      Entity centroid = Entity.createRandomEntity(DIMENSIONS, CATEGORIES);
+      AlertCluster cluster = new AlertCluster(i);
+      alert centroid = alert.createRandomEntity(DIMENSIONS, CATEGORIES);
       cluster.setCentroid(centroid);
       clusters.add(cluster);
     }
 
-    for(Entity e : entities)
+    for(alert e : alerts)
       {
-	System.out.println(e);
+	       System.out.println(e);
       }
 
 
@@ -46,13 +47,13 @@ public class DKMeans
 
   private void plotClusters() {
     for (int i = 0; i < NUM_CLUSTERS; i++) {
-      EntityCluster c = clusters.get(i);
+      AlertCluster c = clusters.get(i);
       c.plotCluster();
     }
   }
 
   private void clearClusters() {
-    for(EntityCluster cluster : clusters) {
+    for(AlertCluster cluster : clusters) {
       cluster.clear();
     }
   }
@@ -66,7 +67,7 @@ public class DKMeans
       //Clear cluster state
       clearClusters();
 
-      ArrayList<Entity> lastCentroids = getCentroids();
+      ArrayList<alert> lastCentroids = getCentroids();
 
       //Assign points to the closer cluster
       assignCluster();// <-----------------------------------MARK
@@ -76,7 +77,7 @@ public class DKMeans
 
       iteration++;
 
-      ArrayList<Entity> currentCentroids = getCentroids();//<---------------MARK
+      ArrayList<alert> currentCentroids = getCentroids();//<---------------MARK
 
       //Calculates total distance between new and old Centroids
       double distance = 0;
@@ -95,11 +96,11 @@ public class DKMeans
   }
 
 
-   private ArrayList<Entity> getCentroids() {
-    	ArrayList<Entity> centroids = new ArrayList<Entity>(NUM_CLUSTERS);
-    	for(EntityCluster cluster : clusters) {
-    		Entity aux = cluster.getCentroid();
-    		Entity point = new Entity(aux.getQualities(),aux.getCategories());
+   private ArrayList<alert> getCentroids() {
+    	ArrayList<alert> centroids = new ArrayList<alert>(NUM_CLUSTERS);
+    	for(AlertCluster cluster : clusters) {
+    		alert aux = cluster.getCentroid();
+    		alert point = new alert(aux.getQualities(),aux.getCategories());
     		centroids.add(point);
     	}
     	return centroids;
@@ -111,11 +112,11 @@ public class DKMeans
         int cluster = 0;
         double distance = 0.0;
 
-        for(Entity point : entities) {
+        for(alert point : entities) {
         	min = max;
             for(int i = 0; i < NUM_CLUSTERS; i++) {
-            	EntityCluster c = clusters.get(i);
-                distance = Entity.distanceEuclidean(point, c.getCentroid());
+            	AlertCluster c = clusters.get(i);
+                distance = alert.distanceEuclidean(point, c.getCentroid());
                 if(distance < min){
                     min = distance;
                     cluster = i;
@@ -128,44 +129,44 @@ public class DKMeans
 
   private void calculateCentroids()
   {
-    for(EntityCluster cluster : clusters)
+    for(AlertCluster cluster : clusters)
       {
-	ArrayList<Entity> list = cluster.getEntities();
-	int n_points = list.size();
-	double[] sum = new double[DIMENSIONS];
-	ArrayList<ArrayList<Integer>> catEntries = new ArrayList<ArrayList<Integer>>();
-	for(int i = 0 ; i < CATEGORIES; i++)
-	  {
-	    catEntries.add(new ArrayList<Integer>());
-	  }
+      	ArrayList<alert> list = cluster.getAlerts();
+      	int n_points = list.size();
+      	double[] sum = new double[DIMENSIONS];
+      	ArrayList<ArrayList<Integer>> catEntries = new ArrayList<ArrayList<Integer>>();
+      	for(int i = 0 ; i < CATEGORIES; i++)
+      	  {
+      	    catEntries.add(new ArrayList<Integer>());
+      	  }
 
-	for(Entity point : list)
-	  {
-	    for(int i = 0 ; i < DIMENSIONS; i++)
-	      sum[i] += point.getQualities().get(i);
-	    for(int i = 0; i < CATEGORIES; i++)
-	      {
-		catEntries.get(i).add(point.getCat(i));
-	      }
-	  }
-	ArrayList<Integer> cats = new ArrayList<Integer>();
-	for(int i = 0; i < CATEGORIES; i++)
-	  {
-	    cats.add(KMode.mode(catEntries.get(i)));
-	  }
+      	for(alert point : list)
+      	  {
+      	    for(int i = 0 ; i < DIMENSIONS; i++)
+      	      sum[i] += point.getQualities().get(i);
+      	    for(int i = 0; i < CATEGORIES; i++)
+      	      {
+      		       catEntries.get(i).add(point.getCat(i));
+      	      }
+      	  }
+      	ArrayList<Integer> cats = new ArrayList<Integer>();
+      	for(int i = 0; i < CATEGORIES; i++)
+      	  {
+      	    cats.add(KMode.mode(catEntries.get(i)));
+      	  }
 
 
-	Entity centroid = cluster.getCentroid();
-	if(n_points > 0)
-	  {
-	    ArrayList<Double> quals = new ArrayList<Double>();
-	    for(int i = 0; i < DIMENSIONS; i++)
-	      {
-		quals.add(sum[i]/n_points);
-	      }
-	    centroid.setQualities(quals);
-	    centroid.setCategories(cats);
-	  }
+      	alert centroid = cluster.getCentroid();
+      	if(n_points > 0)
+      	  {
+      	    ArrayList<Double> quals = new ArrayList<Double>();
+      	    for(int i = 0; i < DIMENSIONS; i++)
+      	    {
+      		      quals.add(sum[i]/n_points);
+      	    }
+      	    centroid.setQualities(quals);
+      	    centroid.setCategories(cats);
+      	  }
       }
 
   }
@@ -173,9 +174,9 @@ public class DKMeans
   public double averageMSE()
   {
     double ret = 0.0;
-    for(EntityCluster c : clusters)
+    for(AlertCluster c : clusters)
       {
-	ret += c.MSE();
+	       ret += c.MSE();
       }
     return ret/NUM_CLUSTERS;
   }
