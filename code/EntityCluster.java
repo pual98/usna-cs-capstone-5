@@ -1,35 +1,35 @@
 import java.util.ArrayList;
 
-public class AlertCluster
+public class EntityCluster
 {
-  public ArrayList<alert> alerts;
-  public alert centroid;
+  public ArrayList<Entity> Entities;
+  public Entity centroid;
   public int id;
 
-  public AlertCluster(int id)
+  public EntityCluster(int id)
   {
     this.id = id;
-    this.alerts = new ArrayList<alert>();
+    this.Entities = new ArrayList<Entity>();
     this.centroid = null;
   }
 
-  public ArrayList<alert> getAlerts() {
-    return alerts;
+  public ArrayList<Entity> getEntities() {
+    return Entities;
   }
 
-  public void addAlert(alert e) {
-    alerts.add(e);
+  public void addEntity(Entity e) {
+    Entities.add(e);
   }
 
-  public void setAlerts (ArrayList<alert> e) {
-    this.alerts = e;
+  public void setEntities(ArrayList<Entity> e) {
+    this.Entities = e;
   }
 
-  public alert getCentroid() {
+  public Entity getCentroid() {
     return centroid;
   }
 
-  public void setCentroid(alert centroid) {
+  public void setCentroid(Entity centroid) {
     this.centroid = centroid;
   }
 
@@ -39,14 +39,14 @@ public class AlertCluster
   }
 
   public void clear() {
-    alerts.clear();
+    Entities.clear();
   }
 
   public void plotCluster() {
     System.out.println("[Cluster: " + id+"]");
     System.out.println("[Centroid: " + centroid + "]");
-    System.out.println("[alerts: \n");
-    for(alert e : alerts) {
+    System.out.println("[Entities: \n");
+    for(Entity e : Entities) {
       System.out.println(e);
     }
     System.out.println("]");
@@ -55,15 +55,15 @@ public class AlertCluster
 
   public double MSE()
   {
-    int n_points = alerts.size();
+    int n_points = Entities.size();
     if(n_points == 0)
       {
 	return 0.0;
       }
     double sum = 0.0;
-    for(alert e : alerts)
+    for(Entity e : Entities)
       {
-	sum +=  Math.pow(alert.distanceEuclidean(e,centroid),2);
+	sum +=  Math.pow(Entity.distanceEuclidean(e,centroid),2);
       }
 
     return sum/n_points;
