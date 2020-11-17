@@ -19,6 +19,16 @@ public class Entity
     this.categories = categories;
   }
 
+  public Entity getCopy()
+  {
+    return new Entity(qualities,categories);
+  }
+
+  public int getEntitySizeInBytes()
+  {
+    return (d * 8) + (dCat * 4) + 12;//quality size + category size + Entity structure
+  }
+
   public void setQualities(ArrayList<Double> q)
   {
     qualities = q;
@@ -83,6 +93,23 @@ public class Entity
       }
     return new Entity(retQual, retCat);
   }
+
+  public static Entity createRandomEntity(int d, int dCat, long seed)
+  {
+    Random r = new Random(seed);
+    ArrayList<Double> retQual = new ArrayList<Double>();
+    for(int i  = 0 ; i  < d ; i ++)
+      {
+	retQual.add(r.nextDouble());
+      }
+    ArrayList<Integer> retCat = new ArrayList<Integer>();
+    for(int i  = 0 ; i  < dCat ; i ++)
+      {
+	retCat.add(r.nextInt(5));
+      }
+    return new Entity(retQual, retCat);
+  }
+
   protected static ArrayList<Entity> createRandomEntities(int d, int dCat, int number)
   {
     ArrayList<Entity> ret = new ArrayList<Entity>(number);
@@ -124,6 +151,35 @@ public class Entity
       }
     return "(" + ret + ")";
   }
+
+
+  public static Entity makeEntityFromString(String normalizedData){
+    if(normalizedData.contains("null"))
+      return null;
+    String[] data = normalizedData.split(";");
+    //[srcIP, destIP, timestamp, ruleID, srcPort, destPort, alertType]
+    double srcIP = Double.parseDouble(data[0]);
+    double destIP = Double.parseDouble(data[1]);
+    double timestamp = Double.parseDouble(data[2]);
+    int ruleID = Integer.parseInt(data[3]);
+    int srcPort = Integer.parseInt(data[4]);
+    int destPort = Integer.parseInt(data[5]);
+    int alertType = Integer.parseInt(data[6]);
+
+    ArrayList<Double> dArr = new ArrayList<Double>();
+    dArr.add(srcIP);
+    dArr.add(destIP);
+    dArr.add(timestamp);
+
+    ArrayList<Integer> iArr = new ArrayList<Integer>();
+    iArr.add(ruleID);
+    iArr.add(srcPort);
+    iArr.add(destPort);
+    iArr.add(alertType);
+    // System.out.println(iArr);
+    return new Entity(dArr, iArr);
+  }
+
 
   public static void main(String[] args)
   {
