@@ -4,6 +4,5 @@
 
 ```
 make
-java IDS
-echo "Hello" >> file.txt
+./demo.sh
 ```
