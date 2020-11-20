@@ -22,6 +22,7 @@ public class Server
 
     // Vector to store active clients 
     static Vector<ClientHandler> ar = new Vector<>(); 
+    static Map<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
 
     // counter for clients 
     static int i = 0; 
@@ -40,13 +41,13 @@ public class Server
             // Accept the incoming request 
             s = ss.accept(); 
 
-            System.out.println("New client request received : " + s); 
+            System.out.println("Server log: New client request received : " + s); 
 
             // obtain input and output streams 
             DataInputStream dis = new DataInputStream(s.getInputStream()); 
             DataOutputStream dos = new DataOutputStream(s.getOutputStream()); 
 
-            System.out.println("Creating a new handler for this client..."); 
+            System.out.println("Server log: Creating a new handler for this client..."); 
 
             // Create a new handler object for handling this request. 
             ClientHandler mtch = new ClientHandler(s,"client " + i, dis, dos); 
@@ -54,7 +55,7 @@ public class Server
             // Create a new Thread with this object. 
             Thread t = new Thread(mtch); 
 
-            System.out.println("Adding this client to active client list"); 
+            System.out.println("Server log: Adding this client to active client list"); 
 
             // add this client to active clients list 
             ar.add(mtch); 
@@ -110,9 +111,71 @@ class ClientHandler implements Runnable
                 if(received.contains("new name id")){ 
                     String arr[] = received.split(":");
                     this.name = arr[1];
-                    System.out.println("Client id initialized: "+this.name);
+                    System.out.println("Server log: client id initialized: "+this.name);
                     continue;
                 } 
+                //01:FROM:GROUPNAME - 01 message to server requesting to make GROUP, named
+                if(received.substring(0,2).equals("01")){
+                    String arr[] = received.split(":");
+                    String groupname = arr[2];
+                    if (!Server.groups.containsKey(groupname)){
+                        Server.groups.put(groupname,new ArrayList<String>());
+                    }
+                    Server.groups.get(groupname).add(arr[1]);
+                    continue;
+                //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
+                }else if(received.substring(0,2).equals("02")){
+                    String arr[] = received.split(":");
+                    String groupname = arr[2];
+                    if (Server.groups.containsKey(groupname)){
+                        String recipient = Server.groups.get(groupname).get(0);
+                        String MsgToSend = received;
+                        for (ClientHandler mc : Server.ar) 
+                        { 
+                            if (recipient.contains(mc.name) && mc.isloggedin==true) 
+                            { 
+                                mc.dos.writeUTF(MsgToSend); 
+                                break; 
+                            } 
+                        } 
+                    }
+                    continue;
+                //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
+                }else if(received.substring(0,2).equals("03")){
+                    System.out.println("Server log: received an accept");
+                //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
+                }else if(received.substring(0,2).equals("04")){
+                    String arr[] = received.split(":");
+                    String groupname = arr[2];
+                    System.out.println("Server log: received an addition to " + groupname);
+                    if (Server.groups.containsKey(groupname))
+                       Server.groups.get(groupname).add(arr[3]);
+                    continue;
+
+                //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
+                }else if(received.substring(0,2).equals("05")){
+                    String arr[] = received.split(":");
+                    String groupname = arr[2];
+                    if (Server.groups.containsKey(groupname)){
+                       ArrayList<String> partners = Server.groups.get(groupname);
+                       String MsgToSend = "06:0:"+groupname+":"+String.join(",",partners);
+                       String recipient = arr[1];
+                       for (ClientHandler mc : Server.ar) 
+                       { 
+                           if (recipient.contains(mc.name) && mc.isloggedin==true) 
+                           { 
+                               mc.dos.writeUTF(MsgToSend); 
+                               break; 
+                           } 
+                       } 
+                    }
+                    continue;
+                //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
+                }else if(received.substring(0,2).equals("06")){
+                    continue;
+                //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
+                }else if(received.substring(0,2).equals("10")){
+                }
                 // break the string into message and recipient part 
                 StringTokenizer st = new StringTokenizer(received, "#"); 
                 String MsgToSend = st.nextToken(); 
@@ -126,7 +189,7 @@ class ClientHandler implements Runnable
                     // output stream 
                     if (recipient.contains(mc.name) && mc.isloggedin==true) 
                     { 
-                        mc.dos.writeUTF(this.name+" : "+MsgToSend); 
+                        mc.dos.writeUTF(MsgToSend); 
                         break; 
                     } 
                 } 

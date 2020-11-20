@@ -1,0 +1,28 @@
+# Communication w/ server
+logout
+    logs out of the server
+new name id:$SomeNumberHere
+    renames my client to $SomeNumberHere on the server
+message#id
+    send the message to the id
+
+# Established protocol
+# These will always end in #ID, where the ID is the final address...if sent to
+the server, just make the ID a 0.
+
+01:FROM:GROUPNAME
+    01 message to server requesting to make GROUP, named GROUPNAME
+02:FROM:GROUPNAME
+    02 request to join GROUPNAME - (server should forward to coordinator)
+03:FROM:MSG#TO
+    03 response from coordinator to TO with "accept" or "deny"
+04:FROM:GROUPNAME:TOADD
+    04 message from coordinator to server with ID TOADD to join have join the GROUPNAME
+05:FROM:GROUPNAME
+    message to server requesting list of IDs in GROUPNAME
+06:FROM:MSG
+    response from server with comma seperated MSG as a list of people in
+    GROUPNAME MSG is something like BILL,12,13,1,2 where BILL is GROUPNAME and
+    everything else is the IDs
+10:FROM:MSG#TO
+    10 Generic message. Send message to the TO

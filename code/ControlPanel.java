@@ -9,8 +9,8 @@ import java.util.*;
 public class ControlPanel extends JPanel implements Runnable {
 
 //    JButton kMeansButton = new JButton("Run K-means training");
-    JButton newCollaborator = new JButton("New collaborator");
-    JButton pingCollaborator = new JButton("Ping collaborator");
+    JButton newCollaborator = new JButton("New Group");
+    JButton pingCollaborator = new JButton("Join Group");
     JButton runIDS = new JButton("Run intrusion detection");
 
     public ControlPanel() {

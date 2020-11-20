@@ -31,10 +31,6 @@ public class Client implements Runnable
                 System.out.println("File already exists.");
             }
         } catch (FileNotFoundException e) { } catch (IOException e) { }
-
-        // Read the content from file
-
-        // Read the content from file
         try{
             Scanner scanner = new Scanner(new File(".config"));
             while (scanner.hasNext()) {
@@ -99,7 +95,7 @@ public class Client implements Runnable
             return;
         }
         for ( int collab : collaborators ){
-            sendMessage(msg, collab);
+            this.sendMessage(msg, collab);
         }
     }
 
@@ -113,8 +109,6 @@ public class Client implements Runnable
             e.printStackTrace();
         }
     }
-
-
     public void run() {
         // sendMessage thread
         Thread sendMessage = new Thread(new Runnable()
@@ -153,25 +147,44 @@ public class Client implements Runnable
                                 // read the message sent to this client
                                 String msg = dis.readUTF();
                                 JFrame f = new JFrame();
-                                if (msg.contains("Collaboration request")){
-                                    String reqID = msg.split(":")[0];
-                                    reqID = reqID.replaceAll("\\s+","");
-                                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to collaborate with ID: "+reqID+"\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
+
+                                System.out.println("Client "+ID+" log msg: "+msg);
+
+                                //01:FROM:GROUPNAME - 01 message to server requesting to make GROUP, named
+                                if(msg.substring(0,2).equals("01")){
+                                    continue;
+                                //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
+                                }else if(msg.substring(0,2).equals("02")){
+                                    String arr[] = msg.split(":");
+                                    String groupname = arr[2];
+                                    String reqID = arr[1];
+                                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+reqID+" to join "+groupname+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
                                         addCollaborator(Integer.parseInt(reqID));
-                                        sendMessage("Collaboration approval:"+ID, Integer.parseInt(reqID));
+                                        sendMessage("03:"+ID+":accept", Integer.parseInt(reqID));
+                                        sendMessage("04:"+ID+":"+groupname+reqID, Integer.parseInt(reqID));
+                                    }else{
+                                        sendMessage("03:"+ID+":deny", Integer.parseInt(reqID));
                                     }
-                                } else if (msg.contains("Collaboration approval")){
-                                    String reqID = msg.split(":")[0];
-                                    reqID = reqID.replaceAll("\\s+","");
-                                    int ireqID = Integer.parseInt(reqID);
-                                    if (requests.contains(ireqID)){
-                                        //              requests.remove(ireqID);
-                                        addCollaborator(ireqID);
-                                    }
-                                } else {
+                                    continue;
+                                //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
+                                }else if(msg.substring(0,2).equals("03")){
                                     JOptionPane.showMessageDialog(f,msg);
+                                    continue;
+                                //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
+                                }else if(msg.substring(0,2).equals("04")){
+                                    continue;
+
+                                //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
+                                }else if(msg.substring(0,2).equals("05")){
+                                    continue;
+                                //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
+                                }else if(msg.substring(0,2).equals("06")){
+                                    continue;
+                                //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
+                                }else if(msg.substring(0,2).equals("10")){
                                 }
+
                             } catch (IOException e) { e.printStackTrace(); }
                         }
                     }
@@ -180,95 +193,96 @@ public class Client implements Runnable
         sendMessage.start();
         readMessage.start();
 
-        /*
-         *TO DO: readInEntities
-         */
-
-        ArrayList<Entity> dataset = Dataset.build();
-        /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
-        ArrayList<EntityCluster> clusters = coordinator.getInitialCluster();//to do
-        /*
-         * receive cents
-         */
-        boolean converged = false;
-        while(!converged)
-        {
-            converged = true;
-            for(Entity en : dataset)
-            {
-                //assign to cluster
-                interimConverged = en.assignClusters(clusters);
-                //assign to cluster
-                if(!interimConverged)
-                {
-                    converged = false;
-                }
-            }
-            if(converged)
-            {
-                break;
-            }
-            //for each cluster:
-            for(EntityCluster c : clusters)
-            {
-                SharingEntity clusterData = new SharingEntity();
-                // sumlocal
-                for(Entity en : dataset)
-                {
-                    if(en.getAssignedCluster() == c.getId())
-                    {
-                        clusterData.addEntity(en);
-                    }
-                }
-                //send sum to all
-                for(OtherClient ot : others)
-                {
-                    ot.send(clusterData);
-                }
-                // wait on sums
-                received = waitOnSums();
-
-                for(SharingEntity se : received)
-                {
-                    clusterData.addSharingEntity(se);
-                }
-                c = clusterData.toEntity();
-            }
-
-        }
+//        /*
+//         *TO DO: readInEntities
+//         */
+//
+//        Dataset D = new Dataset();
+//        ArrayList<Entity> dataset = D.build("file.txt");
+//        /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
+//        ArrayList<EntityCluster> clusters = coordinator.getInitialCluster();        //to do
+//        /*
+//         * receive cents
+//         */
+//        boolean converged = false;
+//        while(!converged)
+//        {
+//            converged = true;
+//            for(Entity en : dataset)
+//            {
+//                //assign to cluster
+//                interimConverged = en.assignClusters(clusters);
+//                //assign to cluster
+//                if(!interimConverged)
+//                {
+//                    converged = false;
+//                }
+//            }
+//            if(converged)
+//            {
+//                break;
+//            }
+//            //for each cluster:
+//            for(EntityCluster c : clusters)
+//            {
+//                SharingEntity clusterData = new SharingEntity();
+//                // sumlocal
+//                for(Entity en : dataset)
+//                {
+//                    if(en.getAssignedCluster() == c.getId())
+//                    {
+//                        clusterData.addEntity(en);
+//                    }
+//                }
+//                //send sum to all
+//                for(OtherClient ot : others)
+//                {
+//                    ot.send(clusterData);
+//                }
+//                // wait on sums
+//                received = waitOnSums();
+//
+//                for(SharingEntity se : received)
+//                {
+//                    clusterData.addSharingEntity(se);
+//                }
+//                c = clusterData.toEntity();
+//            }
+//
+//        }
 
         //display centroids
 
     }
 
 
-    public boolean assignClusters(ArrayList<EntityCluster> clusters)
-    {
-        double max = Double.MAX_VALUE;
-        double min = max;
-        int cluster = 0;
-        double distance = 0.0;
-        boolean converged = true;
-        for(Entity en : data) {
-            min = max;
-            for(int i = 0; i < clusters.size(); i++) {
-                EntityCluster c = clusters.get(i);
-
-                distance = Entity.distanceEuclidean(point, c.getCentroid());
-                if(distance < min) {
-                    min = distance;
-                    cluster = i;
-                }
-            }
-
-            if(cluster != en.getCluster()) {
-                converged = false;
-            }
-            en.setCluster(cluster);
-        }
-        //possible update to total number of entities in cluster
-        return converged;
-    }
+//    public boolean assignClusters(ArrayList<EntityCluster> clusters)
+//    {
+//        double max = Double.MAX_VALUE;
+//        double min = max;
+//        int cluster = 0;
+//        double distance = 0.0;
+//        boolean converged = true;
+//        for(Entity en : data) {
+//            min = max;
+//            for(int i = 0; i < clusters.size(); i++) {
+//                EntityCluster c = clusters.get(i);
+//
+//                distance = Entity.distanceEuclidean(point, c.getCentroid());
+//                if(distance < min) {
+//                    min = distance;
+//                    cluster = i;
+//                }
+//            }
+//
+//            if(cluster != en.getCluster()) {
+//                converged = false;
+//            }
+//            en.setCluster(cluster);
+//        }
+//        //possible update to total number of entities in cluster
+//        return converged;
+//    }
 
 
     public static void main(String args[]) throws UnknownHostException, IOException {
