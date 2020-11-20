@@ -109,6 +109,16 @@ public class Client implements Runnable
             e.printStackTrace();
         }
     }
+    public void sendMessage(String msg, String group) {
+        msg+="#";
+        msg+=group;
+        try {
+            // write on the output stream
+            dos.writeUTF(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void run() {
         // sendMessage thread
         Thread sendMessage = new Thread(new Runnable()
@@ -156,20 +166,19 @@ public class Client implements Runnable
                                 //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
                                 }else if(msg.substring(0,2).equals("02")){
                                     String arr[] = msg.split(":");
-                                    String groupname = arr[2];
+                                    String groupname = arr[2].split("#")[0];
                                     String reqID = arr[1];
                                     int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+reqID+" to join "+groupname+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
                                         addCollaborator(Integer.parseInt(reqID));
                                         sendMessage("03:"+ID+":accept", Integer.parseInt(reqID));
-                                        sendMessage("04:"+ID+":"+groupname+reqID, Integer.parseInt(reqID));
+                                        sendMessage("04:"+ID+":"+groupname+":"+reqID, Integer.parseInt(reqID));
                                     }else{
                                         sendMessage("03:"+ID+":deny", Integer.parseInt(reqID));
                                     }
                                     continue;
                                 //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
                                 }else if(msg.substring(0,2).equals("03")){
-                                    JOptionPane.showMessageDialog(f,msg);
                                     continue;
                                 //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
                                 }else if(msg.substring(0,2).equals("04")){
@@ -183,8 +192,8 @@ public class Client implements Runnable
                                     continue;
                                 //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
                                 }else if(msg.substring(0,2).equals("10")){
-                                }
-
+                                    JOptionPane.showMessageDialog(f,msg);
+                                } 
                             } catch (IOException e) { e.printStackTrace(); }
                         }
                     }

@@ -117,16 +117,16 @@ class ClientHandler implements Runnable
                 //01:FROM:GROUPNAME - 01 message to server requesting to make GROUP, named
                 if(received.substring(0,2).equals("01")){
                     String arr[] = received.split(":");
-                    String groupname = arr[2];
+                    String groupname = arr[2].split("#")[0];
                     if (!Server.groups.containsKey(groupname)){
                         Server.groups.put(groupname,new ArrayList<String>());
                     }
                     Server.groups.get(groupname).add(arr[1]);
                     continue;
-                //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
+                    //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
                 }else if(received.substring(0,2).equals("02")){
                     String arr[] = received.split(":");
-                    String groupname = arr[2];
+                    String groupname = arr[2].split("#")[0];
                     if (Server.groups.containsKey(groupname)){
                         String recipient = Server.groups.get(groupname).get(0);
                         String MsgToSend = received;
@@ -140,41 +140,61 @@ class ClientHandler implements Runnable
                         } 
                     }
                     continue;
-                //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
+                    //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
                 }else if(received.substring(0,2).equals("03")){
-                    System.out.println("Server log: received an accept");
-                //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
+                    //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
                 }else if(received.substring(0,2).equals("04")){
                     String arr[] = received.split(":");
                     String groupname = arr[2];
-                    System.out.println("Server log: received an addition to " + groupname);
                     if (Server.groups.containsKey(groupname))
-                       Server.groups.get(groupname).add(arr[3]);
+                        Server.groups.get(groupname).add(arr[3].split("#")[0]);
                     continue;
 
-                //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
+                    //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
                 }else if(received.substring(0,2).equals("05")){
                     String arr[] = received.split(":");
-                    String groupname = arr[2];
+                    String groupname = arr[2].split("#")[0];
                     if (Server.groups.containsKey(groupname)){
-                       ArrayList<String> partners = Server.groups.get(groupname);
-                       String MsgToSend = "06:0:"+groupname+":"+String.join(",",partners);
-                       String recipient = arr[1];
-                       for (ClientHandler mc : Server.ar) 
-                       { 
-                           if (recipient.contains(mc.name) && mc.isloggedin==true) 
-                           { 
-                               mc.dos.writeUTF(MsgToSend); 
-                               break; 
-                           } 
-                       } 
+                        ArrayList<String> partners = Server.groups.get(groupname);
+                        String MsgToSend = "06:0:"+groupname+":"+String.join(",",partners);
+                        String recipient = arr[1];
+                        for (ClientHandler mc : Server.ar) 
+                        { 
+                            if (recipient.contains(mc.name) && mc.isloggedin==true) 
+                            { 
+                                mc.dos.writeUTF(MsgToSend); 
+                                break; 
+                            } 
+                        } 
                     }
                     continue;
-                //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
+                    //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
                 }else if(received.substring(0,2).equals("06")){
                     continue;
-                //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
+                    //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
                 }else if(received.substring(0,2).equals("10")){
+                    //11:FROM:MSG#GROUP
+                }else if(received.substring(0,2).equals("11")){
+                    String arr[] = received.split(":");
+                    String from = arr[1];
+                    String msg = arr[2];
+
+                    System.out.println("msg "+msg);
+                    StringTokenizer st = new StringTokenizer(msg, "#"); 
+                    String MsgToSend = st.nextToken(); 
+                    String recipient = st.nextToken(); 
+                    if (Server.groups.containsKey(recipient)){
+                        ArrayList<String> partners = Server.groups.get(recipient);
+                        MsgToSend = "10:"+from+":"+MsgToSend;
+                        for (ClientHandler mc : Server.ar) 
+                        { 
+                            if (partners.contains(mc.name) && mc.isloggedin==true) 
+                            { 
+                                mc.dos.writeUTF(MsgToSend); 
+                            } 
+                        } 
+                    }
+                    continue;
                 }
                 // break the string into message and recipient part 
                 StringTokenizer st = new StringTokenizer(received, "#"); 

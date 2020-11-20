@@ -26,3 +26,6 @@ the server, just make the ID a 0.
     everything else is the IDs
 10:FROM:MSG#TO
     10 Generic message. Send message to the TO
+11:FROM:MSG#GROUP
+    10 Generic message. Send message to everyone in the GROUP (good for testing
+    if group is established correctly)

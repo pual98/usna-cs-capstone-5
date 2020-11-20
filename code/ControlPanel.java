@@ -11,6 +11,7 @@ public class ControlPanel extends JPanel implements Runnable {
 //    JButton kMeansButton = new JButton("Run K-means training");
     JButton newCollaborator = new JButton("New Group");
     JButton pingCollaborator = new JButton("Join Group");
+    JButton sendMessage = new JButton("Send message");
     JButton runIDS = new JButton("Run intrusion detection");
 
     public ControlPanel() {
@@ -29,11 +30,15 @@ public class ControlPanel extends JPanel implements Runnable {
         gbc.gridx = 1;
         gbc.gridy = 0;
         this.add(pingCollaborator,gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        this.add(sendMessage,gbc);
     }
     public void addListener(BarListener r){
         this.addMouseListener(r);
         newCollaborator.addActionListener(r);
         pingCollaborator.addActionListener(r);
+        sendMessage.addActionListener(r);
     }
 
 

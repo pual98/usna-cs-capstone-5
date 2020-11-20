@@ -55,6 +55,20 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
                 String msg = "02:"+this.client.getID()+":"+group_name ;
                 this.client.sendMessage(msg, 0);
             }
+            if (e.getActionCommand() == "Send message"){
+
+                // prompt user for GROUP name //
+                String group_name = null ;
+                while(group_name == null)
+                    group_name = JOptionPane.showInputDialog("Enter Group's Name");
+                String message = null;
+                while(message == null)
+                    message = JOptionPane.showInputDialog("Desired message");
+
+                // send Message Type 02 to Server //
+                String msg = "11:"+this.client.getID()+":"+message;
+                this.client.sendMessage(msg, group_name);
+            }
         }
 
         /**

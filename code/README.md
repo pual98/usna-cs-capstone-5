@@ -4,23 +4,26 @@ Collaborative Intrusion Detection System: Inter-Client Communication Testing wit
 
 Testing Instructions:
 
-When running the CIDS, open four terminals on the Linux desktops.  These could be done on different VMs.
-1. In the first terminal, execute the command: 
+When running the CIDS, open one terminal on a Linux desktops.
+1. In the terminal enter the github code directory and execute the command: 
 
-	```java Server```
+	```make```
 
-This command creates the centralized server whereby each Client IDS connects.
+This command will compile at the java code currently being used for the project.
 
-2. On each of the other three terminals, run the command:
+2. Now, run:
 
-	```java IDS```
+	```bash demo.sh```
 
-+ This commands creates an instance of a Client IDS (Intrusion Detection System).  Each client automatically establishes a connection with the centralized server.  IDS opens a GUI with three different panes:	
++ This runs 1 instance of a Server (local) and 3 instances of the IDS...it is equivalent to creating four file structures and running 'java Server' in one and 'java IDS' in the others.
++ *REMEMBER* -- to stop these, type ctrl+c in the terminal.
+
++ The 'java IDS' command, executed in the bash script, creates instances of a Client IDS (Intrusion Detection System).  Each client automatically establishes a connection with the centralized server.  IDS opens a GUI with three different panes:	
 	- The right-most pane is populated with instances of alert-data that is read in and pre-processed by the respective client.  The data between each of the three clients will be the same.
 	- The  left-most pane can be ignored as it will later be used to filter the data in the right-most display pane.
 	- The top(center) panel has three buttons: "Create Group", "Join Group", and "Run intrusion detection"
 
-3. Test the functionality of the buttons in GUI
+3. Test the functionality of the buttons in GUI -- the instructions may reference the messages as appearing in separate terminals. Since we are using the bash script, all the messages will be together.
     + Click on the "Run intrustion detection" button.  Nothing should happen as this functionality has yet to be implemented.
     + In one of the GUIs, click on "Create Group".  
         + The user (client1) should be prompted to enter the name of the Group.  Upon which, the user clicks "Ok".
@@ -31,10 +34,10 @@ This command creates the centralized server whereby each Client IDS connects.
     +. After this message is output to the terminal, client1 should receive a popup in his GUI asking to approve client2 into the group.	
 		+ From client1's GUI, click "accept"
 		+ A message will be outputted in client1's and client2's terminal under the format "03:XXXX:accept" where XXXX is client1's ID.  Client1 will then send a message to the Server telling it to add client2 to the group.  Client1's terminal should print a message using the format "04:XXXX:YYYY:ZZZZ" where XXXX is client1's ID, YYYY is the group name, and ZZZZ is client2's ID.
-    + From a new terminal, i.e. client 3, click the "Join Group" button.
+    + From a new GUI, i.e. client 3, click the "Join Group" button.
 		+ Once again, enter the name of the group that client1 created.  Client1 will be prompted to either accept or deny client3 into the group.
 		+ From client1's GUI, click on "deny"
 		+ A message will be outputted in client1's and client3's terminal under the format "03:XXXX:deny" where XXXX is client1's ID.  
-    + From a terminal that has yet to be used, i.e. client4, click the "Join Group" button.
+    + From a GUI that has yet to be used, i.e. client4, click the "Join Group" button.
 		+ When prompted for a group name, input a name that does not match the name of the group that client 1 created.
 		+ Since this group does not exist, the Server simply ignores this request.  That is, nothing happens.
