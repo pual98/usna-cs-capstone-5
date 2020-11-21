@@ -43,8 +43,8 @@ public class Server
             System.out.println("Server log: New client request received : " + s); 
 
             // obtain input and output streams 
-            DataInputStream dis = new DataInputStream(s.getInputStream()); 
-            DataOutputStream dos = new DataOutputStream(s.getOutputStream()); 
+            ObjectInputStream dis = new ObjectInputStream(s.getInputStream()); 
+            ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream()); 
 
             System.out.println("Server log: Creating a new handler for this client..."); 
 
@@ -76,14 +76,14 @@ class ClientHandler implements Runnable
 { 
     Scanner scn = new Scanner(System.in); 
     private String name; 
-    final DataInputStream dis; 
-    final DataOutputStream dos; 
+    final ObjectInputStream dis; 
+    final ObjectOutputStream dos; 
     Socket s; 
     boolean isloggedin; 
 
     // constructor 
     public ClientHandler(Socket s, String name, 
-            DataInputStream dis, DataOutputStream dos) { 
+            ObjectInputStream dis, ObjectOutputStream dos) { 
         this.dis = dis; 
         this.dos = dos; 
         this.name = name; 
@@ -93,7 +93,7 @@ class ClientHandler implements Runnable
     public void sendMessage(Object subset, String message) throws IOException{
         for (ClientHandler mc : Server.ar) { 
             if (message.contains(mc.name) && mc.isloggedin==true) { 
-                mc.dos.writeUTF(message); 
+                mc.dos.writeObject(message); 
                 break;
             } 
         } 
@@ -179,7 +179,10 @@ class ClientHandler implements Runnable
         while (true) { 
             try { 
                 // receive the string 
-                received = dis.readUTF(); 
+                //
+                System.out.println("Server about to read object");
+                received = (String)dis.readObject(); 
+                System.out.println("Server about read object: "+received);
                 if(received.equals("logout")){ 
                     this.isloggedin=false; 
                     this.s.close(); 
@@ -187,7 +190,7 @@ class ClientHandler implements Runnable
                 } else {
                     this.messageHandler(received);
                 }
-            } catch (EOFException e) {} catch (IOException e) { e.printStackTrace(); }
+            } catch (EOFException e) {} catch (IOException e) { e.printStackTrace(); } catch (ClassNotFoundException e) { }
         } try{ 
             // closing resources 
             this.dis.close(); 
