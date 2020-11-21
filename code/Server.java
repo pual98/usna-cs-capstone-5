@@ -120,7 +120,7 @@ class ClientHandler implements Runnable
             String groupname = arr[2].split("#")[0];
             if (Server.groups.containsKey(groupname)){
                 String recipient = Server.groups.get(groupname).get(0);
-                String MsgToSend = received;
+                String MsgToSend = received.msg;
                 Message m = new Message(2, received.msg, received.source, recipient);
                 this.sendMessage(m);
             }
@@ -133,6 +133,7 @@ class ClientHandler implements Runnable
           String recipient = st.nextToken();
           Message m = new Message(3, MsgToSend, received.source, recipient);
           this.sendMessage(m);
+          return;
         //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
         }else if((received.msg).substring(0,2).equals("04")){
             String arr[] = (received.msg).split(":");
@@ -163,6 +164,7 @@ class ClientHandler implements Runnable
           String recipient = st.nextToken();
           Message m = new Message(10, MsgToSend, received.source, recipient);
           this.sendMessage(m);
+          return;
         //11:FROM:MSG#GROUP
         }else if((received.msg).substring(0,2).equals("11")){
             String arr[] = (received.msg).split(":");
@@ -185,13 +187,13 @@ class ClientHandler implements Runnable
     }
     @Override
     public void run() {
-        String received;
+        Message received;
         while (true) {
             try {
                 // receive the string
                 //
                 System.out.println("Server about to read object");
-                received = (String)dis.readObject();
+                received = (Message)dis.readObject();
                 System.out.println("Server about read object: "+received);
                 if(received.equals("logout")){
                     this.isloggedin=false;
