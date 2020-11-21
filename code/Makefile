@@ -1,5 +1,10 @@
 JAVAC=javac
-sources = $(wildcard *.java)
+sources := $(wildcard *.java)
+sources := $(filter-out KMode.java, $(sources))
+sources := $(filter-out KMeans.java, $(sources))
+sources := $(filter-out SharingEntity.java, $(sources))
+sources := $(filter-out DKMeans.java, $(sources))
+sources := $(filter-out alert.java, $(sources))
 classes = $(sources:.java=.class)
 
 all: $(classes)

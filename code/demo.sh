@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "This may take a moment"
 
 # Create tempdirs
 tmp_dir1=$(mktemp -d -t ciXXXXXXXXXX)

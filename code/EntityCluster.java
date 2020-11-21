@@ -13,6 +13,12 @@ public class EntityCluster
     this.centroid = null;
   }
 
+  public EntityCluster(Entity cent, int id)
+  {
+    this.id = id;
+    this.Entities = new ArrayList<Entity>();
+    this.centroid = cent;
+  }
   public ArrayList<Entity> getEntities() {
     return Entities;
   }

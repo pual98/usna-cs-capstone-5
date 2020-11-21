@@ -9,7 +9,7 @@ public class Entity
 
   private int d;
   private int dCat;
-  private int cluster_number = 0;
+  private int cluster_number = -1;
 
   public Entity(ArrayList<Double> qualities, ArrayList<Integer> categories)
   {
@@ -94,6 +94,7 @@ public class Entity
     return new Entity(retQual, retCat);
   }
 
+
   public static Entity createRandomEntity(int d, int dCat, long seed)
   {
     Random r = new Random(seed);
@@ -134,7 +135,33 @@ public class Entity
     return Math.sqrt(sum);
 
   }
-
+//    public boolean assignClusters(ArrayList<EntityCluster> clusters, ArrayList<Entity> data)
+//    {
+//        double max = Double.MAX_VALUE;
+//        double min = max;
+//        int cluster = 0;
+//        double distance = 0.0;
+//        boolean converged = true;
+//        for(Entity en : data) {
+//            min = max;
+//            for(int i = 0; i < clusters.size(); i++) {
+//                EntityCluster c = clusters.get(i);
+//
+//                distance = Entity.distanceEuclidean(point, c.getCentroid());
+//                if(distance < min) {
+//                    min = distance;
+//                    cluster = i;
+//                }
+//            }
+//
+//            if(cluster != en.getCluster()) {
+//                converged = false;
+//            }
+//            en.setCluster(cluster);
+//        }
+//        //possible update to total number of entities in cluster
+//        return converged;
+//    }
   public String toString()
   {
     String ret = "";
@@ -149,7 +176,7 @@ public class Entity
 	  ret += categories.get(i) + ",";
 	ret += categories.get(dCat-1);
       }
-    return "(" + ret + ")";
+    return "(" + ret + ")" + " " + cluster_number;
   }
 
 
