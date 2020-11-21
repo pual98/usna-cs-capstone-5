@@ -23,11 +23,11 @@ public class Message implements Serializable {
         10 Generic message. Send message to everyone in the GROUP (good for testing
         if group is established correctly)
     */
-    int type;
-    String source;
-    String dest;
+    public int type;
+    public String source;
+    public String dest;
     public String msg = null;
-    public transient SharingEntity en;
+    public SharingEntity en;
 
     public Message(int type, String msg, String source, String dest){
         this.type = type;
