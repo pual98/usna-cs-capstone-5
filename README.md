@@ -22,5 +22,6 @@
 + Active Git branches:
     + Master
     + Dev
+    + Kmeans - working on kmeans implementation
 
 + [Functional requirements trace table](https://docs.google.com/spreadsheets/d/1YPr3v7LRzJZG3VP-RFwnwrRitj4HEj1ryLTDtZEbtS8/edit?usp=sharing)
