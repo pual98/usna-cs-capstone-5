@@ -69,6 +69,10 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
                 String msg = "11:"+this.client.getID()+":"+message;
                 this.client.sendMessage(msg, group_name);
             }
+            if (e.getActionCommand() == "Run intrusion detection"){
+                this.client.kPrototypes();
+            }
+
         }
 
         /**

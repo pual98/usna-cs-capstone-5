@@ -14,11 +14,12 @@ public class Client implements Runnable
     final static int ServerPort = 1234;
     static int ID = 0;
     boolean isCoordinator = false; 
+    String groupname = null;
     ObjectInputStream dis;
     ObjectOutputStream dos;
     Scanner scn;
     ArrayList<Integer> requests = new ArrayList<Integer>();
-
+    ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
 
     public Client() {
         boolean haveID = false;
@@ -62,8 +63,8 @@ public class Client implements Runnable
             Socket s = new Socket(ip, ServerPort);
 
             // obtaining input and out streams
-            dis = new ObjectInputStream(s.getInputStream());
             dos = new ObjectOutputStream(s.getOutputStream());
+            dis = new ObjectInputStream(s.getInputStream());
         } catch(UnknownHostException e) {} catch (IOException e) {}
     }
     public int getID() {
@@ -98,6 +99,7 @@ public class Client implements Runnable
                     public void run() {
                         try {
                             System.out.println("About to request rename:");
+                            System.out.flush();
                             // write on the output stream
                             dos.writeObject("new name id:"+ID);
                         } catch (IOException e) { e.printStackTrace(); }
@@ -168,75 +170,69 @@ public class Client implements Runnable
         sendMessage.start();
         readMessage.start();
 
-        //        /*
-        //         *TO DO: readInEntities
-        //         */
-        //
-        //        int NUM_CLUSTERS = 3;
-        //        Dataset D = new Dataset();
-        //        ArrayList<Entity> dataset = D.build("three.csv");
-        //        /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
-        //        ArrayList<EntityCluster> clusters = new ArrayList<EntityCluster>();
-        //        if(this.isCoordinator) {
-        //            for(int i = 0; i < NUM_CLUSTERS; i++) {
-        //                EntityCluster c = new EntityCluster(i);
-        //                Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
-        //                c.setCentroid(randomCentroid);
-        //                clusters.add(c);
-        //            }
-        //        }
-        //        /*
-        //         * receive cents
-        //         */
-        //        boolean converged = false;
-        //        while(!converged)
-        //        {
-        //            converged = true;
-        //            for(Entity en : dataset)
-        //            {
-        //                //assign to cluster
-        //                boolean interimConverged = assignCluster(en, clusters);
-        //                //assign to cluster
-        //                if(!interimConverged)
-        //                {
-        //                    converged = false;
-        //                }
-        //            }
-        //            if(converged)
-        //            {
-        //                break;
-        //            }
-        //            //for each cluster:
-        //            for(EntityCluster c : clusters)
-        //            {
-        //                SharingEntity clusterData = new SharingEntity();
-        //                // sumlocal
-        //                for(Entity en : dataset)
-        //                {
-        //                    if(en.getAssignedCluster() == c.getId())
-        //                    {
-        //                        clusterData.addEntity(en);
-        //                    }
-        //                }
-        //                //send sum to all
-        //                for(OtherClient ot : others)
-        //                {
-        //                    ot.send(clusterData);
-        //                }
-        //                // wait on sums
-        //                received = waitOnSums();
-        //
-        //                for(SharingEntity se : received)
-        //                {
-        //                    clusterData.addSharingEntity(se);
-        //                }
-        //                c = clusterData.toEntity();
-        //            }
-        //
-        //        }
-        //
-        //display centroids
+    }
+    public void kPrototypes(){
 
+        int NUM_CLUSTERS = 3;
+        ArrayList<Entity> dataset = Dataset.build("three.csv");
+        /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
+        ArrayList<EntityCluster> clusters = new ArrayList<EntityCluster>();
+        if(this.isCoordinator) {
+            for(int i = 0; i < NUM_CLUSTERS; i++) {
+                EntityCluster c = new EntityCluster(i);
+                Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
+                c.setCentroid(randomCentroid);
+                clusters.add(c);
+            }
+        }
+        /*
+         * receive cents
+         */
+        boolean converged = false;
+        while(!converged)
+        {
+            converged = true;
+            for(Entity en : dataset)
+            {
+                //assign to cluster
+                boolean interimConverged = assignCluster(en, clusters);
+                //assign to cluster
+                if(!interimConverged)
+                {
+                    converged = false;
+                }
+            }
+            if(converged)
+            {
+                break;
+            }
+            //for each cluster:
+            for(EntityCluster c : clusters)
+            {
+                SharingEntity clusterData = new SharingEntity();
+                // sumlocal
+                for(Entity en : dataset)
+                {
+                    if(en.getAssignedCluster() == c.getId())
+                    {
+                        clusterData.addEntity(en);
+                    }
+                }
+
+                Message msg = new Message(12, "Doesn't matter.", Integer.toString(ID), groupname);
+                msg.setEntity(clusterData);
+                sendMessage(msg);
+                // wait on sums
+                while (receivedEntities.size() < 3){
+                    Thread.sleep(4000);
+                }
+                for(SharingEntity se : receivedEntities)
+                {
+                    clusterData.addSharingEntity(se);
+                }
+                c = new EntityCluster(clusterData.toEntity(), c.getId());
+            }
+        }
     }
 
     public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters)

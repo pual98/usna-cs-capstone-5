@@ -22,6 +22,9 @@ public class Message implements Serializable {
     11:FROM:MSG#GROUP
         10 Generic message. Send message to everyone in the GROUP (good for testing
         if group is established correctly)
+    12:FROM:MSG#TO
+        Send clusterData object (sharingEntity)
+        should set entity
     */
     public int type;
     public String source;

@@ -71,25 +71,28 @@ public class Server
     }
 }
 
-// ClientHandler class
-class ClientHandler implements Runnable
-{
-    Scanner scn = new Scanner(System.in);
-    private String name;
-    final ObjectInputStream dis;
-    final ObjectOutputStream dos;
-    Socket s;
-    boolean isloggedin;
 
-    // constructor
-    public ClientHandler(Socket s, String name,
-        ObjectInputStream dis, ObjectOutputStream dos) {
-        this.dis = dis;
-        this.dos = dos;
-        this.name = name;
-        this.s = s;
-        this.isloggedin=true;
-    }
+
+// ClientHandler class 
+class ClientHandler implements Runnable 
+{ 
+    Scanner scn = new Scanner(System.in); 
+    private String name; 
+    final ObjectInputStream dis; 
+    final ObjectOutputStream dos; 
+    Socket s; 
+    boolean isloggedin; 
+
+    // constructor 
+    public ClientHandler(Socket s, String name, 
+            ObjectInputStream dis, ObjectOutputStream dos) { 
+        this.dis = dis; 
+        this.dos = dos; 
+        this.name = name; 
+        this.s = s; 
+        this.isloggedin=true; 
+    } 
+    // ClientHandler class
     public void sendMessage(Message m) throws IOException{
         for (ClientHandler mc : Server.ar) {
             if ((m.dest).contains(mc.name) && mc.isloggedin==true) {
