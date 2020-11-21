@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class DKMeans
+public class KMeans
 {
   private int NUM_CLUSTERS;
   //Number of Points
@@ -10,7 +10,7 @@ public class DKMeans
   private ArrayList<Entity> entities;
   private ArrayList<EntityCluster> clusters;
 
-  public DKMeans(int NUM_CLUSTERS, int NUM_ENTITIES, int DIMENSIONS, int CATEGORIES) {
+  public KMeans(int NUM_CLUSTERS, int NUM_ENTITIES, int DIMENSIONS, int CATEGORIES) {
     this.entities = new ArrayList<Entity>();
     this.clusters = new ArrayList<EntityCluster>();
 
@@ -190,7 +190,7 @@ public class DKMeans
     int NUM_ENTITIES = 1000;
     int DIMENSIONS = 4;
     int CATEGORIES = 2;
-    DKMeans dkmeans = new DKMeans(NUM_CLUSTERS,NUM_ENTITIES, DIMENSIONS, CATEGORIES);
+    KMeans dkmeans = new KMeans(NUM_CLUSTERS,NUM_ENTITIES, DIMENSIONS, CATEGORIES);
     dkmeans.init();
     dkmeans.calculate();
     System.out.println("average MSE " + dkmeans.averageMSE());

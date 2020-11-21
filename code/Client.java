@@ -13,10 +13,10 @@ public class Client implements Runnable
 {
     final static int ServerPort = 1234;
     static int ID = 0;
+    boolean isCoordinator = false; 
     DataInputStream dis;
     DataOutputStream dos;
     Scanner scn;
-    ArrayList<Integer> collaborators = new ArrayList<Integer>();
     ArrayList<Integer> requests = new ArrayList<Integer>();
 
 
@@ -39,10 +39,6 @@ public class Client implements Runnable
                 if (line.contains("id")){
                     String arr[] = line.split(":");
                     if (arr[0].equals("id")){ haveID = true; ID = Integer.parseInt(arr[1]); }
-                }
-                if (line.contains("collaborator")){
-                    String arr[] = line.split(":");
-                    if (arr[0].equals("collaborator")){ collaborators.add(Integer.parseInt(arr[1])); }
                 }
             }
         } catch (IOException e) { } catch (NullPointerException e) { }
@@ -70,35 +66,9 @@ public class Client implements Runnable
             dos = new DataOutputStream(s.getOutputStream());
         } catch(UnknownHostException e) {} catch (IOException e) {}
     }
-
-    public void addCollaborator(int idCollab) {
-        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".config", true))) {
-            String fileContent = "\ncollaborator:"+idCollab;
-            bufferedWriter.write(fileContent);
-            collaborators.add(idCollab);
-        } catch (IOException e) { }
-    }
-
     public int getID() {
         return ID;
     }
-
-    public void addRequest(int waitingRequest) {
-        this.requests.add(waitingRequest);
-        this.sendMessage("Collaboration request:"+ID,waitingRequest);
-    }
-
-    public void sendMessageAll(String msg) {
-        if (collaborators.size() < 2){
-            JFrame f = new JFrame();
-            JOptionPane.showMessageDialog(f,"You need three collaborators to send a message");
-            return;
-        }
-        for ( int collab : collaborators ){
-            this.sendMessage(msg, collab);
-        }
-    }
-
     public void sendMessage(String msg, int toSendTo) {
         msg+="#";
         msg+=toSendTo;
@@ -109,6 +79,7 @@ public class Client implements Runnable
             e.printStackTrace();
         }
     }
+
     public void sendMessage(String msg, String group) {
         msg+="#";
         msg+=group;
@@ -133,11 +104,6 @@ public class Client implements Runnable
                         while (true) {
                             // read the message to deliver.
                             String msg = scn.nextLine();
-                            msg+="#";
-                            for ( int collab : collaborators ){
-                                msg+=collab+",";
-                            }
-                            msg = msg.substring(0, msg.length() - 1);
                             try {
                                 // write on the output stream
                                 dos.writeUTF(msg);
@@ -170,7 +136,6 @@ public class Client implements Runnable
                                     String reqID = arr[1];
                                     int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+reqID+" to join "+groupname+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
-                                        addCollaborator(Integer.parseInt(reqID));
                                         sendMessage("03:"+ID+":accept", Integer.parseInt(reqID));
                                         sendMessage("04:"+ID+":"+groupname+":"+reqID, Integer.parseInt(reqID));
                                     }else{
@@ -207,9 +172,18 @@ public class Client implements Runnable
 //         */
 //
 //        Dataset D = new Dataset();
-//        ArrayList<Entity> dataset = D.build("file.txt");
+//        ArrayList<Entity> dataset = D.build("three.csv");
 //        /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
-//        ArrayList<EntityCluster> clusters = coordinator.getInitialCluster();        //to do
+//        int NUM_CLUSTERS = 3;
+//        ArrayList<EntityCluster> clusters;
+//        if(this.isCoordinator) {
+//            for(int i = 0; i < NUM_CLUSTERS; i++) {
+//                EntityCluster c = new EntityCluster(i);
+//                Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
+//                c.setCentroid(randomCentroid);
+//                clusters.add(c);
+//            }
+//        }
 //        /*
 //         * receive cents
 //         */
@@ -292,7 +266,7 @@ public class Client implements Runnable
 //        //possible update to total number of entities in cluster
 //        return converged;
 //    }
-
+//
 
     public static void main(String args[]) throws UnknownHostException, IOException {
         Client client = new Client();
