@@ -70,23 +70,9 @@ public class Client implements Runnable
     public int getID() {
         return ID;
     }
-    public void sendMessage(String msg, int toSendTo) {
-        msg+="#";
-        msg+=toSendTo;
+    public void sendMessage(Message m) {
         try {
-            // write on the output stream
-            dos.writeObject(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendMessage(String msg, String group) {
-        msg+="#";
-        msg+=group;
-        try {
-            // write on the output stream
-            dos.writeObject(msg);
+            dos.writeObject(m);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,12 +87,14 @@ public class Client implements Runnable
                             System.out.println("About to request rename:");
                             System.out.flush();
                             // write on the output stream
-                            dos.writeObject("new name id:"+ID);
+                            Message m = new Message(1000, "new name id:"+ID, Integer.toString(ID), "0");
+                            dos.writeObject(m);
                         } catch (IOException e) { e.printStackTrace(); }
 
                         while (true) {
                             // read the message to deliver.
                             String msg = scn.nextLine();
+                            Message m = new Message(1000, msg, Integer.toString(ID), "0");
                             try {
                                 // write on the output stream
                                 dos.writeObject(msg);
@@ -124,43 +112,47 @@ public class Client implements Runnable
                         while (true) {
                             try {
                                 // read the message sent to this client
-                                String msg = (String)dis.readObject();
+                                Message msg = (Message)dis.readObject();
                                 JFrame f = new JFrame();
 
                                 System.out.println("Client "+ID+" log msg: "+msg);
 
                                 //01:FROM:GROUPNAME - 01 message to server requesting to make GROUP, named
-                                if(msg.substring(0,2).equals("01")){
+                                if(msg.type == 01){
                                     continue;
                                     //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
-                                }else if(msg.substring(0,2).equals("02")){
-                                    String arr[] = msg.split(":");
-                                    String groupname = arr[2].split("#")[0];
-                                    String reqID = arr[1];
+                                }else if(msg.type == 02){
+                                    String groupname = msg.msg.split(":")[2];
+                                    String reqID = msg.source;
                                     int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+reqID+" to join "+groupname+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
-                                        sendMessage("03:"+ID+":accept", Integer.parseInt(reqID));
-                                        sendMessage("04:"+ID+":"+groupname+":"+reqID, Integer.parseInt(reqID));
+                                        Message toSend = new Message(03,"03:"+ID+":accept", Integer.toString(ID), reqID);
+                                        sendMessage(toSend);
+                                        toSend = new Message(04,"04:"+groupname+":"+reqID, Integer.toString(ID), "0");
+                                        sendMessage(toSend);
                                     }else{
-                                        sendMessage("03:"+ID+":deny", Integer.parseInt(reqID));
+                                        Message toSend = new Message(03,"03:"+ID+":deny", Integer.toString(ID), reqID);
+                                        sendMessage(toSend);
                                     }
                                     continue;
                                     //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
-                                }else if(msg.substring(0,2).equals("03")){
+                                }else if(msg.type == 03){
                                     continue;
                                     //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
-                                }else if(msg.substring(0,2).equals("04")){
+                                }else if(msg.type == 04){
                                     continue;
 
                                     //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
-                                }else if(msg.substring(0,2).equals("05")){
+                                }else if(msg.type == 05){
                                     continue;
                                     //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
-                                }else if(msg.substring(0,2).equals("06")){
+                                }else if(msg.type == 06){
                                     continue;
                                     //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
-                                }else if(msg.substring(0,2).equals("10")){
+                                }else if(msg.type == 10){
                                     JOptionPane.showMessageDialog(f,msg);
+                                } else if(msg.type == 12){
+                                    receivedEntities.add(msg.en);
                                 } 
                             } catch (IOException e) { e.printStackTrace(); } catch (ClassNotFoundException e) { }
                         }
@@ -224,7 +216,9 @@ public class Client implements Runnable
                 sendMessage(msg);
                 // wait on sums
                 while (receivedEntities.size() < 3){
-                    Thread.sleep(4000);
+                    try{
+                        Thread.sleep(4000);
+                    }catch (InterruptedException e) {}
                 }
                 for(SharingEntity se : receivedEntities)
                 {

@@ -35,13 +35,15 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
             // create a new Group //
             if (e.getActionCommand() == "New Group"){
                 // prompt user for GROUP name //
+                this.client.isCoordinator = true;
                 String group_name = null; 
                 while(group_name == null)
                     group_name = JOptionPane.showInputDialog("Enter Group's Name");
 
                 // send Message Type 01 to Server //
                 String msg = "01:"+this.client.getID()+":"+group_name ;
-                this.client.sendMessage(msg, 0);
+                Message mmsg = new Message(01, msg, Integer.toString(this.client.getID()), group_name);
+                this.client.sendMessage(mmsg);
             }
 
             if (e.getActionCommand() == "Join Group"){
@@ -53,7 +55,8 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
 
                 // send Message Type 02 to Server //
                 String msg = "02:"+this.client.getID()+":"+group_name ;
-                this.client.sendMessage(msg, 0);
+                Message mmsg = new Message(02, msg, Integer.toString(this.client.getID()), "0");
+                this.client.sendMessage(mmsg);
             }
             if (e.getActionCommand() == "Send message"){
 
@@ -67,7 +70,8 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
 
                 // send Message Type 02 to Server //
                 String msg = "11:"+this.client.getID()+":"+message;
-                this.client.sendMessage(msg, group_name);
+                Message mmsg = new Message(11, msg, Integer.toString(this.client.getID()), group_name);
+                this.client.sendMessage(mmsg);
             }
             if (e.getActionCommand() == "Run intrusion detection"){
                 this.client.kPrototypes();

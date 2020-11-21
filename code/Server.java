@@ -186,6 +186,16 @@ class ClientHandler implements Runnable
                 }
             }
             return;
+        }else if (received.type == 12) {
+            if (Server.groups.containsKey(received.dest)){
+                ArrayList<String> partners = Server.groups.get(received.dest);
+                for ( String p : partners){
+                    if (p != received.source){
+                        this.sendMessage(received);
+                    }
+                }
+            }
+            return;
         }
     }
     @Override
