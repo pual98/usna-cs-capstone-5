@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.net.*;
 /*
-Most of this code is implemented from the following example
+   Most of this code is implemented from the following example
 https://www.geeksforgeeks.org/multi-threaded-chat-application-set-2/?ref=lb
 
 Thank you, geeksforgreeks for the code example.
@@ -10,12 +10,12 @@ Source code has been modified in the run() method to allow users to renaim
 themselves in the client vectos.
 
 TODO: Change main loop to be a function in a runnable class, with the main()
-      function simply making an instance and running a thread
-      1) Two course of action would follow: every IDS is also a server. If they
-      are the main "collaborator," they are the server reached out to.
-      - The IDS.java file would instatiate a new Server()
-      or 2) Server is run by calling `java Server`, with the main acting as a
-      central server
+function simply making an instance and running a thread
+    1) Two course of action would follow: every IDS is also a server. If they
+    are the main "collaborator," they are the server reached out to.
+    - The IDS.java file would instatiate a new Server()
+    or 2) Server is run by calling `java Server`, with the main acting as a
+    central server
 */
 public class Server
 {
@@ -77,24 +77,26 @@ class ClientHandler implements Runnable
 
     // constructor
     public ClientHandler(Socket s, ObjectInputStream dis,
-      ObjectOutputStream dos) {
+            ObjectOutputStream dos) {
         this.dis = dis;
         this.dos = dos;
         this.s = s;
         this.isloggedin=true;
 
         try{
-          Message m = (Message) this.dis.readObject();
-          if((m.msg).contains("new name id")){ // this will always be TRUE
-            this.name = m.msg.split(":")[1];
-            System.out.println("Server log: client id initialized: "+this.name);
-          }
+            Message m = (Message) this.dis.readObject();
+            if((m.msg).contains("new name id")){ // this will always be TRUE
+                this.name = m.msg.split(":")[1];
+                System.out.println("Server log: client id initialized: "+this.name);
+            }
         } catch(Exception e) {}
     }
     // ClientHandler class
     public void sendMessage(Message m) throws IOException{
         for (ClientHandler mc : Server.ar) {
-            if ((Integer.toString(m.dest)).contains(mc.name) && mc.isloggedin==true) {
+            //System.out.println("sendMessage() to "+m.dest+" checking "+mc.name);
+            if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
+                //System.out.println("Message being sent");
                 mc.dos.writeObject(m);
                 break;
             }
@@ -105,23 +107,23 @@ class ClientHandler implements Runnable
         if(received.type == 1){
             String groupname = received.msg;
             if (Server.groups.containsKey(groupname)){
-              Message exists = new Message(14, "Group "+groupname+" already exists.  Please choose another name.", 0, received.source);
-              this.sendMessage(exists);
+                Message exists = new Message(14, "Group "+groupname+" already exists.  Please choose another name.", 0, received.source);
+                this.sendMessage(exists);
             }
             else if(received.msg.equals("")) {
-              Message blank = new Message(14, "Name for group cannot be the empty string.", 0, received.source);
-              this.sendMessage(blank);
+                Message blank = new Message(14, "Name for group cannot be the empty string.", 0, received.source);
+                this.sendMessage(blank);
             }
             else {
-              Server.groups.put(groupname,new ArrayList<String>());
-              // Server.groups.get(groupname).add(arr[1]);
-              Server.groups.get(groupname).add(Integer.toString(received.source));
-              Message success = new Message(15, "Success! You have created group "+groupname+".", 0, received.source);
-              this.sendMessage(success);
+                Server.groups.put(groupname,new ArrayList<String>());
+                // Server.groups.get(groupname).add(arr[1]);
+                Server.groups.get(groupname).add(Integer.toString(received.source));
+                Message success = new Message(15, "Success! You have created group:"+groupname, 0, received.source);
+                this.sendMessage(success);
             }
             return;
-        //02:FROM:GROUPNAME#0 - 02 request to join GROUPNAME - (server should forward to coordinator)
-      }else if(received.type == 2){
+            //02:FROM:GROUPNAME#0 - 02 request to join GROUPNAME - (server should forward to coordinator)
+        }else if(received.type == 2){
             String groupname = received.msg;
             if (Server.groups.containsKey(groupname)){
                 int coordinator = Integer.parseInt(Server.groups.get(groupname).get(0));
@@ -129,26 +131,26 @@ class ClientHandler implements Runnable
                 this.sendMessage(m);
             }
             else {
-              Message noGroup = new Message(14, "Group "+groupname+" does not exist.", 0, received.source);
-              this.sendMessage(noGroup);
+                Message noGroup = new Message(14, "Group "+groupname+" does not exist.", 0, received.source);
+                this.sendMessage(noGroup);
             }
             return;
-        //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
-      }else if(received.type == 3){
-          // break the string into message and recipient part
-          Message m = new Message(3, received.msg, received.source, received.dest);
-          this.sendMessage(m);
-          return;
-        //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
-      }else if(received.type == 4){
+            //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
+        }else if(received.type == 3){
+            // break the string into message and recipient part
+            Message m = new Message(3, received.msg, received.source, received.dest);
+            this.sendMessage(m);
+            return;
+            //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
+        }else if(received.type == 4){
             String arr[] = (received.msg).split(":");
             String groupname = arr[0];
             String toAdd = arr[1];
             if (Server.groups.containsKey(groupname))
                 Server.groups.get(groupname).add(toAdd);
             return;
-        //05:FROM:GROUPNAME#0 - message to server requesting list of IDs in GROUPNAME
-      }else if(received.type == 5){
+            //05:FROM:GROUPNAME#0 - message to server requesting list of IDs in GROUPNAME
+        }else if(received.type == 5){
             String groupname = (received.msg);
             if (Server.groups.containsKey(groupname)){
                 ArrayList<String> partners = Server.groups.get(groupname);
@@ -157,34 +159,35 @@ class ClientHandler implements Runnable
                 this.sendMessage(m);
             }
             return;
-        //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
-      }else if(received.type == 6){
+            //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
+        }else if(received.type == 6){
             return;
-        //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
-      }else if(received.type == 10){
-          return;
-        //11:FROM:MSG#GROUP
-      }else if(received.type == 11){
-          String message = received.msg.split(":")[0];
+            //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
+        }else if(received.type == 10){
+            return;
+            //11:FROM:MSG#GROUP
+        }else if(received.type == 11){
+            String message = received.msg.split(":")[0];
 
-          if(!message.equals("") && !message.equals(null)) {
-            String group_name = received.msg.split(":")[1];
+            if(!message.equals("") && !message.equals(null)) {
+                String group_name = received.msg.split(":")[1];
 
-            if (Server.groups.containsKey(group_name)){
-              ArrayList<String> partners = Server.groups.get(group_name);
-              for(String p : partners){
-                if(Integer.parseInt(p) != received.source) {
-                  Message m = new Message(10, message, received.source, Integer.parseInt(p));
-                  this.sendMessage(m);
+                if (Server.groups.containsKey(group_name)){
+                    ArrayList<String> partners = Server.groups.get(group_name);
+                    for(String p : partners){
+                        //System.out.println("Trying to send msg: "+message+" to group: "+group_name+" and id: "+p);
+                        if(Integer.parseInt(p) != received.source) {
+                            Message m = new Message(10, message, received.source, Integer.parseInt(p));
+                            this.sendMessage(m);
+                        }
+                    }
                 }
-              }
             }
-          }
-          else {
-            Message noMessage = new Message(14, "Blank message.", 0, received.source);
-            this.sendMessage(noMessage);
-          }
-          return;
+            else {
+                Message noMessage = new Message(14, "Blank message.", 0, received.source);
+                this.sendMessage(noMessage);
+            }
+            return;
         }else if (received.type == 12) {
             System.out.println("Server sending: "+received.msg) ;
             if (Server.groups.containsKey(received.dest)){

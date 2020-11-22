@@ -24,7 +24,6 @@ public class Message implements Serializable {
     12: msg = MSG#TO
         Send clusterData object (sharingEntity)
         should set entity
-
     14: msg = Error Message to Client trying to Create/Join Group
         Response from server to requesting client
     15: msg = "Success, you have created group :GROUPNAME"

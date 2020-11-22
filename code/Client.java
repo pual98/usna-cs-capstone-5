@@ -117,10 +117,12 @@ public class Client implements Runnable
 
                                 System.out.println("Client "+ID+" log msg: "+msg);
 
-                                //01:FROM:GROUPNAME - 01 message to server requesting to make GROUP, named
+                                //01: msg = GROUPNAME
+                                //    01 message to server requesting to make GROUP, named GROUPNAME
                                 if(msg.type == 01){
                                     continue;
-                                    //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
+                                //02: msg = GROUPNAME
+                                //    02 request to join GROUPNAME - (server should forward to coordinator)
                                 }else if(msg.type == 02){
                                     String gn = msg.msg;
                                     int requestingID = msg.source;
@@ -130,48 +132,68 @@ public class Client implements Runnable
                                         sendMessage(toSend);
                                         toSend = new Message(04, gn+":"+requestingID, ID, 0);
                                         sendMessage(toSend);
-                                        groupname = gn;
+//                                        groupname = gn;
                                     }else{
                                         Message toSend = new Message(03, gn+":deny", ID, requestingID);
                                         sendMessage(toSend);
                                     }
                                     continue;
-                                    //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
+                                //03: msg = MSG:"accept" || MSG:"deny"
+                                //    03 response from coordinator to TO with "accept" or "deny"
                                 }else if(msg.type == 03){
-                                    String groupname = msg.msg.split(":")[0];
+                                    String gn= msg.msg.split(":")[0];
                                     if(msg.msg.contains("accept")) {
-                                      JOptionPane.showMessageDialog(null, "You have been accepted into group "+groupname+".", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                                      setGroupStatus();
+                                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                                        setGroupStatus();
+                                        groupname = gn;
                                     }
                                     else
-                                      JOptionPane.showMessageDialog(null, "You have been denied from group "+groupname+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
-                                    return ;
-
-                                    //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
+                                        JOptionPane.showMessageDialog(null, "You have been denied from group "+groupname+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
+                                    //return;
+                                    continue;
+                                //04: msg = GROUPNAME:TOADD
+                                //    04 message from coordinator to server with ID TOADD to join have join the GROUPNAME
                                 }else if(msg.type == 04){
                                     continue;
-                              //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
+                                //05: msg = GROUPNAME
+                                //    message to server requesting list of IDs in GROUPNAME
                                 }else if(msg.type == 05){
-                                    //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
+                                    continue;
+                                //06: msg = MSG
+                                //    response from server with comma seperated MSG as a list of people in
+                                //    EXAMPLE: 12,13,1,2 where each is an ID
                                 }else if(msg.type == 06){
                                     ArrayList<String> mems = msg.members;
                                     ArrayList<Integer> memIDs = new ArrayList<Integer>();
                                     for(int i = 0; i < mems.size(); i++) {
-                                      memIDs.add(Integer.parseInt(mems.get(i)));
+                                        memIDs.add(Integer.parseInt(mems.get(i)));
                                     }
                                     //call function to send all IDs
                                     continue;
-                                    //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
+                                //10: msg = MSG
+                                //    10 Generic message. Send message to the TO
                                 }else if(msg.type == 10){
                                     JOptionPane.showMessageDialog(f, msg.msg, "Incoming Message from Client: "+msg.source, JOptionPane.INFORMATION_MESSAGE);
+                                    continue;
+                                //12: msg = MSG#TO
+                                //    Send clusterData object (sharingEntity)
+                                //    should set entity
                                 }else if(msg.type == 12){
                                     receivedEntities.add(msg.en);
+                                    continue;
+                                //14: msg = Error Message to Client trying to Create/Join Group
+                                //    Response from server to requesting client
                                 }else if(msg.type == 14){
-                                    JOptionPane.showMessageDialog(null, msg.msg, "Error!", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(f, msg.msg, "Error!", JOptionPane.ERROR_MESSAGE);
+                                    continue;
+                                //15: msg = "Success, you have created group:GROUPNAME"
+                                //    Response from server to client after creatign a group
                                 }else if(msg.type == 15){
                                     setGroupStatus();
                                     setAsCoordinator();
-                                    JOptionPane.showMessageDialog(null, msg.msg, "Group Created", JOptionPane.INFORMATION_MESSAGE);
+                                    groupname = msg.msg.split(":")[1];
+                                    JOptionPane.showMessageDialog(f, "Success, you have created group "+groupname+".", "Group Created", JOptionPane.INFORMATION_MESSAGE);
+                                    continue;
                                 }
                             } catch (IOException e) { e.printStackTrace(); } catch (ClassNotFoundException e) { }
                         }
