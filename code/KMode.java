@@ -53,15 +53,25 @@ public class KMode
     return mode;
   }
 
+  public static ArrayList<Integer> modes(ArrayList<HashMap<Integer,Integer>> entries)
+  {
+    ArrayList<Integer> ret = new ArrayList<Integer>();
+    for(HashMap<Integer,Integer> i : entries)
+      {
+	ret.add(mode(i));
+      }
+    return ret;
+  }
+
   //NEWT
   public static ArrayList<HashMap<Integer,Integer>> makeNewModeMap(ArrayList<Integer> cats)
   {
-    ret = new ArrayList<HashMap<Integer,Integer>>();
-    for(i = 0; i < cats.size(); i++)
+     ArrayList<HashMap<Integer,Integer>> ret = new ArrayList<HashMap<Integer,Integer>>();
+    for(int i = 0; i < cats.size(); i++)
       {
-	newCat = new HashMap<Integer,Integer>();
-	newCat.put(cats.get(i),1)
-	ret.add(newCat)
+	HashMap<Integer,Integer> newCat = new HashMap<Integer,Integer>();
+	newCat.put(cats.get(i),1);
+	  ret.add(newCat);
       }
     return ret;    
   }
@@ -110,6 +120,15 @@ public class KMode
 	  {
 	    ret.put(e.getKey(), ret.get(e.getKey()) + e.getValue());
 	  }
+      }
+    return ret;
+  }
+  public static ArrayList<HashMap<Integer,Integer>> mergeMaps(ArrayList<HashMap<Integer,Integer>> inA, ArrayList<HashMap<Integer,Integer>> inB)
+  {
+    ArrayList<HashMap<Integer,Integer>> ret = new ArrayList<HashMap<Integer,Integer>>();
+    for(int i = 0 ; i < inA.size(); i++)
+      {
+	ret.add(mergeMaps(inA.get(i),inB.get(i)));
       }
     return ret;
   }
