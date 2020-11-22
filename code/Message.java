@@ -3,36 +3,42 @@ import java.io.*;
 
 public class Message implements Serializable {
     /*
-    01:FROM:GROUPNAME
+    01: msg = GROUPNAME
         01 message to server requesting to make GROUP, named GROUPNAME
-    02:FROM:GROUPNAME
+    02: msg = GROUPNAME
         02 request to join GROUPNAME - (server should forward to coordinator)
-    03:FROM:MSG#TO
+    03: msg = MSG:"accept" || MSG:"deny"
         03 response from coordinator to TO with "accept" or "deny"
-    04:FROM:GROUPNAME:TOADD
+    04: msg = GROUPNAME:TOADD
         04 message from coordinator to server with ID TOADD to join have join the GROUPNAME
-    05:FROM:GROUPNAME
+    05: msg = GROUPNAME
         message to server requesting list of IDs in GROUPNAME
-    06:FROM:MSG
+    06: msg = MSG
         response from server with comma seperated MSG as a list of people in
-        GROUPNAME MSG is something like BILL,12,13,1,2 where BILL is GROUPNAME and
-        everything else is the IDs
-    10:FROM:MSG#TO
+        EXAMPLE: 12,13,1,2 where each is an ID
+    10: msg = MSG
         10 Generic message. Send message to the TO
-    11:FROM:MSG#GROUP
+    11: msg = MSG:GROUP
         10 Generic message. Send message to everyone in the GROUP (good for testing
         if group is established correctly)
-    12:FROM:MSG#TO
+    12: msg = MSG#TO
         Send clusterData object (sharingEntity)
         should set entity
+
+    14: msg = Error Message to Client trying to Create/Join Group
+        Response from server to requesting client
+    15: msg = "Success, you have created group :GROUPNAME"
+        Response from server to client after creatign a group
     */
     public int type;
-    public String source;
-    public String dest;
+    public int source;
+    public int dest;
     public String msg = null;
     public SharingEntity en;
+    public ArrayList<EntityCluster> clusters;
+    public ArrayList<String> members;
 
-    public Message(int type, String msg, String source, String dest){
+    public Message(int type, String msg, int source, int dest){
         this.type = type;
         this.msg = msg;
         this.source = source;
@@ -40,5 +46,13 @@ public class Message implements Serializable {
     }
     public void setEntity(SharingEntity en){
         this.en = en;
+    }
+
+    public void setClusters(ArrayList<EntityCluster> c){
+        this.clusters = c;
+    }
+
+    public void setMembers(ArrayList<String> m){
+        this.members = m;
     }
 }

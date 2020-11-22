@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.lang.*;
 import javax.swing.event.*;
+import java.util.*;
 
 /**
  * @author MIDN Paul Slife
@@ -23,6 +24,7 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
         this.menubar = menubar;
         this.d = d;
         this.client = c;
+        //this.groups = new ArrayList<String>();
     }
 
     /**
@@ -34,44 +36,66 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
 
             // create a new Group //
             if (e.getActionCommand() == "New Group"){
-                // prompt user for GROUP name //
-                this.client.isCoordinator = true;
-                String group_name = null; 
-                while(group_name == null)
-                    group_name = JOptionPane.showInputDialog("Enter Group's Name");
+                //check if Client is already in group
+                if(client.getCoordinatorStatus()) {
+                  JOptionPane.showMessageDialog(null, "Cannot create more than one group.", "Error!", JOptionPane.ERROR_MESSAGE);
+                  return;
+                }
+                if(client.getGroupStatus()) {
+                  JOptionPane.showMessageDialog(null, "You are already in a group.", "Error!", JOptionPane.ERROR_MESSAGE);
+                  return ;
+                }
 
-                // send Message Type 01 to Server //
-                String msg = "01:"+this.client.getID()+":"+group_name ;
-                Message mmsg = new Message(01, msg, Integer.toString(this.client.getID()), group_name);
-                this.client.sendMessage(mmsg);
+                // prompt user for GROUP name //
+                String group_name = null;
+                group_name = JOptionPane.showInputDialog("Enter Group's Name");
+
+                if(group_name != null) {
+                  // send Message Type 01 to Server //
+                  String msg = group_name ;
+                  //groups.add(group_name);
+                  Message mmsg = new Message(01, msg, client.getID(), 0);
+                  client.sendMessage(mmsg);
+                }
+
             }
 
             if (e.getActionCommand() == "Join Group"){
 
-                // prompt user for GROUP name //
-                String group_name = null ;
-                while(group_name == null)
-                    group_name = JOptionPane.showInputDialog("Enter Group's Name");
+              if(client.getCoordinatorStatus()) {
+                JOptionPane.showMessageDialog(null, "You are already the coordinator for a group.", "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+              }
+              if(client.getGroupStatus()) {
+                JOptionPane.showMessageDialog(null, "You have already joined a group.", "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+              }
 
-                // send Message Type 02 to Server //
-                String msg = "02:"+this.client.getID()+":"+group_name ;
-                Message mmsg = new Message(02, msg, Integer.toString(this.client.getID()), "0");
-                this.client.sendMessage(mmsg);
+              // prompt user for GROUP name //
+              String group_name = null ;
+              while(group_name == null) {
+                group_name = JOptionPane.showInputDialog("Enter Group's Name");
+              }
+
+              // send Message Type 02 to Server //
+              Message msg = new Message(02, group_name, client.getID(), 0);
+              this.client.sendMessage(msg);
+
             }
-            if (e.getActionCommand() == "Send message"){
-
-                // prompt user for GROUP name //
-                String group_name = null ;
-                while(group_name == null)
-                    group_name = JOptionPane.showInputDialog("Enter Group's Name");
+            if (e.getActionCommand() == "Send Message to Group"){
+              if(client.getGroupStatus()) {
                 String message = null;
-                while(message == null)
-                    message = JOptionPane.showInputDialog("Desired message");
+                message = JOptionPane.showInputDialog("Desired Message");
 
-                // send Message Type 02 to Server //
-                String msg = "11:"+this.client.getID()+":"+message;
-                Message mmsg = new Message(11, msg, Integer.toString(this.client.getID()), group_name);
+                // send Message Type 11 to Server //
+                String msg = message+":"+client.groupname;
+                Message mmsg = new Message(11, msg, client.getID(), 0);
+                //System.out.println("I am Client "+this.client.getID()+" and I am sending: "+msg);
                 this.client.sendMessage(mmsg);
+              }
+              else {
+                JOptionPane.showMessageDialog(null, "You are not in a group yet.", "Can't Send Message.", JOptionPane.ERROR_MESSAGE);
+              }
             }
             if (e.getActionCommand() == "Run intrusion detection"){
                 this.client.kPrototypes();

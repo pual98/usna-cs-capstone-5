@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "This may take a moment"
-
+killall java  
 # Create tempdirs
 tmp_dir1=$(mktemp -d -t ciXXXXXXXXXX)
 tmp_dir2=$(mktemp -d -t ciXXXXXXXXXX)

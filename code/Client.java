@@ -13,12 +13,12 @@ public class Client implements Runnable
 {
     final static int ServerPort = 1234;
     static int ID = 0;
-    boolean isCoordinator = false; 
+    private boolean isCoordinator = false;
+    boolean inGroup = false; //used to check if Client tries to join more than one CIDS
     String groupname = null;
     ObjectInputStream dis;
     ObjectOutputStream dos;
     Scanner scn;
-    ArrayList<Integer> requests = new ArrayList<Integer>();
     ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
 
     public Client() {
@@ -87,14 +87,14 @@ public class Client implements Runnable
                             System.out.println("About to request rename:");
                             System.out.flush();
                             // write on the output stream
-                            Message m = new Message(1000, "new name id:"+ID, Integer.toString(ID), "0");
+                            Message m = new Message(1000, "new name id:"+ID, ID, 0);
                             dos.writeObject(m);
                         } catch (IOException e) { e.printStackTrace(); }
 
                         while (true) {
                             // read the message to deliver.
                             String msg = scn.nextLine();
-                            Message m = new Message(1000, msg, Integer.toString(ID), "0");
+                            Message m = new Message(1000, msg, ID, 0);
                             try {
                                 // write on the output stream
                                 dos.writeObject(msg);
@@ -122,38 +122,57 @@ public class Client implements Runnable
                                     continue;
                                     //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
                                 }else if(msg.type == 02){
-                                    String groupname = msg.msg.split(":")[2];
-                                    String reqID = msg.source;
-                                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+reqID+" to join "+groupname+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
+                                    String gn = msg.msg;
+                                    int requestingID = msg.source;
+                                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+requestingID+" to join "+gn+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
-                                        Message toSend = new Message(03,"03:"+ID+":accept", Integer.toString(ID), reqID);
+                                        Message toSend = new Message(03, gn+":accept", ID, requestingID);
                                         sendMessage(toSend);
-                                        toSend = new Message(04,"04:"+groupname+":"+reqID, Integer.toString(ID), "0");
+                                        toSend = new Message(04, gn+":"+requestingID, ID, 0);
                                         sendMessage(toSend);
+                                        groupname = gn;
                                     }else{
-                                        Message toSend = new Message(03,"03:"+ID+":deny", Integer.toString(ID), reqID);
+                                        Message toSend = new Message(03, gn+":deny", ID, requestingID);
                                         sendMessage(toSend);
                                     }
                                     continue;
                                     //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
                                 }else if(msg.type == 03){
-                                    continue;
+                                    String groupname = msg.msg.split(":")[0];
+                                    if(msg.msg.contains("accept")) {
+                                      JOptionPane.showMessageDialog(null, "You have been accepted into group "+groupname+".", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                                      setGroupStatus();
+                                    }
+                                    else
+                                      JOptionPane.showMessageDialog(null, "You have been denied from group "+groupname+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
+                                    return ;
+
                                     //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
                                 }else if(msg.type == 04){
                                     continue;
-
-                                    //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
+                              //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
                                 }else if(msg.type == 05){
-                                    continue;
                                     //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
                                 }else if(msg.type == 06){
+                                    ArrayList<String> mems = msg.members;
+                                    ArrayList<Integer> memIDs = new ArrayList<Integer>();
+                                    for(int i = 0; i < mems.size(); i++) {
+                                      memIDs.add(Integer.parseInt(mems.get(i)));
+                                    }
+                                    //call function to send all IDs
                                     continue;
                                     //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
                                 }else if(msg.type == 10){
-                                    JOptionPane.showMessageDialog(f,msg);
-                                } else if(msg.type == 12){
+                                    JOptionPane.showMessageDialog(f, msg.msg, "Incoming Message from Client: "+msg.source, JOptionPane.INFORMATION_MESSAGE);
+                                }else if(msg.type == 12){
                                     receivedEntities.add(msg.en);
-                                } 
+                                }else if(msg.type == 14){
+                                    JOptionPane.showMessageDialog(null, msg.msg, "Error!", JOptionPane.ERROR_MESSAGE);
+                                }else if(msg.type == 15){
+                                    setGroupStatus();
+                                    setAsCoordinator();
+                                    JOptionPane.showMessageDialog(null, msg.msg, "Group Created", JOptionPane.INFORMATION_MESSAGE);
+                                }
                             } catch (IOException e) { e.printStackTrace(); } catch (ClassNotFoundException e) { }
                         }
                     }
@@ -211,7 +230,7 @@ public class Client implements Runnable
                     }
                 }
 
-                Message msg = new Message(12, "Doesn't matter.", Integer.toString(ID), groupname);
+                Message msg = new Message(12, groupname, ID, 0);
                 msg.setEntity(clusterData);
                 sendMessage(msg);
                 // wait on sums
@@ -236,6 +255,7 @@ public class Client implements Runnable
         int cluster = 0;
         double distance = 0.0;
         boolean converged = true;
+
         min = max;
         for(int i = 0; i < clusters.size(); i++) {
             EntityCluster c = clusters.get(i);
@@ -281,6 +301,14 @@ public class Client implements Runnable
         //possible update to total number of entities in cluster
         return converged;
     }
+
+    public void setGroupStatus() { this.inGroup = true; }
+
+    public boolean getGroupStatus() { return inGroup; }
+
+    public void setAsCoordinator() { isCoordinator = true; }
+
+    public boolean getCoordinatorStatus() { return isCoordinator; }
 
     public static void main(String args[]) throws UnknownHostException, IOException {
         Client client = new Client();

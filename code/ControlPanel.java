@@ -11,7 +11,7 @@ public class ControlPanel extends JPanel implements Runnable {
     // JButton kMeansButton = new JButton("Run K-means training");
     JButton newCollaborator = new JButton("New Group");
     JButton pingCollaborator = new JButton("Join Group");
-    JButton sendMessage = new JButton("Send message");
+    JButton sendMessage = new JButton("Send Message to Group");
     JButton runIDS = new JButton("Run intrusion detection");
 
     public ControlPanel() {
