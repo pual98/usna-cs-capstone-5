@@ -39,6 +39,7 @@ public class ControlPanel extends JPanel implements Runnable {
         newCollaborator.addActionListener(r);
         pingCollaborator.addActionListener(r);
         sendMessage.addActionListener(r);
+        runIDS.addActionListener(r);
     }
 
 

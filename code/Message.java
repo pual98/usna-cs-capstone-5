@@ -28,6 +28,9 @@ public class Message implements Serializable {
         Response from server to requesting client
     15: msg = "Success, you have created group :GROUPNAME"
         Response from server to client after creatign a group
+    16: msg = GROUP
+        Send clusters (ArrayList<EntityCluster)...typically for intial points.
+        
     */
     public int type;
     public int source;

@@ -20,6 +20,8 @@ public class Client implements Runnable
     ObjectOutputStream dos;
     Scanner scn;
     ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
+    ArrayList<EntityCluster> clusters = null;
+    ArrayList<Integer> memIDs = null;
 
     public Client() {
         boolean haveID = false;
@@ -164,7 +166,7 @@ public class Client implements Runnable
                                 //    EXAMPLE: 12,13,1,2 where each is an ID
                                 }else if(msg.type == 06){
                                     ArrayList<String> mems = msg.members;
-                                    ArrayList<Integer> memIDs = new ArrayList<Integer>();
+                                    memIDs = new ArrayList<Integer>();
                                     for(int i = 0; i < mems.size(); i++) {
                                         memIDs.add(Integer.parseInt(mems.get(i)));
                                     }
@@ -194,8 +196,11 @@ public class Client implements Runnable
                                     groupname = msg.msg.split(":")[1];
                                     JOptionPane.showMessageDialog(f, "Success, you have created group "+groupname+".", "Group Created", JOptionPane.INFORMATION_MESSAGE);
                                     continue;
+                                } else if(msg.type == 16){
+                                    clusters = msg.clusters;
+                                    continue;
                                 }
-                            } catch (IOException e) { e.printStackTrace(); } catch (ClassNotFoundException e) { }
+                            } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
                         }
                     }
                 });
@@ -205,22 +210,38 @@ public class Client implements Runnable
 
     }
     public void kPrototypes(){
-
-        int NUM_CLUSTERS = 3;
-        ArrayList<Entity> dataset = Dataset.build("three.csv");
+        JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
-        ArrayList<EntityCluster> clusters = new ArrayList<EntityCluster>();
-        if(this.isCoordinator) {
-            for(int i = 0; i < NUM_CLUSTERS; i++) {
-                EntityCluster c = new EntityCluster(i);
-                Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
-                c.setCentroid(randomCentroid);
-                clusters.add(c);
+
+        if (!inGroup){
+            JOptionPane.showMessageDialog(f, "You need to be in a group before running IDS!", "Denial", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ArrayList<Entity> dataset = Dataset.build("threeClusters.csv");
+        if (isCoordinator){
+            int NUM_CLUSTERS = 3;
+            this.clusters = new ArrayList<EntityCluster>();
+            if(this.isCoordinator) {
+                for(int i = 0; i < NUM_CLUSTERS; i++) {
+                    EntityCluster c = new EntityCluster(i);
+                    Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
+                    c.setCentroid(randomCentroid);
+                    clusters.add(c);
+                }
             }
+            Message msg = new Message(16, groupname, ID, 0);
+            msg.setClusters(clusters);
+            sendMessage(msg);
         }
         /*
          * receive cents
          */
+
+        while (clusters == null){
+            try{
+                Thread.sleep(500);
+            }catch (InterruptedException e) {}
+        }
         boolean converged = false;
         while(!converged)
         {
@@ -256,9 +277,9 @@ public class Client implements Runnable
                 msg.setEntity(clusterData);
                 sendMessage(msg);
                 // wait on sums
-                while (receivedEntities.size() < 3){
+                while (receivedEntities.size() < 2){
                     try{
-                        Thread.sleep(4000);
+                        Thread.sleep(500);
                     }catch (InterruptedException e) {}
                 }
                 for(SharingEntity se : receivedEntities)
@@ -268,6 +289,7 @@ public class Client implements Runnable
                 c = new EntityCluster(clusterData.toEntity(), c.getId());
             }
         }
+            JOptionPane.showMessageDialog(null, "Client "+ID+" completed ID!", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters)

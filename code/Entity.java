@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.io.*;
 
-public class Entity
+public class Entity implements Serializable
 {
   private ArrayList<Double> qualities;
   private ArrayList<Integer> categories;

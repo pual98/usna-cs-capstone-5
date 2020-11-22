@@ -199,6 +199,17 @@ class ClientHandler implements Runnable
                 }
             }
             return;
+        } else if (received.type == 16) {
+            System.out.println("Server sending 16 along: "+received.msg) ;
+            if (Server.groups.containsKey(received.msg)){
+                ArrayList<String> partners = Server.groups.get(received.msg);
+                for ( String p : partners){
+                    if (Integer.parseInt(p) != received.source){
+                        this.sendMessage(received);
+                    }
+                }
+            }
+            return;
         }
 
     }
