@@ -95,12 +95,11 @@ public class Client implements Runnable
 
                         while (true) {
                             // read the message to deliver.
-                            String msg = scn.nextLine();
-                            Message m = new Message(1000, msg, ID, 0);
                             try {
-                                // write on the output stream
+                                String msg = scn.nextLine();
+                                Message m = new Message(1000, msg, ID, 0);
                                 dos.writeObject(msg);
-                            } catch (IOException e) { e.printStackTrace(); }
+                            } catch (IOException e) { e.printStackTrace(); } catch (NoSuchElementException e) { }
                         }
                     }
                 });
@@ -201,7 +200,6 @@ public class Client implements Runnable
                                     continue;
                                 } else if(msg.type == 18) {
                                     String group_name = msg.msg;
-
                                     msg.members.remove(Integer.toString(ID));
                                     Object[] partners = msg.members.toArray();
                                     String choice = (String) JOptionPane.showInputDialog(null, "Choose client in "+group_name, group_name+" clients", JOptionPane.INFORMATION_MESSAGE, null, partners, partners[0]);
@@ -213,7 +211,6 @@ public class Client implements Runnable
                                         sendMessage(m);
                                       }
                                     }
-
                                 }
                             } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
                         }
@@ -224,7 +221,8 @@ public class Client implements Runnable
         readMessage.start();
 
     }
-    public void kPrototypes(){
+
+    public void kPrototypes() {
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
@@ -241,18 +239,17 @@ public class Client implements Runnable
                     EntityCluster c = new EntityCluster(i);
                     Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
                     c.setCentroid(randomCentroid);
-                    clusters.add(c);
+                    this.clusters.add(c);
                 }
             }
             Message msg = new Message(16, groupname, ID, 0);
-            msg.setClusters(clusters);
+            msg.setClusters(this.clusters);
             sendMessage(msg);
         }
         /*
          * receive cents
          */
-
-        while (clusters == null){
+        while (this.clusters == null){
             try{
                 Thread.sleep(500);
             }catch (InterruptedException e) {}
@@ -264,7 +261,7 @@ public class Client implements Runnable
             for(Entity en : dataset)
             {
                 //assign to cluster
-                boolean interimConverged = assignCluster(en, clusters);
+                boolean interimConverged = assignCluster(en, this.clusters);
                 //assign to cluster
                 if(!interimConverged)
                 {
@@ -276,7 +273,7 @@ public class Client implements Runnable
                 break;
             }
             //for each cluster:
-            for(EntityCluster c : clusters)
+            for(EntityCluster c : this.clusters)
             {
                 SharingEntity clusterData = new SharingEntity();
                 // sumlocal

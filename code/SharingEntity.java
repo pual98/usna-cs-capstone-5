@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.*;
+import java .io.*;
 
 public class SharingEntity implements Serializable
 {
@@ -24,7 +24,7 @@ public class SharingEntity implements Serializable
   {
     this.countShare = 0;
     this.qualities = new ArrayList<Double>();
-    for(int i = 0 ; i < 4; i++)
+    for(int i = 0 ; i < 3; i++)
       {
 	qualities.add(0.0);
       }

@@ -190,22 +190,22 @@ class ClientHandler implements Runnable
             }
             return;
         }else if (received.type == 12) {
-            System.out.println("Server sending: "+received.msg) ;
-            if (Server.groups.containsKey(received.dest)){
+            if (Server.groups.containsKey(received.msg)){
                 ArrayList<String> partners = Server.groups.get(received.msg);
                 for ( String p : partners){
                     if (Integer.parseInt(p) != received.source){
+                        received.dest = Integer.parseInt(p);
                         this.sendMessage(received);
                     }
                 }
             }
             return;
         } else if (received.type == 16) {
-            System.out.println("Server sending 16 along: "+received.msg) ;
             if (Server.groups.containsKey(received.msg)){
                 ArrayList<String> partners = Server.groups.get(received.msg);
                 for ( String p : partners){
                     if (Integer.parseInt(p) != received.source){
+                        received.dest = Integer.parseInt(p);
                         this.sendMessage(received);
                     }
                 }
@@ -231,9 +231,8 @@ class ClientHandler implements Runnable
             try {
                 // receive the string
                 //
-                System.out.println("Server about to read object");
                 received = (Message)dis.readObject();
-                System.out.println("Server about read object: "+received);
+//                System.out.println("Server about read object: "+received);
                 if(received.equals("logout")){
                     this.isloggedin=false;
                     this.s.close();
