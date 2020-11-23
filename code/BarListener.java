@@ -115,7 +115,7 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
                   JOptionPane.showMessageDialog(null, "You need to be in a group before running IDS!", "Denial", JOptionPane.ERROR_MESSAGE);
                   return;
                 }
-                //this.client.kPrototypes();
+                this.client.kPrototypes();
             }
 
         }
