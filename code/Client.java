@@ -312,7 +312,13 @@ public class Client implements Runnable
                 c = new EntityCluster(clusterData.toEntity(), c.getId());
             }
         }
-            JOptionPane.showMessageDialog(null, "Client "+ID+" completed ID!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        String centroidPopup = "                                            Cluster Centroids:\n";
+        for(int i = 0; i < NUM_CLUSTERS; i++) {
+          Entity centroid = clusters.get(i).getCentroid();
+          centroid.setCluster(i);
+          centroidPopup += centroid.toString()+"\n";
+        }
+        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters)
