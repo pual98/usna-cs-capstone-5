@@ -97,6 +97,15 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
                 JOptionPane.showMessageDialog(null, "You are not in a group yet.", "Can't Send Message.", JOptionPane.ERROR_MESSAGE);
               }
             }
+            if (e.getActionCommand() == "Send Message to Client"){
+              if(client.getGroupStatus()) {
+                Message mmsg = new Message(17, client.groupname, client.getID(), 0);
+                this.client.sendMessage(mmsg);
+              }
+              else {
+                JOptionPane.showMessageDialog(null, "You are not in a group yet.", "Can't Send Message.", JOptionPane.ERROR_MESSAGE);
+              }
+            }
             if (e.getActionCommand() == "Run intrusion detection"){
                 this.client.kPrototypes();
             }

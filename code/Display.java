@@ -17,7 +17,7 @@ public class Display extends JPanel implements Runnable {
         super();
         this.setBackground(new Color(245, 243, 213));
         this.setVisible(true);
-        
+
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -29,7 +29,7 @@ public class Display extends JPanel implements Runnable {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.ipady = 10;
-        gbc.insets = new Insets(10,10,10,10);
+        gbc.insets = new Insets(15,15,15,15);
 
         this.add(controlPanel,gbc);
 
@@ -41,7 +41,7 @@ public class Display extends JPanel implements Runnable {
         this.doLayout();
     }
     public void resize(){
-        // Fix this 
+        // Fix this
         //actionPanel.setMinimumSize(new Dimension(200,200));
     }
 

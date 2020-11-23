@@ -30,7 +30,10 @@ public class Message implements Serializable {
         Response from server to client after creatign a group
     16: msg = GROUP
         Send clusters (ArrayList<EntityCluster)...typically for intial points.
-        
+    17: msg = list of clients within group
+        Client requesting server to send a list of clients within group
+    18: msg = Group
+        Response from server to client with ArrayList<String> of client IDs
     */
     public int type;
     public int source;

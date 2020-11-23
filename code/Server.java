@@ -164,6 +164,7 @@ class ClientHandler implements Runnable
             return;
             //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
         }else if(received.type == 10){
+            this.sendMessage(received);
             return;
             //11:FROM:MSG#GROUP
         }else if(received.type == 11){
@@ -210,7 +211,17 @@ class ClientHandler implements Runnable
                 }
             }
             return;
-        }
+        } else if (received.type == 17) {
+            String group_name = received.msg;
+            if (Server.groups.containsKey(group_name)){
+              ArrayList<String> partners = Server.groups.get(group_name);
+              Message m = new Message(18, group_name, 0, received.source);
+              m.setMembers(partners);
+              this.sendMessage(m);
+            }
+            return;
+          }
+
 
     }
     @Override

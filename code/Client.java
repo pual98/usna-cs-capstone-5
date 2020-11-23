@@ -175,7 +175,7 @@ public class Client implements Runnable
                                 //10: msg = MSG
                                 //    10 Generic message. Send message to the TO
                                 }else if(msg.type == 10){
-                                    JOptionPane.showMessageDialog(f, msg.msg, "Incoming Message from Client: "+msg.source, JOptionPane.INFORMATION_MESSAGE);
+                                    JOptionPane.showMessageDialog(f, msg.msg, "Message from "+msg.source, JOptionPane.INFORMATION_MESSAGE);
                                     continue;
                                 //12: msg = MSG#TO
                                 //    Send clusterData object (sharingEntity)
@@ -199,6 +199,21 @@ public class Client implements Runnable
                                 } else if(msg.type == 16){
                                     clusters = msg.clusters;
                                     continue;
+                                } else if(msg.type == 18) {
+                                    String group_name = msg.msg;
+
+                                    msg.members.remove(Integer.toString(ID));
+                                    Object[] partners = msg.members.toArray();
+                                    String choice = (String) JOptionPane.showInputDialog(null, "Choose client in "+group_name, group_name+" clients", JOptionPane.INFORMATION_MESSAGE, null, partners, partners[0]);
+                                    if(choice != null) {
+                                      String message = null;
+                                      message = JOptionPane.showInputDialog("Desired Message");
+                                      if(!message.equals("") && message != null) {
+                                        Message m = new Message(10, message, ID, Integer.parseInt(choice));
+                                        sendMessage(m);
+                                      }
+                                    }
+
                                 }
                             } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
                         }
