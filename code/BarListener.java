@@ -73,14 +73,18 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
 
               // prompt user for GROUP name //
               String group_name = null ;
-              while(group_name == null) {
+              group_name = JOptionPane.showInputDialog("Enter Group's Name");
+
+              while(group_name.equals("")) {
+                JOptionPane.showMessageDialog(null, "Please input a name of a group.", "No Group Name Provided", JOptionPane.ERROR_MESSAGE);
                 group_name = JOptionPane.showInputDialog("Enter Group's Name");
               }
 
-              // send Message Type 02 to Server //
-              Message msg = new Message(02, group_name, client.getID(), 0);
-              this.client.sendMessage(msg);
-
+              if(group_name != null) {
+                // send Message Type 02 to Server //
+                Message msg = new Message(02, group_name, client.getID(), 0);
+                this.client.sendMessage(msg);
+              }
             }
             if (e.getActionCommand() == "Send Message to Group"){
               if(client.getGroupStatus()) {
@@ -106,8 +110,12 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
                 JOptionPane.showMessageDialog(null, "You are not in a group yet.", "Can't Send Message.", JOptionPane.ERROR_MESSAGE);
               }
             }
-            if (e.getActionCommand() == "Run intrusion detection"){
-                this.client.kPrototypes();
+            if (e.getActionCommand() == "Run Intrusion Detection"){
+                if(!this.client.getGroupStatus()) {
+                  JOptionPane.showMessageDialog(null, "You need to be in a group before running IDS!", "Denial", JOptionPane.ERROR_MESSAGE);
+                  return;
+                }
+                //this.client.kPrototypes();
             }
 
         }

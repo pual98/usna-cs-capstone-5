@@ -34,6 +34,11 @@ public class Message implements Serializable {
         Client requesting server to send a list of clients within group
     18: msg = Group
         Response from server to client with ArrayList<String> of client IDs
+    19: msg = group_name
+        Response from server to coordinator (from message type 01) to choose the number of clusters in CIDS
+    20: msg = groupname:numOfCluster
+        Response to server from coordinatior with number of clusters.
+
     */
     public int type;
     public int source;

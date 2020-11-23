@@ -13,6 +13,7 @@ public class Client implements Runnable
 {
     final static int ServerPort = 1234;
     static int ID = 0;
+    static int NUM_CLUSTERS = 0;
     private boolean isCoordinator = false;
     boolean inGroup = false; //used to check if Client tries to join more than one CIDS
     String groupname = null;
@@ -130,7 +131,7 @@ public class Client implements Runnable
                                     int requestingID = msg.source;
                                     int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+requestingID+" to join "+gn+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
-                                        Message toSend = new Message(03, gn+":accept", ID, requestingID);
+                                        Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS, ID, requestingID);
                                         sendMessage(toSend);
                                         toSend = new Message(04, gn+":"+requestingID, ID, 0);
                                         sendMessage(toSend);
@@ -145,7 +146,8 @@ public class Client implements Runnable
                                 }else if(msg.type == 03){
                                     String gn= msg.msg.split(":")[0];
                                     if(msg.msg.contains("accept")) {
-                                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                                        NUM_CLUSTERS = Integer.parseInt(msg.msg.split(":")[2]);
+                                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                                         setGroupStatus();
                                         groupname = gn;
                                     }
@@ -193,9 +195,9 @@ public class Client implements Runnable
                                 }else if(msg.type == 15){
                                     setGroupStatus();
                                     setAsCoordinator();
-                                    groupname = msg.msg.split(":")[1];
-                                    JOptionPane.showMessageDialog(f, "Success, you have created group "+groupname+".", "Group Created", JOptionPane.INFORMATION_MESSAGE);
-                                    continue;
+                                    JOptionPane.showMessageDialog(f, msg.msg, "Group Created", JOptionPane.INFORMATION_MESSAGE);
+                                    groupname = (msg.msg.split(":")[1]).split(" ")[1];
+
                                 } else if(msg.type == 16){
                                     clusters = msg.clusters;
                                     continue;
@@ -213,7 +215,19 @@ public class Client implements Runnable
                                         sendMessage(m);
                                       }
                                     }
-
+                                }
+                                else if(msg.type == 19) {
+                                  ArrayList<String> options = new ArrayList<String>();
+                                  for(int i = 3; i < 11; i++)
+                                    options.add(""+i);
+                                  Object[] choices = options.toArray();
+                                  String prompt = "         Enter the number \nof clusters for k-Prototypes\n                  (3-10)";
+                                  String num = (String) JOptionPane.showInputDialog(null, prompt, "Select Cluster Number", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
+                                  if(num != null) {
+                                    NUM_CLUSTERS = Integer.parseInt(num);
+                                    Message m = new Message(20, msg.msg+":"+NUM_CLUSTERS, ID, 0);
+                                    sendMessage(m);
+                                  }
                                 }
                             } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
                         }
@@ -228,13 +242,9 @@ public class Client implements Runnable
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
-        if (!inGroup){
-            JOptionPane.showMessageDialog(f, "You need to be in a group before running IDS!", "Denial", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         ArrayList<Entity> dataset = Dataset.build("threeClusters.csv");
         if (isCoordinator){
-            int NUM_CLUSTERS = 3;
+            //int NUM_CLUSTERS = 3;
             this.clusters = new ArrayList<EntityCluster>();
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
