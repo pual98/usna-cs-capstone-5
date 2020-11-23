@@ -115,11 +115,8 @@ class ClientHandler implements Runnable
                 this.sendMessage(blank);
             }
             else {
-                Server.groups.put(groupname,new ArrayList<String>());
-                // Server.groups.get(groupname).add(arr[1]);
-                Server.groups.get(groupname).add(Integer.toString(received.source));
-                Message success = new Message(15, "Success! You have created group:"+groupname, 0, received.source);
-                this.sendMessage(success);
+                Message m = new Message(19, groupname, 0, received.source);
+                this.sendMessage(m);
             }
             return;
             //02:FROM:GROUPNAME#0 - 02 request to join GROUPNAME - (server should forward to coordinator)
@@ -220,9 +217,35 @@ class ClientHandler implements Runnable
               this.sendMessage(m);
             }
             return;
-          }
+        } else if(received.type == 20) {
+            //extract the group name and number of clusters
+            String groupname = received.msg.split(":")[0];
+            int numClusters = Integer.parseInt(received.msg.split(":")[1]);
+            //create new group
+            Server.groups.put(groupname,new ArrayList<String>());
+            //add client as the first member (coordinator)
+            Server.groups.get(groupname).add(Integer.toString(received.source));
+            //send confirmation message
+            Message success = new Message(15, "Success! You have created group: "+groupname, 0, received.source);
+            this.sendMessage(success);
+            return;
+        } else if(received.type == 21) {
+            String num = received.msg.split(":")[1];
+            String group_name = received.msg.split(":")[0];
 
+            System.out.println(group_name);
 
+            if (Server.groups.containsKey(group_name)){
+                ArrayList<String> partners = Server.groups.get(group_name);
+                for(String p : partners){
+                    if(Integer.parseInt(p) != received.source) {
+                        Message m = new Message(22, num, received.source, Integer.parseInt(p));
+                        this.sendMessage(m);
+                    }
+                }
+            }
+          return;
+        }
     }
     @Override
     public void run() {
