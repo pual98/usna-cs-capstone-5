@@ -1,6 +1,10 @@
 #!/bin/bash
 echo "This may take a moment"
-killall java
+numProcesses=$(ps aux | grep -v grep | grep -i -e VSZ -e java | wc -l)
+if [ $numProcesses != "1" ]; then
+    killall java;
+    sleep 1;
+fi
 # Create tempdirs
 tmp_dir1=$(mktemp -d -t ciXXXXXXXXXX)
 tmp_dir2=$(mktemp -d -t ciXXXXXXXXXX)
