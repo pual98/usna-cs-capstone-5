@@ -8,7 +8,7 @@ import java.io.File;
 
 public class Dataset
 {
-    public ArrayList<Entity> build(String filename)
+    static public ArrayList<Entity> build(String filename)
     {
         BufferedReader source;
         ArrayList<Entity> ret = new ArrayList<Entity>();

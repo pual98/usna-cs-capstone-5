@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java .io.*;
 
-public class SharingEntity
+public class SharingEntity implements Serializable
 {
   
   private int countShare;
@@ -22,14 +23,14 @@ public class SharingEntity
   public SharingEntity()
   {
     this.countShare = 0;
-    this.qualities = new ArrayList<Double> qualities();
-    for(int i = 0 ; i < 4; i++)
+    this.qualities = new ArrayList<Double>();
+    for(int i = 0 ; i < 3; i++)
       {
-	qualities.add(0);
+	qualities.add(0.0);
       }
-    this.modeMap = new ArrayList<HashMap<Integer,Integer>> modeMap();
-    this.numQuals = qual.size();
-    this.numCats = cat.size();
+    this.modeMap = new ArrayList<HashMap<Integer,Integer>>();
+    this.numQuals = qualities.size();
+    this.numCats = 4;//.size();
   }
 
   public double getQual(int i)
@@ -83,7 +84,7 @@ public class SharingEntity
       {
 	retQuals.add(a.getQual(i) + b.getQual(i));
       }
-    ArrayList<HashMap<Integer,Integer>> retModeMap = KMode.mergeMapLists(a.modeMap, b.modeMap);
+    ArrayList<HashMap<Integer,Integer>> retModeMap = KMode.mergeMaps(a.modeMap, b.modeMap);
     int retCountShare = a.countShare + b.countShare;
     SharingEntity ret = new SharingEntity(retCountShare, retQuals, retModeMap);
 
@@ -99,7 +100,7 @@ public class SharingEntity
 	retQuals.add(qualities.get(i) + b.getQual(i));
       }
     qualities = retQuals;
-    modeMap =  KMode.mergeMapLists(modeMap, b.modeMap);
+    modeMap =  KMode.mergeMaps(modeMap, b.modeMap);
     countShare = countShare + b.countShare;
   }
 
@@ -111,7 +112,7 @@ public class SharingEntity
       {
 	retQuals.add(qualities.get(i) / countShare);
       }
-    ArrayList<Integer> retCats = KMode.mode(modeMap);
+    ArrayList<Integer> retCats = KMode.modes(modeMap);
     return new Entity(retQuals, retCats);
   }
 
@@ -127,6 +128,7 @@ public class SharingEntity
   }
 
   //NEWT
+  /**
   public void addEntity(Entity toAdd)
   {
     countShare++;
@@ -135,16 +137,14 @@ public class SharingEntity
     modeMap = KMode.mergeMaps(modeMap,newMap);
     numQuals = qual.size();
     numCats = cat.size();
-  }
+  }**/
 
   public void addEntity(Entity toAdd)
   {
     countShare++;
-    qualities = KMode.merge(qualities,toAdd.getQualities);
-    newMap = KMode.makeNewModeMap(toAdd.getCategories());
+    qualities = KMode.merge(qualities,toAdd.getQualities());
+    ArrayList<HashMap<Integer,Integer>> newMap = KMode.makeNewModeMap(toAdd.getCategories());
     modeMap = KMode.mergeMaps(modeMap,newMap);
-    numQuals = qual.size();
-    numCats = cat.size();
   }
 
   

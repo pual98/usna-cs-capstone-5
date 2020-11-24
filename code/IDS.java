@@ -26,7 +26,7 @@ public class IDS {
                 System.out.println("File already exists.");
             }
         } catch (FileNotFoundException e) { } catch (IOException e) { }
-        
+
         // Read the content from file
         // Get the id and set variable
         try{
@@ -55,9 +55,9 @@ public class IDS {
 
         // Create components
         JFrame f = new JFrame();
-        f.setTitle("Intrusion detection system -- ID:"+ID);
+        f.setTitle("Intrusion Detection System -- ID:"+ID);
 
-        JLabel label1 = new JLabel("Intrusion detection system -- ID:"+ID); 
+        JLabel label1 = new JLabel("Intrusion Detection System -- ID:"+ID);
 
         //An IDS system has a menu (top bar), a display area for all data, and
         //a client (itself) to send data to other clients.
@@ -78,7 +78,7 @@ public class IDS {
         f.getContentPane().add(BorderLayout.NORTH, menu);
         f.setJMenuBar(menu);
         f.getContentPane().add(BorderLayout.NORTH, label1);
-        f.getContentPane().add(BorderLayout.CENTER, display); 
+        f.getContentPane().add(BorderLayout.CENTER, display);
 
         Thread displayThread = new Thread(display);
         displayThread.start();

@@ -20,7 +20,9 @@
 ## Milestone 5
 
 + Active Git branches:
-    + Master
-    + Dev
+    + Master - static branch master
+    + Dev - working branch master
+    + kmeans - implementing KPrototypes
 
 + [Functional requirements trace table](https://docs.google.com/spreadsheets/d/1YPr3v7LRzJZG3VP-RFwnwrRitj4HEj1ryLTDtZEbtS8/edit?usp=sharing)
++ [Milestone-5 assignment pdf](/milestone-assignments/Mile5_Testing.pdf)

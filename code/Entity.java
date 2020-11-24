@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.io.*;
 
-public class Entity
+public class Entity implements Serializable
 {
   private ArrayList<Double> qualities;
   private ArrayList<Integer> categories;
@@ -135,33 +136,6 @@ public class Entity
     return Math.sqrt(sum);
 
   }
-//    public boolean assignClusters(ArrayList<EntityCluster> clusters, ArrayList<Entity> data)
-//    {
-//        double max = Double.MAX_VALUE;
-//        double min = max;
-//        int cluster = 0;
-//        double distance = 0.0;
-//        boolean converged = true;
-//        for(Entity en : data) {
-//            min = max;
-//            for(int i = 0; i < clusters.size(); i++) {
-//                EntityCluster c = clusters.get(i);
-//
-//                distance = Entity.distanceEuclidean(point, c.getCentroid());
-//                if(distance < min) {
-//                    min = distance;
-//                    cluster = i;
-//                }
-//            }
-//
-//            if(cluster != en.getCluster()) {
-//                converged = false;
-//            }
-//            en.setCluster(cluster);
-//        }
-//        //possible update to total number of entities in cluster
-//        return converged;
-//    }
   public String toString()
   {
     String ret = "";

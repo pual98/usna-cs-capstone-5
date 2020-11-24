@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.*;
 
-public class EntityCluster
+public class EntityCluster implements Serializable
 {
   public ArrayList<Entity> Entities;
   public Entity centroid;

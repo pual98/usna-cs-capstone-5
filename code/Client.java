@@ -13,12 +13,16 @@ public class Client implements Runnable
 {
     final static int ServerPort = 1234;
     static int ID = 0;
-    boolean isCoordinator = false; 
-    DataInputStream dis;
-    DataOutputStream dos;
+    static int NUM_CLUSTERS = 0;
+    private boolean isCoordinator = false;
+    boolean inGroup = false; //used to check if Client tries to join more than one CIDS
+    String groupname = null;
+    ObjectInputStream dis;
+    ObjectOutputStream dos;
     Scanner scn;
-    ArrayList<Integer> requests = new ArrayList<Integer>();
-
+    ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
+    ArrayList<EntityCluster> clusters = null;
+    ArrayList<Integer> memIDs = null;
 
     public Client() {
         boolean haveID = false;
@@ -62,30 +66,16 @@ public class Client implements Runnable
             Socket s = new Socket(ip, ServerPort);
 
             // obtaining input and out streams
-            dis = new DataInputStream(s.getInputStream());
-            dos = new DataOutputStream(s.getOutputStream());
+            dos = new ObjectOutputStream(s.getOutputStream());
+            dis = new ObjectInputStream(s.getInputStream());
         } catch(UnknownHostException e) {} catch (IOException e) {}
     }
     public int getID() {
         return ID;
     }
-    public void sendMessage(String msg, int toSendTo) {
-        msg+="#";
-        msg+=toSendTo;
+    public void sendMessage(Message m) {
         try {
-            // write on the output stream
-            dos.writeUTF(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendMessage(String msg, String group) {
-        msg+="#";
-        msg+=group;
-        try {
-            // write on the output stream
-            dos.writeUTF(msg);
+            dos.writeObject(m);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,17 +87,20 @@ public class Client implements Runnable
                     @Override
                     public void run() {
                         try {
+                            System.out.println("About to request rename:");
+                            System.out.flush();
                             // write on the output stream
-                            dos.writeUTF("new name id:"+ID);
+                            Message m = new Message(1000, "new name id:"+ID, ID, 0);
+                            dos.writeObject(m);
                         } catch (IOException e) { e.printStackTrace(); }
 
                         while (true) {
                             // read the message to deliver.
-                            String msg = scn.nextLine();
                             try {
-                                // write on the output stream
-                                dos.writeUTF(msg);
-                            } catch (IOException e) { e.printStackTrace(); }
+                                String msg = scn.nextLine();
+                                Message m = new Message(1000, msg, ID, 0);
+                                dos.writeObject(msg);
+                            } catch (IOException e) { e.printStackTrace(); } catch (NoSuchElementException e) { }
                         }
                     }
                 });
@@ -121,45 +114,120 @@ public class Client implements Runnable
                         while (true) {
                             try {
                                 // read the message sent to this client
-                                String msg = dis.readUTF();
+                                Message msg = (Message)dis.readObject();
                                 JFrame f = new JFrame();
 
                                 System.out.println("Client "+ID+" log msg: "+msg);
 
-                                //01:FROM:GROUPNAME - 01 message to server requesting to make GROUP, named
-                                if(msg.substring(0,2).equals("01")){
+                                //01: msg = GROUPNAME
+                                //    01 message to server requesting to make GROUP, named GROUPNAME
+                                if(msg.type == 01){
                                     continue;
-                                //02:FROM:GROUPNAME - 02 request to join GROUPNAME - (server should forward to
-                                }else if(msg.substring(0,2).equals("02")){
-                                    String arr[] = msg.split(":");
-                                    String groupname = arr[2].split("#")[0];
-                                    String reqID = arr[1];
-                                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+reqID+" to join "+groupname+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
+                                //02: msg = GROUPNAME
+                                //    02 request to join GROUPNAME - (server should forward to coordinator)
+                                }else if(msg.type == 02){
+                                    String gn = msg.msg;
+                                    int requestingID = msg.source;
+                                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+requestingID+" to join "+gn+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
-                                        sendMessage("03:"+ID+":accept", Integer.parseInt(reqID));
-                                        sendMessage("04:"+ID+":"+groupname+":"+reqID, Integer.parseInt(reqID));
+                                        Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS, ID, requestingID);
+                                        sendMessage(toSend);
+                                        toSend = new Message(04, gn+":"+requestingID, ID, 0);
+                                        sendMessage(toSend);
+//                                        groupname = gn;
                                     }else{
-                                        sendMessage("03:"+ID+":deny", Integer.parseInt(reqID));
+                                        Message toSend = new Message(03, gn+":deny", ID, requestingID);
+                                        sendMessage(toSend);
                                     }
                                     continue;
-                                //03:FROM:MSG#TO - 03 response from coordinator to TO with "accept" or "deny"
-                                }else if(msg.substring(0,2).equals("03")){
+                                //03: msg = MSG:"accept" || MSG:"deny"
+                                //    03 response from coordinator to TO with "accept" or "deny"
+                                }else if(msg.type == 03){
+                                    String gn= msg.msg.split(":")[0];
+                                    if(msg.msg.contains("accept")) {
+                                        NUM_CLUSTERS = Integer.parseInt(msg.msg.split(":")[2]);
+                                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                                        setGroupStatus();
+                                        groupname = gn;
+                                    }
+                                    else
+                                        JOptionPane.showMessageDialog(null, "You have been denied from group "+groupname+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
+                                    //return;
                                     continue;
-                                //04:FROM:GROUPNAME:TOADD - 04 message from coordinator to server with ID TOADD
-                                }else if(msg.substring(0,2).equals("04")){
+                                //04: msg = GROUPNAME:TOADD
+                                //    04 message from coordinator to server with ID TOADD to join have join the GROUPNAME
+                                }else if(msg.type == 04){
                                     continue;
+                                //05: msg = GROUPNAME
+                                //    message to server requesting list of IDs in GROUPNAME
+                                }else if(msg.type == 05){
+                                    continue;
+                                //06: msg = MSG
+                                //    response from server with comma seperated MSG as a list of people in
+                                //    EXAMPLE: 12,13,1,2 where each is an ID
+                                }else if(msg.type == 06){
+                                    ArrayList<String> mems = msg.members;
+                                    memIDs = new ArrayList<Integer>();
+                                    for(int i = 0; i < mems.size(); i++) {
+                                        memIDs.add(Integer.parseInt(mems.get(i)));
+                                    }
+                                    //call function to send all IDs
+                                    continue;
+                                //10: msg = MSG
+                                //    10 Generic message. Send message to the TO
+                                }else if(msg.type == 10){
+                                    JOptionPane.showMessageDialog(f, msg.msg, "Message from "+msg.source, JOptionPane.INFORMATION_MESSAGE);
+                                    continue;
+                                //12: msg = MSG#TO
+                                //    Send clusterData object (sharingEntity)
+                                //    should set entity
+                                }else if(msg.type == 12){
+                                    receivedEntities.add(msg.en);
+                                    continue;
+                                //14: msg = Error Message to Client trying to Create/Join Group
+                                //    Response from server to requesting client
+                                }else if(msg.type == 14){
+                                    JOptionPane.showMessageDialog(f, msg.msg, "Error!", JOptionPane.ERROR_MESSAGE);
+                                    continue;
+                                //15: msg = "Success, you have created group:GROUPNAME"
+                                //    Response from server to client after creatign a group
+                                }else if(msg.type == 15){
+                                    setGroupStatus();
+                                    setAsCoordinator();
+                                    JOptionPane.showMessageDialog(f, msg.msg, "Group Created", JOptionPane.INFORMATION_MESSAGE);
+                                    groupname = (msg.msg.split(":")[1]).split(" ")[1];
 
-                                //05:FROM:GROUPNAME - message to server requesting list of IDs in GROUPNAME
-                                }else if(msg.substring(0,2).equals("05")){
+                                } else if(msg.type == 16){
+                                    clusters = msg.clusters;
                                     continue;
-                                //06:FROM:GROUPNAME:MSG - response from server with comma seperated MSG as a list of people in GROUPNAME
-                                }else if(msg.substring(0,2).equals("06")){
-                                    continue;
-                                //10:FROM:MSG#TO - 10 Generic message. Send message to the TO
-                                }else if(msg.substring(0,2).equals("10")){
-                                    JOptionPane.showMessageDialog(f,msg);
-                                } 
-                            } catch (IOException e) { e.printStackTrace(); }
+                                } else if(msg.type == 18) {
+                                    String group_name = msg.msg;
+                                    msg.members.remove(Integer.toString(ID));
+                                    Object[] partners = msg.members.toArray();
+                                    String choice = (String) JOptionPane.showInputDialog(null, "Choose client in "+group_name, group_name+" clients", JOptionPane.INFORMATION_MESSAGE, null, partners, partners[0]);
+                                    if(choice != null) {
+                                      String message = null;
+                                      message = JOptionPane.showInputDialog("Desired Message");
+                                      if(!message.equals("") && message != null) {
+                                        Message m = new Message(10, message, ID, Integer.parseInt(choice));
+                                        sendMessage(m);
+                                      }
+                                    }
+                                }
+                                else if(msg.type == 19) {
+                                  ArrayList<String> options = new ArrayList<String>();
+                                  for(int i = 3; i < 11; i++)
+                                    options.add(""+i);
+                                  Object[] choices = options.toArray();
+                                  String prompt = "         Enter the number \nof clusters for k-Prototypes\n                  (3-10)";
+                                  String num = (String) JOptionPane.showInputDialog(null, prompt, "Select Cluster Number", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
+                                  if(num != null) {
+                                    NUM_CLUSTERS = Integer.parseInt(num);
+                                    Message m = new Message(20, msg.msg+":"+NUM_CLUSTERS, ID, 0);
+                                    sendMessage(m);
+                                  }
+                                }
+                            } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
                         }
                     }
                 });
@@ -167,106 +235,153 @@ public class Client implements Runnable
         sendMessage.start();
         readMessage.start();
 
-//        /*
-//         *TO DO: readInEntities
-//         */
-//
-//        Dataset D = new Dataset();
-//        ArrayList<Entity> dataset = D.build("three.csv");
-//        /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
-//        int NUM_CLUSTERS = 3;
-//        ArrayList<EntityCluster> clusters;
-//        if(this.isCoordinator) {
-//            for(int i = 0; i < NUM_CLUSTERS; i++) {
-//                EntityCluster c = new EntityCluster(i);
-//                Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
-//                c.setCentroid(randomCentroid);
-//                clusters.add(c);
-//            }
-//        }
-//        /*
-//         * receive cents
-//         */
-//        boolean converged = false;
-//        while(!converged)
-//        {
-//            converged = true;
-//            for(Entity en : dataset)
-//            {
-//                //assign to cluster
-//                interimConverged = en.assignClusters(clusters);
-//                //assign to cluster
-//                if(!interimConverged)
-//                {
-//                    converged = false;
-//                }
-//            }
-//            if(converged)
-//            {
-//                break;
-//            }
-//            //for each cluster:
-//            for(EntityCluster c : clusters)
-//            {
-//                SharingEntity clusterData = new SharingEntity();
-//                // sumlocal
-//                for(Entity en : dataset)
-//                {
-//                    if(en.getAssignedCluster() == c.getId())
-//                    {
-//                        clusterData.addEntity(en);
-//                    }
-//                }
-//                //send sum to all
-//                for(OtherClient ot : others)
-//                {
-//                    ot.send(clusterData);
-//                }
-//                // wait on sums
-//                received = waitOnSums();
-//
-//                for(SharingEntity se : received)
-//                {
-//                    clusterData.addSharingEntity(se);
-//                }
-//                c = clusterData.toEntity();
-//            }
-//
-//        }
-
-        //display centroids
-
     }
 
+    public void kPrototypes() {
+        JFrame f = new JFrame();
+        /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
-//    public boolean assignClusters(ArrayList<EntityCluster> clusters)
-//    {
-//        double max = Double.MAX_VALUE;
-//        double min = max;
-//        int cluster = 0;
-//        double distance = 0.0;
-//        boolean converged = true;
-//        for(Entity en : data) {
-//            min = max;
-//            for(int i = 0; i < clusters.size(); i++) {
-//                EntityCluster c = clusters.get(i);
-//
-//                distance = Entity.distanceEuclidean(point, c.getCentroid());
-//                if(distance < min) {
-//                    min = distance;
-//                    cluster = i;
-//                }
-//            }
-//
-//            if(cluster != en.getCluster()) {
-//                converged = false;
-//            }
-//            en.setCluster(cluster);
-//        }
-//        //possible update to total number of entities in cluster
-//        return converged;
-//    }
-//
+        ArrayList<Entity> dataset = Dataset.build("threeClusters.csv");
+        if (isCoordinator){
+            //int NUM_CLUSTERS = 3;
+            this.clusters = new ArrayList<EntityCluster>();
+            if(this.isCoordinator) {
+                for(int i = 0; i < NUM_CLUSTERS; i++) {
+                    EntityCluster c = new EntityCluster(i);
+                    Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
+                    c.setCentroid(randomCentroid);
+                    this.clusters.add(c);
+                }
+            }
+            Message msg = new Message(16, groupname, ID, 0);
+            msg.setClusters(this.clusters);
+            sendMessage(msg);
+        }
+        /*
+         * receive cents
+         */
+        while (this.clusters == null){
+            try{
+                Thread.sleep(500);
+            }catch (InterruptedException e) {}
+        }
+        boolean converged = false;
+        while(!converged)
+        {
+            converged = true;
+            for(Entity en : dataset)
+            {
+                //assign to cluster
+                boolean interimConverged = assignCluster(en, this.clusters);
+                //assign to cluster
+                if(!interimConverged)
+                {
+                    converged = false;
+                }
+            }
+            if(converged)
+            {
+                break;
+            }
+            //for each cluster:
+            for(EntityCluster c : this.clusters)
+            {
+                SharingEntity clusterData = new SharingEntity();
+                // sumlocal
+                for(Entity en : dataset)
+                {
+                    if(en.getAssignedCluster() == c.getId())
+                    {
+                        clusterData.addEntity(en);
+                    }
+                }
+
+                Message msg = new Message(12, groupname, ID, 0);
+                msg.setEntity(clusterData);
+                sendMessage(msg);
+                // wait on sums
+                while (receivedEntities.size() < 2){
+                    try{
+                        Thread.sleep(500);
+                    }catch (InterruptedException e) {}
+                }
+                for(SharingEntity se : receivedEntities)
+                {
+                    clusterData.addSharingEntity(se);
+                }
+                c = new EntityCluster(clusterData.toEntity(), c.getId());
+            }
+        }
+        String centroidPopup = "                                            Cluster Centroids:\n";
+        for(int i = 0; i < NUM_CLUSTERS; i++) {
+          Entity centroid = clusters.get(i).getCentroid();
+          centroid.setCluster(i);
+          centroidPopup += centroid.toString()+"\n";
+        }
+        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters)
+    {
+        double max = Double.MAX_VALUE;
+        double min = max;
+        int cluster = 0;
+        double distance = 0.0;
+        boolean converged = true;
+
+        min = max;
+        for(int i = 0; i < clusters.size(); i++) {
+            EntityCluster c = clusters.get(i);
+
+            distance = Entity.distanceEuclidean(en, c.getCentroid());
+            if(distance < min) {
+                min = distance;
+                cluster = i;
+            }
+        }
+
+        if(cluster != en.getAssignedCluster()) {
+            converged = false;
+        }
+        en.setCluster(cluster);
+        //possible update to total number of entities in cluster
+        return converged;
+    }
+    public boolean assignClusters(ArrayList<Entity> data, ArrayList<EntityCluster> clusters)
+    {
+        double max = Double.MAX_VALUE;
+        double min = max;
+        int cluster = 0;
+        double distance = 0.0;
+        boolean converged = true;
+        for(Entity en : data) {
+            min = max;
+            for(int i = 0; i < clusters.size(); i++) {
+                EntityCluster c = clusters.get(i);
+
+                distance = Entity.distanceEuclidean(en, c.getCentroid());
+                if(distance < min) {
+                    min = distance;
+                    cluster = i;
+                }
+            }
+
+            if(cluster != en.getAssignedCluster()) {
+                converged = false;
+            }
+            en.setCluster(cluster);
+        }
+        //possible update to total number of entities in cluster
+        return converged;
+    }
+
+    public void setGroupStatus() { this.inGroup = true; }
+
+    public boolean getGroupStatus() { return inGroup; }
+
+    public void setAsCoordinator() { isCoordinator = true; }
+
+    public boolean getCoordinatorStatus() { return isCoordinator; }
 
     public static void main(String args[]) throws UnknownHostException, IOException {
         Client client = new Client();
