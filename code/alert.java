@@ -27,12 +27,11 @@ public class alert
 	public alert(String[] input)
 	{
 		// find first line with [**] [1:2009358:5] ET SCAN Nmap Scripting Engine User-Agent Detected (Nmap Scripting Engine) [**]
-		Pattern pattern = Pattern.compile("\\d+:\\d+:\\d+");
+		Pattern pattern = Pattern.compile("\\d+;\\d+;\\d+");
 		Matcher matcher = pattern.matcher(input[0]);
-		if (matcher.find())
-		{
+		if (matcher.find()) {
 		    String str1=matcher.group();
-		    String[] list1=str1.split(":");
+		    String[] list1=str1.split(";");
 		    sid = Integer.parseInt(list1[1]);
 		    rev = Integer.parseInt(list1[2]);
 		}
@@ -104,8 +103,10 @@ public class alert
 
 
 
-		System.out.println("Done");
-
+		int i = 0;
+		String sCurrentLine;
+		// assuming each block no more than 20 strings
+		String[] textBlock=new String[20];
 		try {
 
 			//br = new BufferedReader(new FileReader(FILENAME));
@@ -115,37 +116,27 @@ public class alert
 			bw = new BufferedWriter(fw);
 
 
-			String sCurrentLine;
-			// assuming each block no more than 20 strings
-			String[] textBlock=new String[20];
-			int i = 0;
+			//int i = 0;
 			while ((sCurrentLine = br.readLine()) != null) {
 				//System.out.println(sCurrentLine);
-				if (sCurrentLine.equals("")) {
-					// end old block
-					if (i > 0) {
-						alert a=new alert(textBlock);
-						// print the block out
-						if (a != null) {
-							String ostr= a.genCSVOutput();
-							bw.write(ostr);
-						}
-						i=0;
-					}
-				}
-
-				else {
-					textBlock[i]=sCurrentLine;
-					i++;
-				}
-
+				textBlock[i]=sCurrentLine;
+				i++;
 			}
 
-		} catch (IOException e) {
+		} catch (IOException e) {	e.printStackTrace(); }
 
-			e.printStackTrace();
-
-		} finally {
+		 finally {
+			if (i > 0) {
+				System.out.println("About to make alert");
+				alert a=new alert(textBlock);
+				// print the block out
+				if (a != null) {
+					System.out.println("alert completed");
+					String ostr= a.genCSVOutput();
+					try {	bw.write(ostr); } catch(Exception e) {;}
+				}
+				i=0;
+			}
 
 			try {
 
@@ -167,6 +158,7 @@ public class alert
 				ex.printStackTrace();
 
 			}
+			System.out.println("Done");
 
 		}
 

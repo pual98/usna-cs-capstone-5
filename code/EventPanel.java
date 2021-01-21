@@ -1,4 +1,5 @@
 import java.awt.geom.*;
+import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -12,55 +13,87 @@ public class EventPanel extends JPanel implements Runnable {
     private BarListener r = null;
     private ArrayList<String> events= new ArrayList<String>();
 
-    // private JPanel searchAndTable = new JPanel();
-    // private JPanel inside = new JPanel();
     private JPanel filterPanel = new JPanel();
+    private JCheckBox filter1 = new JCheckBox("Democracy");
+    private JCheckBox filter2 = new JCheckBox("Not Democracy");
 
-    // private JScrollPane eventPane = new JScrollPane(inside, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    private Table table = new Table();
     private Color col = Color.lightGray;
 
     // Visuals
-    private GridBagConstraints gbcEvent = new GridBagConstraints();
-    private GridBagConstraints gbcMaster = new GridBagConstraints();
-    private GridBagConstraints gbcSearch = new GridBagConstraints();
-
-    private int displayedCount = 0;
-
-    private JPanel searchBox = new JPanel();
-    private JTextField searchField = new JTextField(45);
-    private JButton searchButton = new JButton("Search");
-
+    private GridBagConstraints gbc = new GridBagConstraints();
     private JTableSearch dataWithSearch = new JTableSearch();
+
     public EventPanel() {
         super();
         this.setBackground(new Color(245, 243, 213));
         this.setLayout(new GridBagLayout());
-        gbcMaster.fill = GridBagConstraints.BOTH;
-        gbcMaster.gridx = 0;
-        gbcMaster.gridy = 0;
-        gbcMaster.weightx = 1;
-        gbcMaster.weighty = 1;
-        this.add(filterPanel,gbcMaster);
-        filterPanel.add(new JLabel("This will be the filter panel"));
 
-        gbcMaster.gridx = 1;
-        gbcMaster.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
 
-        this.add(dataWithSearch,gbcMaster);
+        filterPanel.setPreferredSize(new Dimension(75,100));
+        this.add(filterPanel,gbc);
+        filterPanel.add(new JLabel("Filter Panel"));
+        filterPanel.add(filter1);
+        filterPanel.add(filter2);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        this.add(table, gbc);
+
+        filter1.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            if(filter1.isSelected()) {
+              table.rowSorter.setRowFilter(RowFilter.regexFilter("true"));
+            }
+            else
+              table.rowSorter.setRowFilter(null);
+          }
+        });
+
+        filter2.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            if(filter2.isSelected()) {
+              table.rowSorter.setRowFilter(RowFilter.regexFilter("false"));
+            }
+            else
+              table.rowSorter.setRowFilter(null);
+          }
+        });
+
+        //this.add(dataWithSearch,gbc);
     }
+
+    // public void actionPerformed(ActionEvent e) {
+    //   if(filter1.isSelected())
+    //     table.rowSorter.setRowFilter(RowFilter.regexFilter("true"));
+    //   if(filter2.isSelected())
+    //     table.rowSorter.setRowFilter(RowFilter.regexFilter("false"));
+    //   else
+    //     table.rowSorter.setRowFilter(RowFilter.regexFilter(""));
+    // }
 
     public void addListener(BarListener r){
         this.addMouseListener(r);
     }
+
     private void alternateColor(){
         if (this.col == Color.lightGray)
             this.col = Color.white;
         else
             this.col = Color.lightGray;
     }
+
     public void addText(String s){
         this.events.add(s);
     }
+
     public void updatePanel(){
         for(String l : this.events){
             this.dataWithSearch.model.addRow(new Object[]{l});

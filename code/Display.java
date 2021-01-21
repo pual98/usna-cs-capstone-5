@@ -5,6 +5,7 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.*;
+import java.time.*;
 
 public class Display extends JPanel implements Runnable {
 
@@ -20,6 +21,7 @@ public class Display extends JPanel implements Runnable {
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+
 
         // Add panels back into Display
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -59,6 +61,8 @@ public class Display extends JPanel implements Runnable {
               String line;
             while(true){
                 try{
+
+
                      if((line = in.readLine()) != null) {
                         eventPanel.addText(line);
                         eventPanel.updatePanel();
@@ -67,7 +71,7 @@ public class Display extends JPanel implements Runnable {
                      } else {
                         Thread.sleep(20);
                      }
-                }catch(InterruptedException e){}
+                }catch(Exception e){}
             }
         } catch(Throwable e){}
     }
