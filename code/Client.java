@@ -15,14 +15,15 @@ public class Client implements Runnable
     static int ID = 0;
     static int NUM_CLUSTERS = 0;
     private boolean isCoordinator = false;
-    boolean inGroup = false; //used to check if Client tries to join more than one CIDS
-    String groupname = null;
-    ObjectInputStream dis;
-    ObjectOutputStream dos;
-    Scanner scn;
-    ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
-    ArrayList<EntityCluster> clusters = null;
-    ArrayList<Integer> memIDs = null;
+    public boolean inGroup = false; //used to check if Client tries to join more than one CIDS
+    public String groupname = null;
+    public ObjectInputStream dis;
+    public ObjectOutputStream dos;
+    public Scanner scn;
+    public ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
+    public ArrayList<EntityCluster> clusters = null;
+    public ArrayList<Integer> memIDs = null;
+    public String filename;
 
     public Client() {
         boolean haveID = false;

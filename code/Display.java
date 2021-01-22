@@ -8,10 +8,8 @@ import java.util.*;
 import java.time.*;
 
 public class Display extends JPanel implements Runnable {
-
-    private BarListener r = null;
-    private ControlPanel controlPanel = new ControlPanel();
-    private EventPanel eventPanel = new EventPanel();
+    public ControlPanel controlPanel = new ControlPanel();
+    public EventPanel eventPanel = new EventPanel();
 
 
     public Display() {
