@@ -40,6 +40,7 @@ public class Display extends JPanel implements Runnable {
         this.add(eventPanel, gbc);
         this.doLayout();
     }
+
     public void resize(){
         // Fix this
         //actionPanel.setMinimumSize(new Dimension(200,200));
@@ -52,6 +53,10 @@ public class Display extends JPanel implements Runnable {
 
     public String getFilename() {
       return eventPanel.getFilename();
+    }
+
+    public ArrayList<Entity> getEntitiesFromFile() {
+      return eventPanel.getDataset();
     }
 
     /**

@@ -13,6 +13,7 @@ public class EventPanel extends JPanel implements Runnable {
 
     private BarListener r = null;
     private ArrayList<String> events= new ArrayList<String>();
+    private ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
 
     //filter panel features
     private JPanel filterPanel = new JPanel();
@@ -81,7 +82,7 @@ public class EventPanel extends JPanel implements Runnable {
         browse = new JButton("Browse...");
         upload = new JButton("Upload");
         fileLabel = new JLabel("Choose Snort Test File");
-        uploadTextField = new JTextField(30);
+        uploadTextField = new JTextField(25);
         uploadTextField.setEditable(false);
         fileChooser = new JFileChooser();
 
@@ -141,7 +142,7 @@ public class EventPanel extends JPanel implements Runnable {
     //when the upload button is pressed
     public void upload(ActionEvent evt) {
       if(uploadTextField.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "No Snort File Selected", "Error!", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "No File Selected", "Error!", JOptionPane.ERROR_MESSAGE);
         return;
       }
       filename = uploadTextField.getText();
@@ -151,6 +152,39 @@ public class EventPanel extends JPanel implements Runnable {
         filename = "";
         return;
       }
+      else{
+        try{
+          FileReader fr = new FileReader(filename);
+          BufferedReader br = new BufferedReader(fr);
+          FileWriter fw = new FileWriter("output.csv");
+          BufferedWriter bw = new BufferedWriter(fw);
+          String line;
+
+
+          while ((line = br.readLine()) != null) {
+            AlertParser a = new AlertParser(line);
+            a.parseLine();
+
+            if(a.isTCP()) {
+              String parsedLine = a.genCSVOutput();
+              Entity en = a.genEntityFromLine(parsedLine);
+              if(en != null)
+                entitiesFromFile.add(en);
+            }
+          }
+
+
+        } catch (Throwable e) {
+            JOptionPane.showMessageDialog(null, "File provided is in wrong format!", "File Not Supported!", JOptionPane.ERROR_MESSAGE);
+            filename = "";
+            uploadTextField.setText("");
+            return;
+        }
+      }
+    }
+
+    public ArrayList<Entity> getDataset() {
+      return entitiesFromFile;
     }
 
     //return filename so that it can be accessed by the client

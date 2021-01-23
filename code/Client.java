@@ -25,6 +25,7 @@ public class Client implements Runnable
     public ArrayList<Integer> memIDs = null;
     public String filename;
 
+
     public Client() {
         boolean haveID = false;
         try{
@@ -238,11 +239,11 @@ public class Client implements Runnable
 
     }
 
-    public void kPrototypes() {
+    public void kPrototypes(ArrayList<Entity> dataset) {
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
-        ArrayList<Entity> dataset = Dataset.build("threeClusters.csv");
+        //ArrayList<Entity> dataset = Dataset.build("threeClusters.csv");
         if (isCoordinator){
             //int NUM_CLUSTERS = 3;
             this.clusters = new ArrayList<EntityCluster>();
