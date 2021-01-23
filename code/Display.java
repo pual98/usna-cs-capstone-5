@@ -59,27 +59,15 @@ public class Display extends JPanel implements Runnable {
       return eventPanel.getDataset();
     }
 
+    public void populateTable() {
+      eventPanel.populateTable();
+    }
+
     /**
      * Runnable method for threads.
      **/
     public void run() {
-        try{
-              RandomAccessFile in = new RandomAccessFile("file.txt", "r");
-              String line;
-            while(true){
-                try{
 
-
-                     if((line = in.readLine()) != null) {
-                        eventPanel.addText(line);
-                        eventPanel.updatePanel();
-                        this.resize();
-                        this.revalidate();
-                     } else {
-                        Thread.sleep(20);
-                     }
-                }catch(Exception e){}
-            }
-        } catch(Throwable e){}
+      
     }
 }

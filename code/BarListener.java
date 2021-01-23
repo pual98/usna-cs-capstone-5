@@ -124,6 +124,7 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
                 //Parse filename into CSV file to be sent to kPrototypes
 
                 this.client.kPrototypes(d.getEntitiesFromFile());
+                this.d.populateTable();
             }
 
         }

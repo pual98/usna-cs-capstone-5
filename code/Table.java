@@ -19,17 +19,17 @@ public class Table extends JPanel {
     //private String[] columnNames
       //      = {"sid", "rev", "Message", "Priority", "epochTime", "srcIP", "srcPort", "destIP", "destPort"};
 
-    private String[] columnNames = {"Country","Capital","Population by Millions", "Democracy"};
-    private Object[][] data = {
-        {"USA", "Washington DC", 280, true},
-        {"Canada", "Ottawa", 32, true},
-        {"United Kingdom", "London", 60, true},
-        {"Germany", "Berlin", 83, false},
-        {"France", "Paris", 60, true},
-        {"Norway", "Oslo", 4.5, false},
-        {"India", "New Delhi", 1046, true}
-    };
-    //private Object[][] data;
+    private String[] columnNames = {"Source IP","Source Port","Dest IP", "Dest Port", "Classification", "Message", "Cluster #"};
+    private Object[][] data = null;
+    // private Object[][] data = {
+    //     {"USA", "Washington DC", 280, true},
+    //     {"Canada", "Ottawa", 32, true},
+    //     {"United Kingdom", "London", 60, true},
+    //     {"Germany", "Berlin", 83, false},
+    //     {"France", "Paris", 60, true},
+    //     {"Norway", "Oslo", 4.5, false},
+    //     {"India", "New Delhi", 1046, true}
+    // };
 
 
     private DefaultTableModel model;
@@ -40,16 +40,12 @@ public class Table extends JPanel {
 
     public Table() {
 
-          //data = parseData("file.txt");
         model = new DefaultTableModel(data, columnNames) {
           public boolean isCellEditable(int row, int column) {
             return false;//This causes all cells to be not editable
           }
         };
         table = new JTable(model);
-        rowSorter = new TableRowSorter<>(table.getModel());
-
-        table.setRowSorter(rowSorter);
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel("Search"), BorderLayout.WEST);
@@ -58,58 +54,51 @@ public class Table extends JPanel {
         setLayout(new BorderLayout());
         add(panel, BorderLayout.SOUTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
-
-        textfield.getDocument().addDocumentListener(new DocumentListener(){
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                String text = textfield.getText();
-
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                String text = textfield.getText();
-
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
     }
 
-    // public Object[][] parseData(String filename) {
-    //   // Object[][] lines = new Object[][];
-    //   // try{
-    //   //     RandomAccessFile in = new RandomAccessFile(filename, "r");
-    //   //     String line;
-    //   //     while(true){
-    //   //       try{
-    //   //         if((line = in.readLine()) != null) {
-    //   //           eventPanel.addText(line);
-    //   //           eventPanel.updatePanel();
-    //   //           this.resize();
-    //   //           this.revalidate();
-    //   //         }
-    //   //         else {
-    //   //           Thread.sleep(20);
-    //   //         }
-    //   //       }catch(Exception e){}
-    //   //     }
-    //   //   } catch(Throwable e){}
-    // }
+  public void updateData(Object[][] newData) {
+      data = newData;
+      model = new DefaultTableModel(data, columnNames) {
+        public boolean isCellEditable(int row, int column) {
+          return false;//This causes all cells to be not editable
+        }
+      };
+      table.setModel(model);
+      table.revalidate();
+      table.repaint();
+
+      rowSorter = new TableRowSorter<>(table.getModel());
+      table.setRowSorter(rowSorter);
+      textfield.getDocument().addDocumentListener(new DocumentListener(){
+
+          @Override
+          public void insertUpdate(DocumentEvent e) {
+              String text = textfield.getText();
+
+              if (text.trim().length() == 0) {
+                  rowSorter.setRowFilter(null);
+              } else {
+                  rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+              }
+          }
+
+          @Override
+          public void removeUpdate(DocumentEvent e) {
+              String text = textfield.getText();
+
+              if (text.trim().length() == 0) {
+                  rowSorter.setRowFilter(null);
+              } else {
+                  rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+              }
+          }
+
+          @Override
+          public void changedUpdate(DocumentEvent e) {
+              throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          }
+      });
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable(){
