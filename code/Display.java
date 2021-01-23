@@ -50,6 +50,10 @@ public class Display extends JPanel implements Runnable {
         controlPanel.addListener(r);
     }
 
+    public String getFilename() {
+      return eventPanel.getFilename();
+    }
+
     /**
      * Runnable method for threads.
      **/

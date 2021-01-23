@@ -115,6 +115,14 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
                   JOptionPane.showMessageDialog(null, "You need to be in a group before running IDS!", "Denial", JOptionPane.ERROR_MESSAGE);
                   return;
                 }
+                // String fname = d.getFilename();
+                // if(fname.equals("")) {
+                //   JOptionPane.showMessageDialog(null, "You need to upload Snort Data prior to running IDS!", "No File Selected", JOptionPane.ERROR_MESSAGE);
+                //   return;
+                // }
+
+                //Parse filename into CSV file to be sent to kPrototypes
+                
                 this.client.kPrototypes();
             }
 

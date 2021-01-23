@@ -26,7 +26,7 @@ public class EventPanel extends JPanel implements Runnable {
     private JLabel fileLabel;
     private JTextField uploadTextField;
     private JFileChooser fileChooser;
-    private String filename;
+    private String filename = "";
     private String outputCSV;
 
 
@@ -148,6 +148,7 @@ public class EventPanel extends JPanel implements Runnable {
       if(!filename.contains(".txt")) {
         JOptionPane.showMessageDialog(null, "Please Upload a Snort Text File", "Wrong File Extension!", JOptionPane.ERROR_MESSAGE);
         uploadTextField.setText("");
+        filename = "";
         return;
       }
     }
