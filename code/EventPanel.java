@@ -14,6 +14,9 @@ public class EventPanel extends JPanel implements Runnable {
     private BarListener r = null;
     private ArrayList<String> events= new ArrayList<String>();
 
+    private ArrayList<String> parsedLines ;
+    private ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
+
     //filter panel features
     private JPanel filterPanel = new JPanel();
     private JCheckBox filter1 = new JCheckBox("Democracy");
@@ -41,6 +44,7 @@ public class EventPanel extends JPanel implements Runnable {
         super();
         this.setBackground(new Color(245, 243, 213));
         this.setLayout(new GridBagLayout());
+        parsedLines = new ArrayList<String>();
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
@@ -81,7 +85,7 @@ public class EventPanel extends JPanel implements Runnable {
         browse = new JButton("Browse...");
         upload = new JButton("Upload");
         fileLabel = new JLabel("Choose Snort Test File");
-        uploadTextField = new JTextField(30);
+        uploadTextField = new JTextField(25);
         uploadTextField.setEditable(false);
         fileChooser = new JFileChooser();
 
@@ -118,14 +122,7 @@ public class EventPanel extends JPanel implements Runnable {
         //this.add(dataWithSearch,gbc);
     }
 
-    // public void actionPerformed(ActionEvent e) {
-    //   if(filter1.isSelected())
-    //     table.rowSorter.setRowFilter(RowFilter.regexFilter("true"));
-    //   if(filter2.isSelected())
-    //     table.rowSorter.setRowFilter(RowFilter.regexFilter("false"));
-    //   else
-    //     table.rowSorter.setRowFilter(RowFilter.regexFilter(""));
-    // }
+
 
     public void addListener(BarListener r){
         this.addMouseListener(r);
@@ -141,7 +138,7 @@ public class EventPanel extends JPanel implements Runnable {
     //when the upload button is pressed
     public void upload(ActionEvent evt) {
       if(uploadTextField.getText().equals("")) {
-        JOptionPane.showMessageDialog(null, "No Snort File Selected", "Error!", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "No File Selected", "Error!", JOptionPane.ERROR_MESSAGE);
         return;
       }
       filename = uploadTextField.getText();
@@ -151,6 +148,65 @@ public class EventPanel extends JPanel implements Runnable {
         filename = "";
         return;
       }
+      else{
+        try{
+          FileReader fr = new FileReader(filename);
+          BufferedReader br = new BufferedReader(fr);
+          FileWriter fw = new FileWriter("output.csv");
+          BufferedWriter bw = new BufferedWriter(fw);
+          String line;
+
+          //
+          while ((line = br.readLine()) != null) {
+            AlertParser a = new AlertParser(line);
+            a.parseLine();
+
+            if(a.isTCP()) {
+              //keep track of parsed lines as strings
+              String parsedLine = a.genCSVOutput();
+              parsedLines.add(parsedLine);
+              //keep track of parsed lines as Entities
+              Entity en = a.genEntityFromLine(parsedLine);
+              if(en != null)
+                entitiesFromFile.add(en);
+            }
+          }
+          JOptionPane.showMessageDialog(null, "Upload Complete!", "Data Uploaded", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Throwable e) {
+            JOptionPane.showMessageDialog(null, "File provided is in wrong format!", "File Not Supported!", JOptionPane.ERROR_MESSAGE);
+            filename = "";
+            uploadTextField.setText("");
+            return;
+        }
+      }
+    }
+
+    public void populateTable() {
+      Object[][] data = new Object[parsedLines.size()][7];
+      for(int i = 0; i < parsedLines.size(); i++) {
+        String[] row = parsedLines.get(i).split(";");
+        //source IP
+        data[i][0] = row[6];
+        //source port
+        data[i][1] = row[7];
+        //dest IP
+        data[i][2] = row[8];
+        //dest port
+        data[i][3] = row[9];
+        //classification
+        data[i][4] = row[3];
+        //message
+        data[i][5] = row[2];
+        //cluster number
+        data[i][6] = entitiesFromFile.get(i).getAssignedCluster();
+      }
+      table.updateData(data);
+      this.revalidate();
+      this.repaint();
+    }
+
+    public ArrayList<Entity> getDataset() {
+      return entitiesFromFile;
     }
 
     //return filename so that it can be accessed by the client
