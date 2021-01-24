@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java .io.*;
+import java.io.*;
 
 public class SharingEntity implements Serializable
 {
@@ -10,6 +10,7 @@ public class SharingEntity implements Serializable
   private ArrayList<Double> qualities;
   private int numQuals;
   private int numCats;
+  private boolean conv;
   
   public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat)
   {
@@ -18,6 +19,15 @@ public class SharingEntity implements Serializable
     this.modeMap = cat;
     this.numQuals = qual.size();
     this.numCats = cat.size();
+  }
+    public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat, boolean cv)
+  {
+    this.countShare = cs;
+    this.qualities = qual;
+    this.modeMap = cat;
+    this.numQuals = qual.size();
+    this.numCats = cat.size();
+    this.conv = cv;
   }
   
   public SharingEntity()
@@ -29,10 +39,25 @@ public class SharingEntity implements Serializable
 	qualities.add(0.0);
       }
     this.modeMap = new ArrayList<HashMap<Integer,Integer>>();
+    for(int i = 0 ; i < 4; i++)
+      {
+	modeMap.add(new HashMap<Integer,Integer>());
+      }
     this.numQuals = qualities.size();
     this.numCats = 4;//.size();
+    this.conv = false;
   }
 
+  public void setConv(boolean b)
+  {
+    conv = b;
+  }
+
+  public boolean getConv()
+  {
+    return conv;
+  }
+  
   public double getQual(int i)
   {
     return qualities.get(i);
@@ -145,6 +170,8 @@ public class SharingEntity implements Serializable
     qualities = KMode.merge(qualities,toAdd.getQualities());
     ArrayList<HashMap<Integer,Integer>> newMap = KMode.makeNewModeMap(toAdd.getCategories());
     modeMap = KMode.mergeMaps(modeMap,newMap);
+    numQuals = qualities.size();
+    numCats = toAdd.getCategoryCount();
   }
 
   

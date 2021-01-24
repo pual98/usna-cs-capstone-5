@@ -265,28 +265,43 @@ public class Client implements Runnable
                 Thread.sleep(500);
             }catch (InterruptedException e) {}
         }
+	Random r = new Random();
         boolean converged = false;
-        while(!converged)
+	int itt = 0;
+	while(!converged)
         {
+	    System.out.println("self " +ID + " c0 " + clusters.get(0).getCentroid());
+	    System.out.println("self " +ID + " c1 " + clusters.get(1).getCentroid());
+	    System.out.println("self " +ID + " c2 " + clusters.get(2).getCentroid());
             converged = true;
+	    
             for(Entity en : dataset)
             {
                 //assign to cluster
-                boolean interimConverged = assignCluster(en, this.clusters);
-                //assign to cluster
-                if(!interimConverged)
-                {
-                    converged = false;
-                }
+	      if(itt == 0)
+		{
+		  assignRandomCluster(en,this.clusters,r);
+		  converged = false;
+		}
+	      else
+		{
+		  boolean interimConverged = assignCluster(en, this.clusters);
+		  //assign to cluster
+		  if(!interimConverged)
+		    {
+		      converged = false;
+		    }
+		}
             }
-            if(converged)
-            {
-                break;
-            }
+	    itt++;
+
             //for each cluster:
+	    ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
             for(EntityCluster c : this.clusters)
             {
                 SharingEntity clusterData = new SharingEntity();
+		clusterData.setConv(converged);
+		System.out.println("self " + ID + " " + converged);
                 // sumlocal
                 for(Entity en : dataset)
                 {
@@ -295,22 +310,33 @@ public class Client implements Runnable
                         clusterData.addEntity(en);
                     }
                 }
+		System.out.println("ENTITIZED " + clusterData.toEntity());
 
                 Message msg = new Message(12, groupname, ID, 0);
                 msg.setEntity(clusterData);
                 sendMessage(msg);
                 // wait on sums
+		try{
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e) {}
                 while (receivedEntities.size() < 2){
                     try{
                         Thread.sleep(500);
                     }catch (InterruptedException e) {}
                 }
+		System.out.println("RECEIVED " + receivedEntities.size() +  "Entities");
                 for(SharingEntity se : receivedEntities)
                 {
-                    clusterData.addSharingEntity(se);
+		  if(se.getConv() == false)
+		    converged = false;
+		  clusterData.addSharingEntity(se);
                 }
                 c = new EntityCluster(clusterData.toEntity(), c.getId());
+		System.out.println("self updating " +ID + " " + c.getCentroid());
+		nc.add(c);
             }
+	    System.out.println("self " + ID + " " +  clusters.get(1).getCentroid());
+	    this.clusters = nc;
         }
         String centroidPopup = "                                            Cluster Centroids:\n";
         for(int i = 0; i < NUM_CLUSTERS; i++) {
@@ -321,7 +347,13 @@ public class Client implements Runnable
         JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters)
+  public static void assignRandomCluster(Entity en, ArrayList<EntityCluster> clusters, Random r)
+  {
+    int cluster = r.nextInt(clusters.size());
+    en.setCluster(cluster);
+  }
+
+  public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters)
     {
         double max = Double.MAX_VALUE;
         double min = max;

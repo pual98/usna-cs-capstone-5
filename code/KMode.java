@@ -120,6 +120,10 @@ public class KMode
 	  {
 	    ret.put(e.getKey(), ret.get(e.getKey()) + e.getValue());
 	  }
+	else
+	  {
+	    ret.put(e.getKey(),e.getValue());
+	  }
       }
     return ret;
   }
