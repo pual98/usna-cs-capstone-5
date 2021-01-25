@@ -265,14 +265,22 @@ public class Client implements Runnable
                 Thread.sleep(500);
             }catch (InterruptedException e) {}
         }
+
 	Random r = new Random();
         boolean converged = false;
 	int itt = 0;
 	while(!converged)
         {
-	    System.out.println("self " +ID + " c0 " + clusters.get(0).getCentroid());
-	    System.out.println("self " +ID + " c1 " + clusters.get(1).getCentroid());
-	    System.out.println("self " +ID + " c2 " + clusters.get(2).getCentroid());
+	  int clabel = 0;
+	  for(EntityCluster c: clusters)
+	    {
+	      c.setId(clabel);
+	      clabel++;
+	    }
+	    System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 0 " + clusters.get(0).getCentroid());
+	    System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 1 " + clusters.get(1).getCentroid());
+	    System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 2 " + clusters.get(2).getCentroid());
+
             converged = true;
 	    
             for(Entity en : dataset)
@@ -299,43 +307,47 @@ public class Client implements Runnable
 	    ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
             for(EntityCluster c : this.clusters)
             {
-                SharingEntity clusterData = new SharingEntity();
-		clusterData.setConv(converged);
-		System.out.println("self " + ID + " " + converged);
-                // sumlocal
-                for(Entity en : dataset)
+	      SharingEntity clusterData = new SharingEntity();
+	      clusterData.setConv(converged);
+	      System.out.println("self " + ID + " " + converged);
+	      // sumlocal
+	      for(Entity en : dataset)
                 {
-                    if(en.getAssignedCluster() == c.getId())
+		  if(en.getAssignedCluster() == c.getId())
                     {
-                        clusterData.addEntity(en);
+		      clusterData.addEntity(en);
                     }
                 }
-		System.out.println("ENTITIZED " + clusterData.toEntity());
-
-                Message msg = new Message(12, groupname, ID, 0);
-                msg.setEntity(clusterData);
-                sendMessage(msg);
-                // wait on sums
+	      
+	      Message msg = new Message(12, groupname, ID, 0);
+	      msg.setEntity(clusterData);
+	      sendMessage(msg);
+	      // wait on sums
+	      try{
+		Thread.sleep(1000);
+	      }catch (InterruptedException e) {}
+	      while (receivedEntities.size() < 2){
 		try{
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e) {}
-                while (receivedEntities.size() < 2){
-                    try{
-                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
-                }
-		System.out.println("RECEIVED " + receivedEntities.size() +  "Entities");
-                for(SharingEntity se : receivedEntities)
+		  Thread.sleep(500);
+		}catch (InterruptedException e) {}
+	      }
+	      System.out.println("Size of Received Sharing Entity List " + receivedEntities.size());
+	      System.out.println("Own Sharing Entity iteration " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + clusterData.toEntity());
+	      int check = 0;
+	      for(SharingEntity se : receivedEntities)
                 {
+		  if(check >= 2)
+		    break;
+		  System.out.println("Received Sharing Entity iteration  " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + se.toEntity());
 		  if(se.getConv() == false)
 		    converged = false;
 		  clusterData.addSharingEntity(se);
                 }
-                c = new EntityCluster(clusterData.toEntity(), c.getId());
-		System.out.println("self updating " +ID + " " + c.getCentroid());
-		nc.add(c);
+	      System.out.println("FINAL iteration " + itt +  "   ID " + ID  + "   cluster  " + c.getId() + clusterData.toEntity());
+	      c = new EntityCluster(clusterData.toEntity(), c.getId());
+	      nc.add(c);
+	      receivedEntities.removeAll(receivedEntities);
             }
-	    System.out.println("self " + ID + " " +  clusters.get(1).getCentroid());
 	    this.clusters = nc;
         }
         String centroidPopup = "                                            Cluster Centroids:\n";

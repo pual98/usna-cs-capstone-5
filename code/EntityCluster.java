@@ -33,6 +33,7 @@ public class EntityCluster implements Serializable
   }
 
   public Entity getCentroid() {
+    centroid.setCluster(id);
     return centroid;
   }
 
@@ -43,6 +44,9 @@ public class EntityCluster implements Serializable
 
   public int getId() {
     return id;
+  }
+  public void setId(int ij) {
+    id = ij;
   }
 
   public void clear() {

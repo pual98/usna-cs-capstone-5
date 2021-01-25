@@ -112,7 +112,7 @@ public class SharingEntity implements Serializable
     ArrayList<HashMap<Integer,Integer>> retModeMap = KMode.mergeMaps(a.modeMap, b.modeMap);
     int retCountShare = a.countShare + b.countShare;
     SharingEntity ret = new SharingEntity(retCountShare, retQuals, retModeMap);
-
+ 
     return ret;
   }
   
@@ -126,7 +126,7 @@ public class SharingEntity implements Serializable
       }
     qualities = retQuals;
     modeMap =  KMode.mergeMaps(modeMap, b.modeMap);
-    countShare = countShare + b.countShare;
+    countShare = countShare + b.countShare; 
   }
 
   
