@@ -87,5 +87,10 @@ public class IDS {
         f.pack();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
+
+
+        if (args[0].equals("-f")){
+            display.getEventPanel().setFilePath(args[1]); 
+        }
     }
 }

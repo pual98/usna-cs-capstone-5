@@ -181,6 +181,10 @@ public class EventPanel extends JPanel implements Runnable {
       }
     }
 
+    public void setFilePath(String text){
+        uploadTextField.setText(text);
+    }
+
     public void populateTable() {
       Object[][] data = new Object[parsedLines.size()][7];
       for(int i = 0; i < parsedLines.size(); i++) {
