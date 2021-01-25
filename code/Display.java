@@ -5,12 +5,11 @@ import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.*;
+import java.time.*;
 
 public class Display extends JPanel implements Runnable {
-
-    private BarListener r = null;
-    private ControlPanel controlPanel = new ControlPanel();
-    private EventPanel eventPanel = new EventPanel();
+    public ControlPanel controlPanel = new ControlPanel();
+    public EventPanel eventPanel = new EventPanel();
 
 
     public Display() {
@@ -20,6 +19,7 @@ public class Display extends JPanel implements Runnable {
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+
 
         // Add panels back into Display
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -40,6 +40,7 @@ public class Display extends JPanel implements Runnable {
         this.add(eventPanel, gbc);
         this.doLayout();
     }
+
     public void resize(){
         // Fix this
         //actionPanel.setMinimumSize(new Dimension(200,200));
@@ -50,25 +51,23 @@ public class Display extends JPanel implements Runnable {
         controlPanel.addListener(r);
     }
 
+    public String getFilename() {
+      return eventPanel.getFilename();
+    }
+
+    public ArrayList<Entity> getEntitiesFromFile() {
+      return eventPanel.getDataset();
+    }
+
+    public void populateTable() {
+      eventPanel.populateTable();
+    }
+
     /**
      * Runnable method for threads.
      **/
     public void run() {
-        try{
-              RandomAccessFile in = new RandomAccessFile("file.txt", "r");
-              String line;
-            while(true){
-                try{
-                     if((line = in.readLine()) != null) {
-                        eventPanel.addText(line);
-                        eventPanel.updatePanel();
-                        this.resize();
-                        this.revalidate();
-                     } else {
-                        Thread.sleep(20);
-                     }
-                }catch(InterruptedException e){}
-            }
-        } catch(Throwable e){}
+
+      
     }
 }

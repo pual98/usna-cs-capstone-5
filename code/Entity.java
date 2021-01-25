@@ -136,20 +136,20 @@ public class Entity implements Serializable
     return Math.sqrt(sum);
 
   }
+
+
   public String toString()
   {
     String ret = "";
-    if(d != 0)
-      {
+    if(d != 0) {
       for(int i = 0 ; i < d; i++)
-	ret += qualities.get(i) + ",";
-      }
-    if(dCat != 0)
-      {
-	for(int i = 0 ; i < dCat-1; i++)
-	  ret += categories.get(i) + ",";
-	ret += categories.get(dCat-1);
-      }
+	    ret += qualities.get(i) + ",";
+    }
+    if(dCat != 0) {
+      for(int i = 0 ; i < dCat-1; i++)
+	    ret += categories.get(i) + ",";
+	    ret += categories.get(dCat-1);
+    }
     return "(" + ret + ")" + " " + cluster_number;
   }
 

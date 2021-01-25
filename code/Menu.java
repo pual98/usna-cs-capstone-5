@@ -19,7 +19,7 @@ public class Menu extends JMenuBar {
     public Menu(){
         //Create menus
         file = new JMenu("File");
-        help = new JMenu("help");
+        help = new JMenu("Help");
 
         //Add sub menus
         options = new JMenu("options");
@@ -28,7 +28,7 @@ public class Menu extends JMenuBar {
         file.add(addClient);
         this.add(help);
         this.add(options);
-        
+
         //Visuals
         this.setBackground(Color.lightGray);
         Font menuFont = new Font("Times New Roman", Font.PLAIN, 16);
