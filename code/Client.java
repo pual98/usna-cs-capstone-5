@@ -307,6 +307,7 @@ public class Client implements Runnable
 	    ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
             for(EntityCluster c : this.clusters)
             {
+	      System.out.println("this.Cluster  SIZE: " + this.clusters.size());
 	      SharingEntity clusterData = new SharingEntity();
 	      clusterData.setConv(converged);
 	      System.out.println("self " + ID + " " + converged);
@@ -320,7 +321,10 @@ public class Client implements Runnable
                 }
 	      
 	      Message msg = new Message(12, groupname, ID, 0);
+	      clusterData.setClusterLabel(c.getId());
+	      clusterData.setIterationLabel(itt);
 	      msg.setEntity(clusterData);
+	      System.out.println("ID " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
 	      sendMessage(msg);
 	      // wait on sums
 	      try{
@@ -333,11 +337,15 @@ public class Client implements Runnable
 	      }
 	      System.out.println("Size of Received Sharing Entity List " + receivedEntities.size());
 	      System.out.println("Own Sharing Entity iteration " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + clusterData.toEntity());
-	      int check = 0;
+	      ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
 	      for(SharingEntity se : receivedEntities)
+		{
+		  if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
+		    confirmedSharingEntities.add(se);
+		}
+	      for(SharingEntity se : confirmedSharingEntities)
                 {
-		  if(check >= 2)
-		    break;
+		 
 		  System.out.println("Received Sharing Entity iteration  " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + se.toEntity());
 		  if(se.getConv() == false)
 		    converged = false;
@@ -346,7 +354,7 @@ public class Client implements Runnable
 	      System.out.println("FINAL iteration " + itt +  "   ID " + ID  + "   cluster  " + c.getId() + clusterData.toEntity());
 	      c = new EntityCluster(clusterData.toEntity(), c.getId());
 	      nc.add(c);
-	      receivedEntities.removeAll(receivedEntities);
+	      receivedEntities.removeAll(confirmedSharingEntities);
             }
 	    this.clusters = nc;
         }

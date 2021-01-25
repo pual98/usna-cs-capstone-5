@@ -10,6 +10,8 @@ public class SharingEntity implements Serializable
   private ArrayList<Double> qualities;
   private int numQuals;
   private int numCats;
+  private int clusterLabel;
+  private int iterationLabel;
   private boolean conv;
   
   public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat)
@@ -77,6 +79,26 @@ public class SharingEntity implements Serializable
     return modeMap;
   }
 
+  public void setClusterLabel(int label)
+  {
+    clusterLabel = label;
+  }
+
+  public int getClusterLabel()
+  {
+    return clusterLabel;
+  }
+  
+  public void setIterationLabel(int label)
+  {
+    iterationLabel = label;
+  }
+
+  public int getIterationLabel()
+  {
+    return iterationLabel;
+  }
+  
   public int getCountShare()
   {
     return countShare;
