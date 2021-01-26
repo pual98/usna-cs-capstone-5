@@ -19,8 +19,8 @@ public class EventPanel extends JPanel implements Runnable {
 
     //filter panel features
     private JPanel filterPanel = new JPanel();
-    private JCheckBox filter1 = new JCheckBox("Democracy");
-    private JCheckBox filter2 = new JCheckBox("Not Democracy");
+    private JCheckBox filter1 = new JCheckBox("Web Application Attacks");
+    private JCheckBox filter2 = new JCheckBox("Attempted Information Leak");
 
     //upload file panel
     private JPanel fileUpload;
@@ -63,7 +63,7 @@ public class EventPanel extends JPanel implements Runnable {
           @Override
           public void actionPerformed(ActionEvent e) {
             if(filter1.isSelected()) {
-              table.rowSorter.setRowFilter(RowFilter.regexFilter("true"));
+              table.rowSorter.setRowFilter(RowFilter.regexFilter("Web Application Attack"));
             }
             else
               table.rowSorter.setRowFilter(null);
@@ -74,7 +74,7 @@ public class EventPanel extends JPanel implements Runnable {
           @Override
           public void actionPerformed(ActionEvent e) {
             if(filter2.isSelected()) {
-              table.rowSorter.setRowFilter(RowFilter.regexFilter("false"));
+              table.rowSorter.setRowFilter(RowFilter.regexFilter("Attempted Information Leak"));
             }
             else
               table.rowSorter.setRowFilter(null);
