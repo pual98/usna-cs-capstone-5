@@ -20,7 +20,7 @@ public class EventPanel extends JPanel implements Runnable {
     //filter panel features
     private JPanel filterPanel = new JPanel();
     private JCheckBox filter1 = new JCheckBox("Web Application Attacks");
-    private JCheckBox filter2 = new JCheckBox("Attempted Information Leak");
+    private JCheckBox filter2 = new JCheckBox("Attempted Information Leaks");
 
     //upload file panel
     private JPanel fileUpload;
