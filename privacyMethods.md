@@ -4,11 +4,11 @@ To begin, it may be useful to understand and review what we've done so far. Our
 current implementation is simply k-prototypes, a modification of k-means:
 
 + [K-means refresher video](https://www.youtube.com/watch?v=4b5d3muPQmA):
-  Remember, k-means simply assigs random (or not-so-random) cluster
+  Remember, k-means simply assigns random (or not-so-random) cluster
   centroids to start, assigns data points to the centroids nearest them (by
-  Euclidian distance), finds the mean of the points assigned to a centroid, and
+  Euclidean distance), finds the mean of the points assigned to a centroid, and
   resets the "center" to the mean. Then repeat this process until the centroid
-  center stops moving significantly, or "converges."
+  centers stop moving significantly, or "converge."
 
 + K-prototypes is basically the same thing, but with a slight tweak. In
   k-means, the *mean* is possible because the data is numerical. Remember, the
@@ -16,10 +16,12 @@ current implementation is simply k-prototypes, a modification of k-means:
   to a cluster because their similarity (Euclidian distance) was closest to
   that cluster. Sometimes, data cannot be numerical. For non-quantitative data,
   aka qualitative data, the similarity metric is simply a check to see if the
-  two qualitative data points are an exact match or not. Then, instead of the
-  centroid being assigned to the mean (the average of the data), the centroid
+  two qualitative data points are an exact match or not. Then, the
+  centroid is assigned to the mean (the average of the data) and the centroid
   is assigned the qualitative attribute most frequently found in its dataset
   (the mode).
+  + It is not clear to me how k-prototypes reassigns entities based on their
+    categorical attributes.
 
 + Reviewing our Java implementation for better code understanding:
     + Entity: this class represents a horizontal partition of data (i.e., one
@@ -115,11 +117,12 @@ Any other index = 0
 ```
 
 2. Perturbing: Perturb(B) produces B'
-    + For each bit in B, if B[i] = 1, for some prob p leave it as 1. For some
-      prob q, change it to 0
+    + For each bit in B, if B[i] = 1, for some prob p leave it as 1; otherwise, change to 0
+    + For each bit in B, if B[i] = 0, for some prob q set the bit to 1;
+      otherwise, change to 0
     + This of course requires a p and q; $p = 1/2$ and $q=1/(e^\epsilon+1)$
+        + Found in [sec17](research/sec17-wang-tianhao.pdf)
     + $\epsilon$ is a privacy budget -- we need to determine how to set it.
-
 
 3. Share with aggregator -- just send to server
 
@@ -130,15 +133,11 @@ Any other index = 0
 > perturbed value, let it be count(v'). However even if a value v appears in all
 > rows, its probability of set to 1 is only p. And a non v value has
 > a probability of q being set to v. So we need to adjust for this bias. The real
-> count can be estimated as (count(v') - nq)/(p-q) (see equation 1 on page 6 to
-> adjust for perturbation).
+> count can be estimated as (count(v') - nq)/(p-q) (see equation 1 on [page 6](research/sec17-wang-tianhao.pdf) to adjust for perturbation).
 
-## Basic assumptions for alg:
+## Assumptions and questions:
 
-1. Server will be the aggregator. Aggregator is required, because otherwise you
-   are sending the perturbed bit vectors to each party who will see if you have
-   a categorical attribute or not (possibly--depends if the v bit was changed
-   to a 0 or not).
+1. Will the server or each individual be the aggregator?
 2. This only works for categorical attributes, who depend on frequency for the
    mode. This would not work for quantitative attributes, which depend on the
    mean.
