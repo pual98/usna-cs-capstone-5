@@ -16,13 +16,14 @@
     + [Homomorphic Encryption](research/When_Homomorphic_Cryptosystem_Meets_Differential_Privacy.pdf)
     + [Summary of Homomorphic Differential Privacy](https://docs.google.com/document/d/19XImfqUX-phXZn_5oWGkPs97NRoG7dks_SjsjLCiTSo/edit?usp=sharing)
     + [Differential Privacy Tutorial](research/differential_privacy_tutorial.pdf)
+    + [Locally Differentially Private Protocols for Frequency Estimation](research/sec17-wang-tianhao.pdf)
 
 ## Milestone 5
 
 + Active Git branches:
     + Master - static branch master
     + Dev - working branch master
-    + kmeans - implementing KPrototypes
+    + differentialPrivacy - working on diff priv
 
 + [Functional requirements trace table](https://docs.google.com/spreadsheets/d/1YPr3v7LRzJZG3VP-RFwnwrRitj4HEj1ryLTDtZEbtS8/edit?usp=sharing)
-+ [Milestone-5 assignment pdf](/milestone-assignments/Mile5_Testing.pdf)
++ [Milestone-7 assignment](https://docs.google.com/presentation/d/16VzU-3wbWz0Dfgpwj108qTSYcgCt0TeQNXReAiIcZtc/edit?usp=sharing)
