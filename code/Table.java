@@ -1,4 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.Color ;
+import java.awt.event.* ;
+import java.awt.Component ;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,107 +13,160 @@ import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer ;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class Table extends JPanel {
 
-    //private String[] columnNames
-      //      = {"sid", "rev", "Message", "Priority", "epochTime", "srcIP", "srcPort", "destIP", "destPort"};
-
-    private String[] columnNames = {"Source IP","Source Port","Dest IP", "Dest Port", "Classification", "Message", "Cluster #"};
-    private Object[][] data = null;
-    // private Object[][] data = {
-    //     {"USA", "Washington DC", 280, true},
-    //     {"Canada", "Ottawa", 32, true},
-    //     {"United Kingdom", "London", 60, true},
-    //     {"Germany", "Berlin", 83, false},
-    //     {"France", "Paris", 60, true},
-    //     {"Norway", "Oslo", 4.5, false},
-    //     {"India", "New Delhi", 1046, true}
-    // };
+  // Table Data //
+  private String[] columnNames = {"Source IP","Source Port","Dest IP", "Dest Port", "Classification", "Message", "Cluster #"};
+  private Object[][] data = null;
+  private Color [] clusterColor = { new Color(204, 204, 204), new Color(115, 173, 230), new Color(243, 142, 142), new Color(182, 239, 182), new Color(249, 249, 180), new Color(242, 203, 145), new Color(204, 153, 255), new Color(160, 246, 246), new Color(253, 159, 253), new Color(204, 255, 153) } ;
 
 
-    private DefaultTableModel model;
-    private JTable table;
-    public TableRowSorter<TableModel> rowSorter;
+  // Table Model //
+  private DefaultTableModel model;
+  private JTable table;
+  private JTextField textfield = new JTextField();
+  private JButton query = new JButton("Filter");
+  public TableRowSorter<TableModel> sorter;
 
-    private JTextField textfield = new JTextField();
+  // Filter Parser for Table //
+  private FilterParser fp = new FilterParser() ;
 
-    public Table() {
+  // Table Cell Renderer to Color rows based on CLuster Number //
+  private class ColorRenderer implements TableCellRenderer {
 
-        model = new DefaultTableModel(data, columnNames) {
-          public boolean isCellEditable(int row, int column) {
-            return false;//This causes all cells to be not editable
-          }
-        };
-        table = new JTable(model);
+    public DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel("Search"), BorderLayout.WEST);
-        panel.add(textfield, BorderLayout.CENTER);
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+        boolean isSelected, boolean hasFocus, int row, int column){
 
-        setLayout(new BorderLayout());
-        add(panel, BorderLayout.SOUTH);
-        add(new JScrollPane(table), BorderLayout.CENTER);
+      // get Component //
+      Component c = renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+      // get cluster number //
+      int actualRow = table.getRowSorter().convertRowIndexToModel(row);
+      int clusterNum = (int) table.getModel().getValueAt(actualRow, 6);
+
+      // color row //
+      c.setBackground(clusterColor[clusterNum]);
+
+      return c ;
     }
+  }
 
-  public void updateData(Object[][] newData) {
-      data = newData;
-      model = new DefaultTableModel(data, columnNames) {
-        public boolean isCellEditable(int row, int column) {
-          return false;//This causes all cells to be not editable
+  /* Constructor for Table class */
+  public Table() {
+    
+    // create Table Model //
+    model = new DefaultTableModel(data, columnNames) {
+      public boolean isCellEditable(int row, int column) {
+        return false;//This causes all cells to be not editable
+      }
+    };
+
+    // create JTable //
+    table = new JTable(model);
+
+    // create Panel and search label //
+    JPanel panel = new JPanel(new BorderLayout());
+    panel.add(new JLabel("Search"), BorderLayout.WEST);
+    
+    // create action listener for button //
+    query.addActionListener( new ActionListener(){
+      
+      public void actionPerformed(ActionEvent e){
+        
+        if(data != null){
+          String text = textfield.getText() ;
+
+          // do not send empty text //
+          if(text.length() == 0){
+            textfield.setBackground(Color.RED) ;
+          }
+          else{ filterTable(text) ;}
         }
-      };
-      table.setModel(model);
-      table.revalidate();
-      table.repaint();
+      }
+    });
+    panel.add(query, BorderLayout.EAST);
 
-      rowSorter = new TableRowSorter<>(table.getModel());
-      table.setRowSorter(rowSorter);
-      textfield.getDocument().addDocumentListener(new DocumentListener(){
+    // create documnet listener for text field //
+    textfield.getDocument().addDocumentListener( new DocumentListener(){
+      @Override
+      public void insertUpdate(DocumentEvent e){ resetColor(); }
 
-          @Override
-          public void insertUpdate(DocumentEvent e) {
-              String text = textfield.getText();
+      @Override
+      public void removeUpdate(DocumentEvent e){ 
+        resetColor(); 
+        sorter.setRowFilter(null);
+      }
 
-              if (text.trim().length() == 0) {
-                  rowSorter.setRowFilter(null);
-              } else {
-                  rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-              }
-          }
+      @Override
+      public void changedUpdate(DocumentEvent e){resetColor(); }
 
-          @Override
-          public void removeUpdate(DocumentEvent e) {
-              String text = textfield.getText();
+      private void resetColor(){ textfield.setBackground(Color.WHITE); }
+    });
+    panel.add(textfield, BorderLayout.CENTER);
+    
+    // add rest of components to panel //
+    setLayout(new BorderLayout());
+    add(panel, BorderLayout.SOUTH);
+    add(new JScrollPane(table), BorderLayout.CENTER);
+  }
 
-              if (text.trim().length() == 0) {
-                  rowSorter.setRowFilter(null);
-              } else {
-                  rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-              }
-          }
+  /* Update table data */
+  public void updateData(Object[][] newData) {
+    
+    /* create new model with new data */
+    data = newData;
+    model = new DefaultTableModel(data, columnNames) {
+      public boolean isCellEditable(int row, int column) {
+        return false;//This causes all cells to be not editable
+      }
+    };
 
-          @Override
-          public void changedUpdate(DocumentEvent e) {
-              throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-          }
-      });
+    // set table to new model //
+    table.setModel(model);
+    table.revalidate();
+    
+    /* create color renderer for rows */
+    ColorRenderer rowRenderer = new ColorRenderer();
+    table.setDefaultRenderer(Object.class, rowRenderer);
+    
+    /* create and add table filter */
+    sorter = new TableRowSorter<>(table.getModel());
+    table.setRowSorter(sorter); 
+    table.repaint();
+
+  }
+  
+  public void filterTable(String text){
+    
+    // use FilterParser //
+    RowFilter<Object,Object> filter = fp.parseFilter(text) ;
+    if(filter != null){
+      sorter.setRowFilter(filter);
+      textfield.setBackground(Color.GREEN) ;
     }
+    else{ textfield.setBackground(Color.RED); }    
+  }
+  
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(new Runnable(){
+      public void run() {
+        JFrame frame = new JFrame("Row Filter");
+        frame.add(new Table());
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+      }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable(){
-            public void run() {
-               JFrame frame = new JFrame("Row Filter");
-               frame.add(new Table());
-               frame.pack();
-               frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               frame.setLocationRelativeTo(null);
-               frame.setVisible(true);
-            }
-
-        });
-    }
+    });
+  }
 }

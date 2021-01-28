@@ -19,8 +19,8 @@ public class EventPanel extends JPanel implements Runnable {
 
     //filter panel features
     private JPanel filterPanel = new JPanel();
-    private JCheckBox filter1 = new JCheckBox("Web Application Attacks");
-    private JCheckBox filter2 = new JCheckBox("Attempted Information Leaks");
+    private JCheckBox filter1 = new JCheckBox("Democracy");
+    private JCheckBox filter2 = new JCheckBox("Not Democracy");
 
     //upload file panel
     private JPanel fileUpload;
@@ -43,43 +43,8 @@ public class EventPanel extends JPanel implements Runnable {
     public EventPanel() {
         super();
         this.setBackground(new Color(245, 243, 213));
-        this.setLayout(new GridBagLayout());
+        this.setLayout(new BorderLayout());
         parsedLines = new ArrayList<String>();
-
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-
-        //filter panel set up
-        filterPanel.setPreferredSize(new Dimension(75,100));
-        this.add(filterPanel,gbc);
-        filterPanel.add(new JLabel("Filter Panel"));
-        filterPanel.add(filter1);
-        filterPanel.add(filter2);
-
-        filter1.addActionListener(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            if(filter1.isSelected()) {
-              table.rowSorter.setRowFilter(RowFilter.regexFilter("Web Application Attack"));
-            }
-            else
-              table.rowSorter.setRowFilter(null);
-          }
-        });
-
-        filter2.addActionListener(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            if(filter2.isSelected()) {
-              table.rowSorter.setRowFilter(RowFilter.regexFilter("Attempted Information Leak"));
-            }
-            else
-              table.rowSorter.setRowFilter(null);
-          }
-        });
 
         fileUpload = new JPanel();
         browse = new JButton("Browse...");
@@ -103,21 +68,17 @@ public class EventPanel extends JPanel implements Runnable {
             }
         });
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
         fileUpload.add(fileLabel);
         fileUpload.add(uploadTextField);
         fileUpload.add(browse);
         fileUpload.add(upload);
-        this.add(fileUpload, gbc);
+        this.add(fileUpload, BorderLayout.PAGE_START);
 
         FileTypeFilter fileFilter = new FileTypeFilter("txt", "Snort Text Files");
         fileChooser.addChoosableFileFilter(fileFilter);
 
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        this.add(table, gbc);
+        this.add(table, BorderLayout.CENTER);
 
         //this.add(dataWithSearch,gbc);
     }
