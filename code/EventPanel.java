@@ -17,10 +17,6 @@ public class EventPanel extends JPanel implements Runnable {
     private ArrayList<String> parsedLines ;
     private ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
 
-    //filter panel features
-    private JPanel filterPanel = new JPanel();
-    private JCheckBox filter1 = new JCheckBox("Democracy");
-    private JCheckBox filter2 = new JCheckBox("Not Democracy");
 
     //upload file panel
     private JPanel fileUpload;
@@ -36,13 +32,9 @@ public class EventPanel extends JPanel implements Runnable {
     private Table table = new Table();
     private Color col = Color.lightGray;
 
-    // Visuals
-    private GridBagConstraints gbc = new GridBagConstraints();
-    private JTableSearch dataWithSearch = new JTableSearch();
-
     public EventPanel() {
         super();
-        this.setBackground(new Color(245, 243, 213));
+        this.setBackground(new Color(133, 199, 127));
         this.setLayout(new BorderLayout());
         parsedLines = new ArrayList<String>();
 
@@ -179,22 +171,8 @@ public class EventPanel extends JPanel implements Runnable {
       return filename;
     }
 
-    private void alternateColor(){
-        if (this.col == Color.lightGray)
-            this.col = Color.white;
-        else
-            this.col = Color.lightGray;
-    }
-
     public void addText(String s){
         this.events.add(s);
-    }
-
-    public void updatePanel() {
-        for(String l : this.events){
-            this.dataWithSearch.model.addRow(new Object[]{l});
-        }
-        this.events = new ArrayList<String>();
     }
 
     /**

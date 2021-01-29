@@ -18,6 +18,10 @@ import javax.swing.table.DefaultTableCellRenderer ;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.event.*;
+import java.util.*;
+import javax.swing.*;
+import java.lang.*;
 
 public class Table extends JPanel {
 
@@ -62,7 +66,7 @@ public class Table extends JPanel {
 
   /* Constructor for Table class */
   public Table() {
-    
+
     // create Table Model //
     model = new DefaultTableModel(data, columnNames) {
       public boolean isCellEditable(int row, int column) {
@@ -75,14 +79,18 @@ public class Table extends JPanel {
 
     // create Panel and search label //
     JPanel panel = new JPanel(new BorderLayout());
-    panel.add(new JLabel("Search"), BorderLayout.WEST);
-    
+    panel.add(new JLabel("Filter"), BorderLayout.WEST);
+
     // create action listener for button //
     query.addActionListener( new ActionListener(){
-      
+
       public void actionPerformed(ActionEvent e){
-        
-        if(data != null){
+
+        if(data == null){
+          JOptionPane.showMessageDialog(null, "The table is empty.  Please run intrusion \ndetection to produce clustered data.", "No Data in Table!", JOptionPane.ERROR_MESSAGE);
+          return;
+        }
+        else {
           String text = textfield.getText() ;
 
           // do not send empty text //
@@ -101,8 +109,8 @@ public class Table extends JPanel {
       public void insertUpdate(DocumentEvent e){ resetColor(); }
 
       @Override
-      public void removeUpdate(DocumentEvent e){ 
-        resetColor(); 
+      public void removeUpdate(DocumentEvent e){
+        resetColor();
         sorter.setRowFilter(null);
       }
 
@@ -112,7 +120,7 @@ public class Table extends JPanel {
       private void resetColor(){ textfield.setBackground(Color.WHITE); }
     });
     panel.add(textfield, BorderLayout.CENTER);
-    
+
     // add rest of components to panel //
     setLayout(new BorderLayout());
     add(panel, BorderLayout.SOUTH);
@@ -121,7 +129,7 @@ public class Table extends JPanel {
 
   /* Update table data */
   public void updateData(Object[][] newData) {
-    
+
     /* create new model with new data */
     data = newData;
     model = new DefaultTableModel(data, columnNames) {
@@ -133,29 +141,29 @@ public class Table extends JPanel {
     // set table to new model //
     table.setModel(model);
     table.revalidate();
-    
+
     /* create color renderer for rows */
     ColorRenderer rowRenderer = new ColorRenderer();
     table.setDefaultRenderer(Object.class, rowRenderer);
-    
+
     /* create and add table filter */
     sorter = new TableRowSorter<>(table.getModel());
-    table.setRowSorter(sorter); 
+    table.setRowSorter(sorter);
     table.repaint();
 
   }
-  
+
   public void filterTable(String text){
-    
+
     // use FilterParser //
     RowFilter<Object,Object> filter = fp.parseFilter(text) ;
     if(filter != null){
       sorter.setRowFilter(filter);
       textfield.setBackground(Color.GREEN) ;
     }
-    else{ textfield.setBackground(Color.RED); }    
+    else{ textfield.setBackground(Color.RED); }
   }
-  
+
   public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable(){
       public void run() {

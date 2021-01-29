@@ -14,7 +14,7 @@ public class Display extends JPanel implements Runnable {
 
     public Display() {
         super();
-        this.setBackground(new Color(245, 243, 213));
+        this.setBackground(new Color(182, 209, 208));
         this.setVisible(true);
 
         this.setLayout(new GridBagLayout());
@@ -72,6 +72,6 @@ public class Display extends JPanel implements Runnable {
      **/
     public void run() {
 
-      
+
     }
 }

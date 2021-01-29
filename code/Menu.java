@@ -15,18 +15,18 @@ public class Menu extends JMenuBar {
     JMenu file, help, options;
 
     //Specific elements--sub menu options
-    JMenuItem addClient;
+    JMenuItem filterHelp;
     public Menu(){
         //Create menus
         file = new JMenu("File");
         help = new JMenu("Help");
 
         //Add sub menus
-        options = new JMenu("options");
-        addClient = new JMenuItem("Add a collaborator");
+        options = new JMenu("Options");
+        filterHelp = new JMenuItem("Filter Commands");
         this.add(file);
-        file.add(addClient);
         this.add(help);
+        help.add(filterHelp);
         this.add(options);
 
         //Visuals
@@ -34,11 +34,33 @@ public class Menu extends JMenuBar {
         Font menuFont = new Font("Times New Roman", Font.PLAIN, 16);
         UIManager.put("Menu.font",menuFont);
         this.setFont(menuFont);
+
+        filterHelp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                JFrame commands = new JFrame("Filter Commands Help");
+                commands.setLayout(new BorderLayout());
+                commands.setSize(400,500);
+                JTextArea text = new JTextArea(30,40);
+                text.setEditable(true);
+                text.setLineWrap(true);
+                Font font = new Font("Segoe Script", Font.BOLD, 15);
+                text.setFont(font);
+                try {
+                    text.read(new InputStreamReader(getClass().getResourceAsStream("filterCommands.txt")),null);
+                } catch (IOException e) { e.printStackTrace();
+        }
+                JScrollPane scrollPane = new JScrollPane(text);
+                commands.add(scrollPane, BorderLayout.CENTER);
+                commands.pack();
+                commands.setVisible(true);
+            }
+        });
     }
     //Allow "add client" button to listen for button clicks...not currenly
     //working. Additionaly, all future buttons go here.
     //TODO expand for all buttons.
     public void addListener(BarListener r){
-        addClient.addActionListener(r);
+        filterHelp.addActionListener(r);
     }
 }

@@ -1,25 +1,23 @@
-Example: src.ip==192.168.202.102 || dest.port==4578
+Filter Commands Usage:
 
-Filter commands usage:
-
-* Applying filters on CIDS GUI is similar as in Wireshark. You filter by
+* Applying filters on CIDS GUI is similar to Wireshark. You filter by
   columns, so the name of each column's filter are the following:
 
   COLUMN                  FILTER NAME
-  Source IP               src.ip
-  Source Port             src.port
-  Destination IP          dest.ip
-  Destination Port        dest.port
-  Classification          clf
-  Message                 msg
-  Cluster Number          cluster
+  Source IP                       src.ip
+  Source Port                  src.port
+  Destination IP                dest.ip
+  Destination Port           dest.port
+  Classification                    clf
+  Message                          msg
+  Cluster Number             cluster
 
 * After the filter name, you have to choose a comparative operator. The
   only 2 comparative operators currently supported are equal and not equal:
   
   NAME        SYMBOL
-  Equal       ==
-  Not Equal   !=
+  Equal             ==
+  Not Equal       !=
 
 * Immediately after the comparative operator you must type the value you
   are searching for.
@@ -28,8 +26,8 @@ Filter commands usage:
   AND and OR as shown below :
 
   NAME        SYMBOL
-  AND         &&
-  OR          &&
+  AND              &&
+  OR                  ||
 
 * Examples. Note that you can't have spaces between the filter name,
   comparative operator, and value. 

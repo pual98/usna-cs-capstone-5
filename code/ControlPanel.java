@@ -19,26 +19,26 @@ public class ControlPanel extends JPanel implements Runnable {
 
     public ControlPanel() {
         super();
-        this.setBackground(Color.lightGray);
-        this.setLayout(new GridBagLayout());
+        this.setBackground(new Color(182, 209, 208));
+        this.setLayout(new FlowLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(5,5,5,5);
-        this.add(newCollaborator,gbc);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        this.add(runIDS,gbc);
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        this.add(pingCollaborator,gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        this.add(sendMessage,gbc);
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        this.add(sendToClient,gbc);
+        // GridBagConstraints gbc = new GridBagConstraints();
+        // gbc.gridx = 1;
+        // gbc.gridy = 0;
+        // gbc.insets = new Insets(5,5,5,5);
+        this.add(newCollaborator);
+        // gbc.gridx = 0;
+        // gbc.gridy = 1;
+        // gbc.gridx = 2;
+        // gbc.gridy = 0;
+        this.add(pingCollaborator);
+        this.add(runIDS);
+        // gbc.gridx = 1;
+        // gbc.gridy = 1;
+        this.add(sendMessage);
+        // gbc.gridx = 2;
+        // gbc.gridy = 1;
+        this.add(sendToClient);
     }
     public void addListener(BarListener r){
         this.addMouseListener(r);
