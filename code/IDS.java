@@ -61,8 +61,8 @@ public class IDS {
 
         //An IDS system has a menu (top bar), a display area for all data, and
         //a client (itself) to send data to other clients.
-        Menu menu = new Menu();
         Display display = new Display();
+        Menu menu = new Menu(display);
         Client client = new Client();
 
         //Start client thread
@@ -90,7 +90,7 @@ public class IDS {
 
 
         if (args[0].equals("-f")){
-            display.getEventPanel().setFilePath(args[1]); 
+            display.getEventPanel().setFilePath(args[1]);
         }
     }
 }

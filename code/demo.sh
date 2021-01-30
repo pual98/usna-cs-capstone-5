@@ -32,10 +32,11 @@ cp ./*".class" "$tmp_dir2/"
 cp ./*".class" "$tmp_dir3/"
 cp ./*".class" "$tmp_dir4/"
 
-cp "file.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
-cp "file.txt" "Fast Snort Data/file1.txt" "threeClusters.csv" "large.csv" "$tmp_dir2/"
-cp "file.txt" "Fast Snort Data/file2.txt" "threeClusters.csv" "large.csv" "$tmp_dir3/"
-cp "file.txt" "Fast Snort Data/file3.txt" "threeClusters.csv" "large.csv" "$tmp_dir4/"
+cp "file.txt" "filterCommands.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
+cp "file.txt" "filterCommands.txt" "Fast Snort Data/file1.txt" "threeClusters.csv" "large.csv" "$tmp_dir2/"
+cp "file.txt" "filterCommands.txt" "Fast Snort Data/file2.txt" "threeClusters.csv" "large.csv" "$tmp_dir3/"
+cp "file.txt" "filterCommands.txt" "Fast Snort Data/file3.txt" "threeClusters.csv" "large.csv" "$tmp_dir4/"
+
 
 trap 'kill %1; kill %2; kill %3; kill %4' SIGINT
 

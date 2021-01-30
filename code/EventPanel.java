@@ -71,8 +71,6 @@ public class EventPanel extends JPanel implements Runnable {
 
 
         this.add(table, BorderLayout.CENTER);
-
-        //this.add(dataWithSearch,gbc);
     }
 
 
@@ -160,6 +158,10 @@ public class EventPanel extends JPanel implements Runnable {
       table.updateData(data);
       this.revalidate();
       this.repaint();
+    }
+
+    public JTable getTable() {
+      return table.getTable();
     }
 
     public ArrayList<Entity> getDataset() {

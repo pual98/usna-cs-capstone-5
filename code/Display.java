@@ -67,6 +67,10 @@ public class Display extends JPanel implements Runnable {
         return eventPanel;
     }
 
+    public JTable getTable() {
+      return this.eventPanel.getTable();
+    }
+
     /**
      * Runnable method for threads.
      **/
