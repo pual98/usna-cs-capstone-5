@@ -26,7 +26,7 @@ import java.lang.*;
 public class Table extends JPanel {
 
   // Table Data //
-  private String[] columnNames = {"Source IP","Source Port","Dest IP", "Dest Port", "Classification", "Message", "Cluster #"};
+  private String[] columnNames = {"Source IP","Source Port","Dest IP", "Dest Port", "Classification", "Message", "Cluster #", "File"};
   private Object[][] data = null;
   private Color [] clusterColor = { new Color(204, 204, 204), new Color(115, 173, 230), new Color(243, 142, 142), new Color(182, 239, 182), new Color(249, 249, 180), new Color(242, 203, 145), new Color(204, 153, 255), new Color(160, 246, 246), new Color(253, 159, 253), new Color(204, 255, 153) } ;
 

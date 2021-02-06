@@ -35,7 +35,7 @@ public class Entity implements Serializable
     qualities = q;
   }
 
-   public void setCategories(ArrayList<Integer> cat)
+  public void setCategories(ArrayList<Integer> cat)
   {
     categories = cat;
   }
@@ -84,14 +84,14 @@ public class Entity implements Serializable
     Random r = new Random();
     ArrayList<Double> retQual = new ArrayList<Double>();
     for(int i  = 0 ; i  < d ; i ++)
-      {
-	retQual.add(r.nextDouble());
-      }
+    {
+      retQual.add(r.nextDouble());
+    }
     ArrayList<Integer> retCat = new ArrayList<Integer>();
     for(int i  = 0 ; i  < dCat ; i ++)
-      {
-	retCat.add(r.nextInt(5));
-      }
+    {
+      retCat.add(r.nextInt(5));
+    }
     return new Entity(retQual, retCat);
   }
 
@@ -101,14 +101,14 @@ public class Entity implements Serializable
     Random r = new Random(seed);
     ArrayList<Double> retQual = new ArrayList<Double>();
     for(int i  = 0 ; i  < d ; i ++)
-      {
-	retQual.add(r.nextDouble());
-      }
+    {
+      retQual.add(r.nextDouble());
+    }
     ArrayList<Integer> retCat = new ArrayList<Integer>();
     for(int i  = 0 ; i  < dCat ; i ++)
-      {
-	retCat.add(r.nextInt(5));
-      }
+    {
+      retCat.add(r.nextInt(5));
+    }
     return new Entity(retQual, retCat);
   }
 
@@ -125,16 +125,13 @@ public class Entity implements Serializable
   {
     double sum = 0;
     for(int i = 0; i  < a.getQualityCount(); i++ )
-      {
-	sum += Math.pow(a.getQual(i) - b.getQual(i),2);
-      }
-    for(int i = 0; i  < a.getCategoryCount(); i++)
-      {
-	if(a.getCat(i) != b.getCat(i))
-	  sum+=1;
-      }
-    return Math.sqrt(sum);
+      sum += Math.pow(a.getQual(i) - b.getQual(i),2);
 
+    for(int i = 0; i  < a.getCategoryCount(); i++){
+      if(a.getCat(i) != b.getCat(i))
+        sum+=1;
+    }
+    return Math.sqrt(sum);
   }
 
 
@@ -143,12 +140,12 @@ public class Entity implements Serializable
     String ret = "";
     if(d != 0) {
       for(int i = 0 ; i < d; i++)
-	    ret += qualities.get(i) + ",";
+        ret += qualities.get(i) + ",";
     }
     if(dCat != 0) {
       for(int i = 0 ; i < dCat-1; i++)
-	    ret += categories.get(i) + ",";
-	    ret += categories.get(dCat-1);
+        ret += categories.get(i) + ",";
+      ret += categories.get(dCat-1);
     }
     return "(" + ret + ")" + " " + cluster_number;
   }
@@ -189,17 +186,17 @@ public class Entity implements Serializable
     System.out.println(a);
     System.out.println(b);
     System.out.println(Entity.distanceEuclidean(a,b));
-     a = Entity.createRandomEntity(2,0);
-     b = Entity.createRandomEntity(2,0);
+    a = Entity.createRandomEntity(2,0);
+    b = Entity.createRandomEntity(2,0);
     System.out.println(a);
     System.out.println(b);
     System.out.println(Entity.distanceEuclidean(a,b));
-     a = Entity.createRandomEntity(0,0);
-     b = Entity.createRandomEntity(0,0);
+    a = Entity.createRandomEntity(0,0);
+    b = Entity.createRandomEntity(0,0);
     System.out.println(a);
     System.out.println(b);
     System.out.println(Entity.distanceEuclidean(a,b));
-     a = Entity.createRandomEntity(0,2);
+    a = Entity.createRandomEntity(0,2);
     b = Entity.createRandomEntity(0,2);
     System.out.println(a);
     System.out.println(b);

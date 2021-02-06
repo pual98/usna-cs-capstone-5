@@ -68,14 +68,14 @@ public class EntityCluster implements Serializable
   {
     int n_points = Entities.size();
     if(n_points == 0)
-      {
-	return 0.0;
-      }
+    {
+      return 0.0;
+    }
     double sum = 0.0;
     for(Entity e : Entities)
-      {
-	sum +=  Math.pow(Entity.distanceEuclidean(e,centroid),2);
-      }
+    {
+      sum +=  Math.pow(Entity.distanceEuclidean(e,centroid),2);
+    }
 
     return sum/n_points;
   }

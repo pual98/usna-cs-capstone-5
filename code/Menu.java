@@ -13,31 +13,41 @@ TODO: menu buttons need to work with action listeners. They currently do
 */
 public class Menu extends JMenuBar {
 
-    Display display;
+    private Client client;
+    private Display display;
     //Make menu main options
-    JMenu file, help, options;
+    private JMenu file, help, options;
 
     //Specific elements--sub menu options
-    JMenuItem filterHelp;
-    JMenuItem export;
+    private JMenuItem filterHelp;
+    private JMenuItem export;
+    private JMenuItem sendToClient;
+    private JMenuItem sendToGroup;
 
-    public Menu(Display d){
-        Display display = d;
+    public Menu(Display d, Client c){
+        display = d;
+        client = c;
+
         //Create menus
         file = new JMenu("File");
         help = new JMenu("Help");
+        options = new JMenu("Options");
+        this.add(file);
+        this.add(help);
+        this.add(options);
 
         //Add sub menus
-        options = new JMenu("Options");
-        filterHelp = new JMenuItem("Filter Commands");
         export = new JMenuItem("Export Table as CSV");
-        this.add(file);
         file.add(export);
 
-        this.add(help);
+        filterHelp = new JMenuItem("Filter Commands");
         help.add(filterHelp);
 
-        this.add(options);
+        sendToClient = new JMenuItem("Send Message to Client");
+        sendToGroup = new JMenuItem("Send Message to Group");
+        options.add(sendToGroup);
+        options.add(sendToClient);
+
 
         //Visuals
         this.setBackground(Color.lightGray);
@@ -108,6 +118,39 @@ public class Menu extends JMenuBar {
               }
             }
         });
+
+        sendToClient.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+              if(client.getGroupStatus()) {
+                Message mmsg = new Message(17, client.groupname, client.getID(), 0);
+                client.sendMessage(mmsg);
+              }
+              else {
+                JOptionPane.showMessageDialog(null, "You are not in a group yet.", "Can't Send Message.", JOptionPane.ERROR_MESSAGE);
+              }
+            }
+          });
+
+        sendToGroup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+              if(client.getGroupStatus()) {
+                String message = null;
+                message = JOptionPane.showInputDialog("Desired Message");
+
+                // send Message Type 11 to Server //
+                String msg = message+":"+client.groupname;
+                Message mmsg = new Message(11, msg, client.getID(), 0);
+                //System.out.println("I am Client "+this.client.getID()+" and I am sending: "+msg);
+                client.sendMessage(mmsg);
+              }
+              else {
+                JOptionPane.showMessageDialog(null, "You are not in a group yet.", "Can't Send Message.", JOptionPane.ERROR_MESSAGE);
+              }
+            }
+          });
+
     }
     //Allow "add client" button to listen for button clicks...not currenly
     //working. Additionaly, all future buttons go here.

@@ -67,6 +67,18 @@ public class Display extends JPanel implements Runnable {
         return eventPanel;
     }
 
+    public void setAlgorithmComplete() {
+      eventPanel.setAlgorithmComplete();
+    }
+
+    public int getUploadCount() {
+      return eventPanel.getUploadCount();
+    }
+
+    public ArrayList<Entity> getNewData() {
+      return eventPanel.getNewData();
+    }
+
     public JTable getTable() {
       return this.eventPanel.getTable();
     }

@@ -62,8 +62,8 @@ public class IDS {
         //An IDS system has a menu (top bar), a display area for all data, and
         //a client (itself) to send data to other clients.
         Display display = new Display();
-        Menu menu = new Menu(display);
         Client client = new Client();
+        Menu menu = new Menu(display, client);
 
         //Start client thread
         Thread clientThread = new Thread(client);
