@@ -432,13 +432,25 @@ public class Client implements Runnable
   public void correlateNewData(ArrayList<Entity> newData) {
     for(int i = 0; i < newData.size(); i++) {
       int minIndex = 0;
-      double min = Entity.distanceEuclidean(newData.get(i), clusters.get(0).getCentroid());
+      double min = -1 ;
       for(int j = 0; j < clusters.size(); j++) {
-        double dist = Entity.distanceEuclidean(newData.get(i), clusters.get(j).getCentroid());
-        if(dist < min)
-          minIndex = j;
+        if(clusters.get(j).getCentroid().isNaN()) // skip NaN centroids
+          continue;
+
+        if( min == -1){
+          min = Entity.distanceEuclidean(newData.get(i), clusters.get(j).getCentroid());
+          minIndex = j ;
+        }
+        else{
+          double dist = Entity.distanceEuclidean(newData.get(i), clusters.get(j).getCentroid());
+          if(dist < min){
+            minIndex = j;
+            min = dist ;
+          }
+        }
       }
-      newData.get(i).setCluster(minIndex);
+      int clusterID = clusters.get(minIndex).getId();
+      newData.get(i).setCluster(clusterID);
     }
   }
 

@@ -150,6 +150,14 @@ public class Entity implements Serializable
     return "(" + ret + ")" + " " + cluster_number;
   }
 
+  public boolean isNaN() {
+    for(double q : qualities) {
+      if(Double.isNaN(q))
+        return true;
+    }
+    return false;
+  }
+
 
   public static Entity makeEntityFromString(String normalizedData){
     if(normalizedData.contains("null"))
