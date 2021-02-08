@@ -17,6 +17,7 @@ public class Client implements Runnable
   final static int ServerPort = 1234;
   static int ID = 0;
   static int NUM_CLUSTERS = 0;
+  static String ALGORITHM = "Distributed";
   private boolean isCoordinator = false;
   public boolean inGroup = false; //used to check if Client tries to join more than one CIDS
   public String groupname = null;
@@ -31,6 +32,9 @@ public class Client implements Runnable
   public ArrayList<Boolean> clustersPresent = new ArrayList<Boolean>();
   private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+  public final static int DISTRIBUTED = 1;
+  public final static int SECRET_SHARE = 0;
+  public final static int DIFFERENTIAL_PRIVACY = 0;
 
   public Client() {
     boolean haveID = false;
@@ -137,7 +141,7 @@ public class Client implements Runnable
                   int requestingID = msg.source;
                   int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+requestingID+" to join "+gn+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                   if (reply == JOptionPane.YES_OPTION) {
-                    Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS, ID, requestingID);
+                    Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS+":"+ALGORITHM, ID, requestingID);
                     sendMessage(toSend);
                     toSend = new Message(04, gn+":"+requestingID, ID, 0);
                     sendMessage(toSend);
@@ -153,7 +157,8 @@ public class Client implements Runnable
                   String gn= msg.msg.split(":")[0];
                   if(msg.msg.contains("accept")) {
                     NUM_CLUSTERS = Integer.parseInt(msg.msg.split(":")[2]);
-                    JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    ALGORITHM = msg.msg.split(":")[3];
+                    JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS+"\n       Algorithm = "+ALGORITHM, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                     setGroupStatus();
                     groupname = gn;
                   }
@@ -228,9 +233,31 @@ public class Client implements Runnable
                   Object[] choices = options.toArray();
                   String prompt = "         Enter the number \nof clusters for k-Prototypes\n                  (3-10)";
                   String num = (String) JOptionPane.showInputDialog(null, prompt, "Select Cluster Number", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
+
+                  int selectedAlg = 0;
+                  String algorithm = "";
+                  do{
+                      prompt = "Select the algorithm to be used";
+                      options = new ArrayList<String>();
+                      options.add("Distributed (none)");
+                      options.add("Secret sharing");
+                      options.add("Differential privacy");
+                      choices = options.toArray();
+                      algorithm = (String) JOptionPane.showInputDialog(null, prompt, "Select algorithm", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
+                      if (algorithm.equals("Distributed (none)")){
+                          selectedAlg = DISTRIBUTED;
+                      }else if (algorithm.equals("Secret sharing")){
+                          selectedAlg = SECRET_SHARE; 
+                      }else if (algorithm.equals("Differential Privacy")){
+                          selectedAlg = DIFFERENTIAL_PRIVACY; 
+                      }
+                      if (selectedAlg == 0)
+                          JOptionPane.showMessageDialog(null,"Selected algorithm not yet implemented; please choose another." , "Error!", JOptionPane.ERROR_MESSAGE);
+                  }while(selectedAlg == 0);
+
                   if(num != null) {
                     NUM_CLUSTERS = Integer.parseInt(num);
-                    Message m = new Message(20, msg.msg+":"+NUM_CLUSTERS, ID, 0);
+                    Message m = new Message(20, msg.msg+":"+NUM_CLUSTERS+":"+algorithm, ID, 0);
                     sendMessage(m);
                   }
                 }

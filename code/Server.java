@@ -222,6 +222,7 @@ class ClientHandler implements Runnable
             //extract the group name and number of clusters
             String groupname = received.msg.split(":")[0];
             int numClusters = Integer.parseInt(received.msg.split(":")[1]);
+            String algorithm = received.msg.split(":")[2];
             //create new group
             Server.groups.put(groupname,new ArrayList<String>());
             //add client as the first member (coordinator)
