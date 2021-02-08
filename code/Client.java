@@ -452,6 +452,35 @@ public class Client implements Runnable
     return converged;
   }
 
+  public int[] unaryEncode(int c){
+    // Based on max port number
+    int vector[] = new int[65535];
+    for (int i = 0; i < vector.length; i++)
+      vector[i] = 0;
+    vector[c] = 1;
+    return vector;
+  }
+
+  public int[] perturb(int[] vector){
+    Random rand = new Random();
+    double p = 1/2;
+    double epsilon = 1;
+    double q = 1/(java.lang.Math.exp(epsilon) + 1);
+    for (int i = 0; i < vector.length; i++)
+      if (vector[i] == 1)
+        if(rand.nextFloat() <= p)
+          vector[i] = 0;
+      else if (vector[i] == 0)
+        if(rand.nextFloat() <= q)
+          vector[i] = 1;
+    return vector;
+  }
+  public int[] decode(int[][] vectorAggregate){
+    // TODO : Should return a vector of integers where vector[i] represents the 
+    // estimated frequency i occurred in the aggregate of vectors
+    int[] vector = new int[vectorAggregate[0].length];
+    return vector;
+  }
   public void setGroupStatus() { this.inGroup = true; }
 
   public boolean getGroupStatus() { return inGroup; }
