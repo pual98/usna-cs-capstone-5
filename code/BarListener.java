@@ -110,8 +110,6 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
       if(d.getUploadCount() > 1) {
         this.client.correlateNewData(d.getNewData());
         this.d.populateTable();
-        JOptionPane.showMessageDialog(null, "Data Correlation Complete.", "Success", JOptionPane.INFORMATION_MESSAGE);
-
       }
     }
 
@@ -121,15 +119,12 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
    * Performs action when there is a state change in the slider bar.
    * @param e ChangeEvent that triggered the listener.
    **/
-  public void stateChanged(ChangeEvent e){
-  }
+  public void stateChanged(ChangeEvent e){;}
   /**
    * PerformsAction when mouse is clicked
    * @param e MouseEvent that triggered the method.
    **/
-  public void mousePressed(MouseEvent e){
-
-  }
+  public void mousePressed(MouseEvent e){;}
 
   /********* Unused methods from mouse listener **********/
   public void mouseClicked(MouseEvent e){}

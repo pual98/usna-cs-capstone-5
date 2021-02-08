@@ -20,10 +20,12 @@ public class Client implements Runnable
   public ObjectInputStream dis;
   public ObjectOutputStream dos;
   public Scanner scn;
+
   public ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
   public ArrayList<EntityCluster> clusters = null;
   public ArrayList<Integer> memIDs = null;
   public String filename;
+  public ArrayList<Boolean> clustersPresent = new ArrayList<Boolean>();
 
 
   public Client() {
@@ -271,15 +273,19 @@ public class Client implements Runnable
     Random r = new Random();
     boolean converged = false;
     int itt = 0;
+
+    for(int i = 0; i < NUM_CLUSTERS; i++)
+      clustersPresent.add(false);
+
     while(!converged) {
       int clabel = 0;
       for(EntityCluster c: clusters){
         c.setId(clabel);
         clabel++;
       }
-      System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 0 " + clusters.get(0).getCentroid());
-      System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 1 " + clusters.get(1).getCentroid());
-      System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 2 " + clusters.get(2).getCentroid());
+      // System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 0 " + clusters.get(0).getCentroid());
+      // System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 1 " + clusters.get(1).getCentroid());
+      // System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 2 " + clusters.get(2).getCentroid());
 
       converged = true;
 
@@ -302,10 +308,10 @@ public class Client implements Runnable
       ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
       for(EntityCluster c : this.clusters)
       {
-        System.out.println("this.Cluster  SIZE: " + this.clusters.size());
+        // System.out.println("this.Cluster  SIZE: " + this.clusters.size());
         SharingEntity clusterData = new SharingEntity();
         clusterData.setConv(converged);
-        System.out.println("self " + ID + " " + converged);
+        // System.out.println("self " + ID + " " + converged);
         // sumlocal
         for(Entity en : dataset){
           if(en.getAssignedCluster() == c.getId())
@@ -316,7 +322,7 @@ public class Client implements Runnable
         clusterData.setClusterLabel(c.getId());
         clusterData.setIterationLabel(itt);
         msg.setEntity(clusterData);
-        System.out.println("ID " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
+        // System.out.println("ID " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
         sendMessage(msg);
         // wait on sums
         try{
@@ -327,29 +333,33 @@ public class Client implements Runnable
             Thread.sleep(500);
           }catch (InterruptedException e) {}
         }
-        System.out.println("Size of Received Sharing Entity List " + receivedEntities.size());
-        System.out.println("Own Sharing Entity iteration " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + clusterData.toEntity());
+        // System.out.println("Size of Received Sharing Entity List " + receivedEntities.size());
+        // System.out.println("Own Sharing Entity iteration " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + clusterData.toEntity());
         ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
-        for(SharingEntity se : receivedEntities)
-        {
+        for(SharingEntity se : receivedEntities) {
           if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
             confirmedSharingEntities.add(se);
         }
-        for(SharingEntity se : confirmedSharingEntities)
-        {
-
-          System.out.println("Received Sharing Entity iteration  " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + se.toEntity());
+        for(SharingEntity se : confirmedSharingEntities) {
+          // System.out.println("Received Sharing Entity iteration  " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + se.toEntity());
           if(se.getConv() == false)
             converged = false;
           clusterData.addSharingEntity(se);
         }
-        System.out.println("FINAL iteration " + itt +  "   ID " + ID  + "   cluster  " + c.getId() + clusterData.toEntity());
+        // System.out.println("FINAL iteration " + itt +  "   ID " + ID  + "   cluster  " + c.getId() + clusterData.toEntity());
         c = new EntityCluster(clusterData.toEntity(), c.getId());
         nc.add(c);
         receivedEntities.removeAll(confirmedSharingEntities);
       }
       this.clusters = nc;
     }
+
+    //identify which clusters this client's data belong to
+    for(int i = 0; i < dataset.size(); i++) {
+      int num = dataset.get(i).getAssignedCluster();
+      clustersPresent.set(num, true);
+    }
+
     String centroidPopup = "                                            Cluster Centroids:\n";
     for(int i = 0; i < NUM_CLUSTERS; i++) {
       Entity centroid = clusters.get(i).getCentroid();
@@ -359,14 +369,12 @@ public class Client implements Runnable
     JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
   }
 
-  public static void assignRandomCluster(Entity en, ArrayList<EntityCluster> clusters, Random r)
-  {
+  public static void assignRandomCluster(Entity en, ArrayList<EntityCluster> clusters, Random r) {
     int cluster = r.nextInt(clusters.size());
     en.setCluster(cluster);
   }
 
-  public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters)
-  {
+  public static boolean assignCluster(Entity en, ArrayList<EntityCluster> clusters) {
     double max = Double.MAX_VALUE;
     double min = max;
     int cluster = 0;
@@ -430,6 +438,8 @@ public class Client implements Runnable
   public boolean getCoordinatorStatus() { return isCoordinator; }
 
   public void correlateNewData(ArrayList<Entity> newData) {
+    ArrayList<Integer> newClusters = new ArrayList<Integer>();
+
     for(int i = 0; i < newData.size(); i++) {
       int minIndex = 0;
       double min = -1 ;
@@ -437,7 +447,7 @@ public class Client implements Runnable
         if(clusters.get(j).getCentroid().isNaN()) // skip NaN centroids
           continue;
 
-        if( min == -1){
+        if(min == -1){
           min = Entity.distanceEuclidean(newData.get(i), clusters.get(j).getCentroid());
           minIndex = j ;
         }
@@ -445,13 +455,44 @@ public class Client implements Runnable
           double dist = Entity.distanceEuclidean(newData.get(i), clusters.get(j).getCentroid());
           if(dist < min){
             minIndex = j;
-            min = dist ;
+            min = dist;
           }
         }
       }
+      //assign a cluster to the new instance of data
       int clusterID = clusters.get(minIndex).getId();
       newData.get(i).setCluster(clusterID);
+
+      //check for data that appears in a new cluster (cluster that wasn't used by initial data)
+      if(!clustersPresent.get(clusterID)) {
+        newClusters.add(clusterID);
+        clustersPresent.set(clusterID, true);
+      }
     }
+
+    System.out.println("newClusters = " + newClusters.size());
+    int len = newClusters.size();
+    if(len != 0) {
+      String alert = "Data Correlated to New Cluster";
+      if(len == 1)
+        alert += ": " + newClusters.get(0);
+      else {
+        alert += "s: ";
+        for(int j = 0; j < len; j++) {
+          if(j == len-1)
+            alert += newClusters.get(j);
+          else
+            alert += newClusters.get(j) + ", ";
+        }
+      }
+      JOptionPane.showMessageDialog(null, alert, "New Alert Type(s) Found!", JOptionPane.INFORMATION_MESSAGE);
+    }
+    else
+      JOptionPane.showMessageDialog(null, "Correlation Complete", "No New Alert Types Found!", JOptionPane.INFORMATION_MESSAGE);
+
+
+
+
   }
 
   public static void main(String args[]) throws UnknownHostException, IOException {
