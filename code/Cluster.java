@@ -3,11 +3,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.logging.Level; 
+import java.util.logging.Logger; 
+import java.util.logging.*;
+
 public class Cluster {
 
 	public List<Point> points;
 	public Point centroid;
 	public int id;
+  private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	//Creates a new Cluster
 	public Cluster(int id) {

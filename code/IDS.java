@@ -3,6 +3,10 @@ import java.io.*;
 import java.awt.*;        // Using AWT layouts
 import java.awt.event.*;  // Using AWT event classes and listener interfaces
 import javax.swing.*;     // Using Swing components and containers
+import java.util.logging.Level; 
+import java.util.logging.Logger; 
+import java.util.logging.*;
+
 
 // A Swing GUI application inherits from top-level container javax.swing.JFrame
 /**
@@ -11,6 +15,7 @@ import javax.swing.*;     // Using Swing components and containers
  * @author Bishop, Mokry, Quiroz, Slife
  **/
 public class IDS {
+    private static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static void main(String[] args) {
 
         boolean haveID = false;
@@ -21,9 +26,9 @@ public class IDS {
             File myFile = new File(".config");
 
             if (myFile.createNewFile()){
-                System.out.println("File is created!");
+                LOGGER.log(Level.INFO, "IDS config file is created");
             }else{
-                System.out.println("File already exists.");
+                LOGGER.log(Level.INFO, "IDS config already exists");
             }
         } catch (FileNotFoundException e) { } catch (IOException e) { }
 
@@ -33,7 +38,6 @@ public class IDS {
             Scanner scanner = new Scanner(new File(".config"));
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
-                System.out.println(line);
                 if (line.contains("id")){
                     String arr[] = line.split(":");
                     if (arr[0].equals("id")){ haveID = true; ID = Integer.parseInt(arr[1]); }

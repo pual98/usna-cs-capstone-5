@@ -1,6 +1,11 @@
 import java.io.*;
 import java.util.*;
 import java.net.*;
+
+
+import java.util.logging.Level; 
+import java.util.logging.Logger; 
+import java.util.logging.*;
 /*
    Most of this code is implemented from the following example
 https://www.geeksforgeeks.org/multi-threaded-chat-application-set-2/?ref=lb
@@ -23,6 +28,7 @@ public class Server
     // Vector to store active clients
     static Vector<ClientHandler> ar = new Vector<>();
     static Map<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static void main(String[] args) throws IOException
     {
@@ -37,13 +43,11 @@ public class Server
             // Accept the incoming request
             s = ss.accept();
 
-            System.out.println("Server log: New client request received : " + s);
+            LOGGER.log(Level.INFO, "Server: New client request received. Creating a handler for the client.", s);
 
             // obtain input and output streams
             ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
             ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
-
-            System.out.println("Server log: Creating a new handler for this client...");
 
             // Create a new handler object for handling this request.
             ClientHandler mtch = new ClientHandler(s, dis, dos);
@@ -51,11 +55,10 @@ public class Server
             // Create a new Thread with this object.
             Thread t = new Thread(mtch);
 
-            System.out.println("Server log: Adding this client to active client list");
-
             // add this client to active clients list
             ar.add(mtch);
-            System.out.println("Just added Client Handler "+mtch.name);
+            
+            LOGGER.log(Level.INFO, "Server: Client added to the server's cleint list");
 
             // start the thread.
             t.start();
@@ -74,6 +77,7 @@ class ClientHandler implements Runnable
     final ObjectOutputStream dos;
     Socket s;
     boolean isloggedin;
+    private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // constructor
     public ClientHandler(Socket s, ObjectInputStream dis,
@@ -87,16 +91,14 @@ class ClientHandler implements Runnable
             Message m = (Message) this.dis.readObject();
             if((m.msg).contains("new name id")){ // this will always be TRUE
                 this.name = m.msg.split(":")[1];
-                System.out.println("Server log: client id initialized: "+this.name);
+                LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
             }
         } catch(Exception e) {}
     }
     // ClientHandler class
     public void sendMessage(Message m) throws IOException{
         for (ClientHandler mc : Server.ar) {
-            //System.out.println("sendMessage() to "+m.dest+" checking "+mc.name);
             if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
-                //System.out.println("Message being sent");
                 mc.dos.writeObject(m);
                 break;
             }
@@ -173,7 +175,6 @@ class ClientHandler implements Runnable
                 if (Server.groups.containsKey(group_name)){
                     ArrayList<String> partners = Server.groups.get(group_name);
                     for(String p : partners){
-                        //System.out.println("Trying to send msg: "+message+" to group: "+group_name+" and id: "+p);
                         if(Integer.parseInt(p) != received.source) {
                             Message m = new Message(10, message, received.source, Integer.parseInt(p));
                             this.sendMessage(m);
@@ -233,7 +234,6 @@ class ClientHandler implements Runnable
             String num = received.msg.split(":")[1];
             String group_name = received.msg.split(":")[0];
 
-            System.out.println(group_name);
 
             if (Server.groups.containsKey(group_name)){
                 ArrayList<String> partners = Server.groups.get(group_name);
@@ -255,7 +255,6 @@ class ClientHandler implements Runnable
                 // receive the string
                 //
                 received = (Message)dis.readObject();
-//                System.out.println("Server about read object: "+received);
                 if(received.equals("logout")){
                     this.isloggedin=false;
                     this.s.close();

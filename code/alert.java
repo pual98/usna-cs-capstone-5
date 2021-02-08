@@ -6,6 +6,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.*;
 
+
+import java.util.logging.Level; 
+import java.util.logging.Logger; 
+import java.util.logging.*;
+
 public class alert
 {
 	private int sid;
@@ -19,6 +24,8 @@ public class alert
 	private String destIP;
 	private String srcPort;
 	private String destPort;
+
+    private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	public alert()
 	{sid = -1;}
@@ -118,7 +125,6 @@ public class alert
 
 			//int i = 0;
 			while ((sCurrentLine = br.readLine()) != null) {
-				//System.out.println(sCurrentLine);
 				textBlock[i]=sCurrentLine;
 				i++;
 			}
@@ -127,11 +133,9 @@ public class alert
 
 		 finally {
 			if (i > 0) {
-				System.out.println("About to make alert");
 				alert a=new alert(textBlock);
 				// print the block out
 				if (a != null) {
-					System.out.println("alert completed");
 					String ostr= a.genCSVOutput();
 					try {	bw.write(ostr); } catch(Exception e) {;}
 				}
@@ -158,7 +162,6 @@ public class alert
 				ex.printStackTrace();
 
 			}
-			System.out.println("Done");
 
 		}
 

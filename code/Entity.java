@@ -3,6 +3,10 @@ import java.util.List;
 import java.util.Random;
 import java.io.*;
 
+import java.util.logging.Level; 
+import java.util.logging.Logger; 
+import java.util.logging.*;
+
 public class Entity implements Serializable
 {
   private ArrayList<Double> qualities;
@@ -11,6 +15,7 @@ public class Entity implements Serializable
   private int d;
   private int dCat;
   private int cluster_number = -1;
+
 
   public Entity(ArrayList<Double> qualities, ArrayList<Integer> categories)
   {
@@ -182,32 +187,20 @@ public class Entity implements Serializable
     iArr.add(srcPort);
     iArr.add(destPort);
     iArr.add(alertType);
-    // System.out.println(iArr);
     return new Entity(dArr, iArr);
   }
 
 
   public static void main(String[] args)
   {
+    Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     Entity a = Entity.createRandomEntity(2,2);
     Entity b = Entity.createRandomEntity(2,2);
-    System.out.println(a);
-    System.out.println(b);
-    System.out.println(Entity.distanceEuclidean(a,b));
     a = Entity.createRandomEntity(2,0);
     b = Entity.createRandomEntity(2,0);
-    System.out.println(a);
-    System.out.println(b);
-    System.out.println(Entity.distanceEuclidean(a,b));
     a = Entity.createRandomEntity(0,0);
     b = Entity.createRandomEntity(0,0);
-    System.out.println(a);
-    System.out.println(b);
-    System.out.println(Entity.distanceEuclidean(a,b));
     a = Entity.createRandomEntity(0,2);
     b = Entity.createRandomEntity(0,2);
-    System.out.println(a);
-    System.out.println(b);
-    System.out.println(Entity.distanceEuclidean(a,b));
   }
 }

@@ -1,13 +1,16 @@
 // Java implementation for multithreaded chat client
 // Save file as Client.java
 import java.io.*;
-import java.util.*;
 import java.net.*;
-import java.util.Scanner;
-import javax.swing.*;
-import java.awt.event.*;
 import java.lang.*;
+import java.util.*;
+import javax.swing.*;
 import javax.swing.event.*;
+import java.awt.event.*;
+
+import java.util.logging.Level; 
+import java.util.logging.Logger; 
+import java.util.logging.*;
 
 public class Client implements Runnable
 {
@@ -26,6 +29,7 @@ public class Client implements Runnable
   public ArrayList<Integer> memIDs = null;
   public String filename;
   public ArrayList<Boolean> clustersPresent = new ArrayList<Boolean>();
+  private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 
   public Client() {
@@ -33,17 +37,16 @@ public class Client implements Runnable
     try{
       File myFile = new File(".config");
       if (myFile.createNewFile()){
-        System.out.println("File is created!");
+          LOGGER.log(Level.INFO, "Client config file is created");
       }
       else{
-        System.out.println("File already exists.");
+          LOGGER.log(Level.INFO,"Client config file already exists");
       }
     } catch (FileNotFoundException e) { } catch (IOException e) { }
     try{
       Scanner scanner = new Scanner(new File(".config"));
       while (scanner.hasNext()) {
         String line = scanner.nextLine();
-        System.out.println(line);
         if (line.contains("id")){
           String arr[] = line.split(":");
           if (arr[0].equals("id")){ haveID = true; ID = Integer.parseInt(arr[1]); }
@@ -91,7 +94,7 @@ public class Client implements Runnable
           @Override
           public void run() {
             try {
-              System.out.println("About to request rename:");
+              LOGGER.log(Level.INFO, "Client requesting rename");
               System.out.flush();
               // write on the output stream
               Message m = new Message(1000, "new name id:"+ID, ID, 0);
@@ -121,7 +124,7 @@ public class Client implements Runnable
                 Message msg = (Message)dis.readObject();
                 JFrame f = new JFrame();
 
-                System.out.println("Client "+ID+" log msg: "+msg);
+                LOGGER.log(Level.INFO, ID+": client read msg: "+msg);
 
                 //01: msg = GROUPNAME
                 //    01 message to server requesting to make GROUP, named GROUPNAME
@@ -283,9 +286,8 @@ public class Client implements Runnable
         c.setId(clabel);
         clabel++;
       }
-      // System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 0 " + clusters.get(0).getCentroid());
-      // System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 1 " + clusters.get(1).getCentroid());
-      // System.out.println("iteration " + itt +  "   ID " + ID  + "   cluster 2 " + clusters.get(2).getCentroid());
+      for (int i = 0; i < NUM_CLUSTERS; i++)
+          LOGGER.log(Level.INFO, ID+": kPrototypes iteration "+itt+", cluster "+ i + ", centroid: "+ clusters.get(i).getCentroid());
 
       converged = true;
 
@@ -308,10 +310,8 @@ public class Client implements Runnable
       ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
       for(EntityCluster c : this.clusters)
       {
-        // System.out.println("this.Cluster  SIZE: " + this.clusters.size());
         SharingEntity clusterData = new SharingEntity();
         clusterData.setConv(converged);
-        // System.out.println("self " + ID + " " + converged);
         // sumlocal
         for(Entity en : dataset){
           if(en.getAssignedCluster() == c.getId())
@@ -322,7 +322,7 @@ public class Client implements Runnable
         clusterData.setClusterLabel(c.getId());
         clusterData.setIterationLabel(itt);
         msg.setEntity(clusterData);
-        // System.out.println("ID " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
+        LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
         sendMessage(msg);
         // wait on sums
         try{
@@ -333,20 +333,16 @@ public class Client implements Runnable
             Thread.sleep(500);
           }catch (InterruptedException e) {}
         }
-        // System.out.println("Size of Received Sharing Entity List " + receivedEntities.size());
-        // System.out.println("Own Sharing Entity iteration " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + clusterData.toEntity());
         ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
         for(SharingEntity se : receivedEntities) {
           if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
             confirmedSharingEntities.add(se);
         }
         for(SharingEntity se : confirmedSharingEntities) {
-          // System.out.println("Received Sharing Entity iteration  " + itt +  "   ID " + ID  + "   cluster " + c.getId() + " " + se.toEntity());
           if(se.getConv() == false)
             converged = false;
           clusterData.addSharingEntity(se);
         }
-        // System.out.println("FINAL iteration " + itt +  "   ID " + ID  + "   cluster  " + c.getId() + clusterData.toEntity());
         c = new EntityCluster(clusterData.toEntity(), c.getId());
         nc.add(c);
         receivedEntities.removeAll(confirmedSharingEntities);

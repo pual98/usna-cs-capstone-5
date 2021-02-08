@@ -50,7 +50,6 @@ public class AlertParser
 	/*Parses through one line (one instance of alert data)*/
 	public void parseLine() {
 		//Start with 03/16-09:29:49.550000
-		//System.out.println(line);
 		String[] list1 = line.split("\\s");
 		// parse localdate time
 		DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("MM/dd-HH:mm:ss.SSSSSS").parseDefaulting(ChronoField.YEAR, 2012).toFormatter();
@@ -137,7 +136,6 @@ public class AlertParser
 			//srcIP, srcPort, destIP, destPort
 			//convert IPs
 
-			//System.out.println(ipToLong(data[6]));
 			double lSrcIP = ipToDouble(data[6]);
 			// String newSrcIP = String.valueOf(lSrcIP);
 			double lDestIP = ipToDouble(data[8]);
