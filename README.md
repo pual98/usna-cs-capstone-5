@@ -18,7 +18,7 @@
     + [Differential Privacy Tutorial](research/differential_privacy_tutorial.pdf)
     + [Locally Differentially Private Protocols for Frequency Estimation](research/sec17-wang-tianhao.pdf)
 
-## Milestone 5
+## Milestone 7
 
 + Active Git branches:
     + Master - static branch master
