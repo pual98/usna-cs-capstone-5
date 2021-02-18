@@ -13,7 +13,7 @@ public class Message implements Serializable {
         04 message from coordinator to server with ID TOADD to join have join the GROUPNAME
     05: msg = GROUPNAME
         message to server requesting list of IDs in GROUPNAME
-    06: msg = MSG
+    06: TODO: Deprecated msg = MSG
         response from server with comma seperated MSG as a list of people in
         EXAMPLE: 12,13,1,2 where each is an ID
     10: msg = MSG

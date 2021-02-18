@@ -150,11 +150,11 @@ class ClientHandler implements Runnable
             return;
             //05:FROM:GROUPNAME#0 - message to server requesting list of IDs in GROUPNAME
         }else if(received.type == 5){
-            String groupname = (received.msg);
+            String groupname = received.msg;
             if (Server.groups.containsKey(groupname)){
                 ArrayList<String> partners = Server.groups.get(groupname);
-                String MsgToSend = groupname+":"+String.join(",",partners);
-                Message m = new Message(6, MsgToSend, 0, received.source);
+                Message m = new Message(6,"", 0, received.source);
+                m.setMembers(partners);
                 this.sendMessage(m);
             }
             return;
@@ -231,20 +231,25 @@ class ClientHandler implements Runnable
             Message success = new Message(15, "Success! You have created group: "+groupname, 0, received.source);
             this.sendMessage(success);
             return;
+            // TODO: Check for error w/ type code 21...make sure sending to
+            // right dest
         } else if(received.type == 21) {
-            String num = received.msg.split(":")[1];
-            String group_name = received.msg.split(":")[0];
-
+            sendMessage(received);
+            /*
+            int num = received.dest;
+            String group_name = received.msg;
 
             if (Server.groups.containsKey(group_name)){
                 ArrayList<String> partners = Server.groups.get(group_name);
                 for(String p : partners){
-                    if(Integer.parseInt(p) != received.source) {
-                        Message m = new Message(22, num, received.source, Integer.parseInt(p));
+                    if(Integer.parseInt(p) == received.dest) {
+                        Message m = new Message(22, ""+num, received.source, Integer.parseInt(p));
+                        m.setEntity(received.en);
                         this.sendMessage(m);
                     }
                 }
             }
+            */
           return;
         }
     }
