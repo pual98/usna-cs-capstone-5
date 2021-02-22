@@ -362,7 +362,7 @@ public class Client implements Runnable
                 try{
                     Thread.sleep(1000);
                 }catch (InterruptedException e) {}
-                while (countFromIteration(receivedEntities, itt) < 2){
+                while (countFromIteration(receivedEntities, itt, c.getId()) < 2){
                     try{
                         Thread.sleep(500);
                     }catch (InterruptedException e) {}
@@ -621,6 +621,8 @@ public class Client implements Runnable
             for(EntityCluster c : this.clusters)
             {
                 SharingEntity clusterData = new SharingEntity();
+                clusterData.setIterationLabel(itt);
+                clusterData.setClusterLabel(c.getId());
                 clusterData.setConv(converged);
                 // sumlocal
                 for(Entity en : dataset){
@@ -642,8 +644,6 @@ public class Client implements Runnable
 
                 int count = 0;
                 for ( int id : memIDs ){
-                    shares.get(count).setIterationLabel(itt);
-                    shares.get(count).setClusterLabel(c.getId());
                     if (id == ID){
                         receivedShares.add(shares.get(count));
                     }else{
@@ -689,6 +689,8 @@ public class Client implements Runnable
                 LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
                 */
+                
+                ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
 
                 Message msg = new Message(12, groupname, ID, 0);
                 LOGGER.log(Level.INFO, "ID: " + ID + " setting cluster label to c.getId(): "+c.getId());
@@ -698,6 +700,7 @@ public class Client implements Runnable
                 LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + intermediateEntity.toEntity() );
                 sendMessage(msg);
 
+                confirmedSharingEntities.add(intermediateEntity);
                 try{
                     Thread.sleep(1000);
                 }catch (InterruptedException e) {}
@@ -708,7 +711,6 @@ public class Client implements Runnable
                     }catch (InterruptedException e) {}
                 }
 
-                ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
                 for(SharingEntity se : receivedEntities) {
                     if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
                         confirmedSharingEntities.add(se);
@@ -725,7 +727,8 @@ public class Client implements Runnable
 
                 receivedEntities.removeAll(confirmedSharingEntities);
                 receivedShares.removeAll(intermediateConfirmed);
-                LOGGER.log(Level.INFO, "ID: " + ID + " completed one rev");
+                LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
+                LOGGER.log(Level.INFO, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString());
             }
 
             this.clusters = nc;

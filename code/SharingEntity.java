@@ -179,7 +179,6 @@ public class SharingEntity implements Serializable
         ArrayList<Integer> retCats = KMode.modes(modeMap);
         Entity ret = new Entity(retQuals, retCats);
         ret.setCluster(clusterLabel);
-        // TODO: I added here
         return ret;
     }
 
@@ -231,6 +230,7 @@ public class SharingEntity implements Serializable
                 }
                 SharingEntity toAdd = new SharingEntity();
                 toAdd.setClusterLabel(clusterLabel);
+                toAdd.setIterationLabel(iterationLabel);
                 toAdd.countShare = 1;
                 toAdd.setQuals(squal);
                 ret.add(toAdd);
@@ -250,6 +250,7 @@ public class SharingEntity implements Serializable
             SharingEntity finalShare = new SharingEntity();
             finalShare.setQuals(finalShareQuals);
             finalShare.setClusterLabel(clusterLabel);
+            finalShare.setIterationLabel(iterationLabel);
             finalShare.countShare = countShare-2;
             ret.add(finalShare);
         }
