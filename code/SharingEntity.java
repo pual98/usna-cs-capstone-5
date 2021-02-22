@@ -177,7 +177,10 @@ public class SharingEntity implements Serializable
             retQuals.add(qualities.get(i) / countShare);
         }
         ArrayList<Integer> retCats = KMode.modes(modeMap);
-        return new Entity(retQuals, retCats);
+        Entity ret = new Entity(retQuals, retCats);
+        ret.setCluster(clusterLabel);
+        // TODO: I added here
+        return ret;
     }
 
     public long estimatedSizeInBytes()
@@ -245,8 +248,8 @@ public class SharingEntity implements Serializable
                 finalShareQuals.add(finalShare);
             }
             SharingEntity finalShare = new SharingEntity();
-            finalShare.setClusterLabel(clusterLabel);
             finalShare.setQuals(finalShareQuals);
+            finalShare.setClusterLabel(clusterLabel);
             finalShare.countShare = countShare-2;
             ret.add(finalShare);
         }
