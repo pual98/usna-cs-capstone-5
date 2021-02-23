@@ -167,7 +167,8 @@ public class SharingEntity implements Serializable
         }
         qualities = retQuals;
         modeMap =  KMode.mergeMaps(modeMap, b.modeMap);
-        countShare = countShare + b.countShare; 
+        countShare = countShare + b.countShare;
+        System.out.println("AFTER addSharingEntity countShare = "+countShare);
     }
 
 
@@ -194,18 +195,6 @@ public class SharingEntity implements Serializable
         ret += 8;//count share
         return ret;
     }
-
-    //NEWT
-    /**
-      public void addEntity(Entity toAdd)
-      {
-      countShare++;
-      qualities = KMode.merge(qualities,toAdd.getQualities);
-      newMap = KMode.makeNewModeMap(toAdd.getCategories());
-      modeMap = KMode.mergeMaps(modeMap,newMap);
-      numQuals = qual.size();
-      numCats = cat.size();
-      }**/
 
     public void addEntity(Entity toAdd)
     {
@@ -246,7 +235,7 @@ public class SharingEntity implements Serializable
                     sum += ret.get(i).getQual(j);
                 }
                 double modSum =(double) (sum - (double)(Math.floor(sum)));
-                double finalShare = qualities.get(j) - modSum; 
+                double finalShare = qualities.get(j) - modSum;
                 finalShareQuals.add(finalShare);
             }
             SharingEntity finalShare = new SharingEntity();
@@ -254,6 +243,7 @@ public class SharingEntity implements Serializable
             finalShare.setClusterLabel(clusterLabel);
             finalShare.setIterationLabel(iterationLabel);
             finalShare.countShare = countShare-2;
+            System.out.println("COUNT SHARE AT THE END OF MAKESHARE: "+ finalShare.countShare);
             ret.add(finalShare);
         }
         return ret;
