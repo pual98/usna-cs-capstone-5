@@ -15,24 +15,6 @@ public class SharingEntity implements Serializable
     private int iterationLabel;
     private boolean conv;
 
-    public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat)
-    {
-        this.countShare = cs;
-        this.qualities = qual;
-        this.modeMap = cat;
-        this.numQuals = qual.size();
-        this.numCats = cat.size();
-    }
-    public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat, boolean cv)
-    {
-        this.countShare = cs;
-        this.qualities = qual;
-        this.modeMap = cat;
-        this.numQuals = qual.size();
-        this.numCats = cat.size();
-        this.conv = cv;
-    }
-
     public SharingEntity()
     {
         this.countShare = 0;
@@ -51,6 +33,41 @@ public class SharingEntity implements Serializable
         this.conv = false;
     }
 
+    public SharingEntity(int qualCount,int catCount)
+    {
+        this.countShare = 0;
+        this.qualities = new ArrayList<Double>();
+        this.modeMap = new ArrayList<HashMap<Integer,Integer>>();
+        for(int i = 0 ; i < qualCount; i++)
+        {
+            qualities.add(0.0);
+        }
+        for(int i = 0 ; i < catCount; i++)
+        {
+            modeMap.add(new HashMap<Integer,Integer>());
+        }
+    }
+
+    /*
+    public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat)
+    {
+        this.countShare = cs;
+        this.qualities = qual;
+        this.modeMap = cat;
+        this.numQuals = qual.size();
+        this.numCats = cat.size();
+    }
+    public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat, boolean cv)
+    {
+        this.countShare = cs;
+        this.qualities = qual;
+        this.modeMap = cat;
+        this.numQuals = qual.size();
+        this.numCats = cat.size();
+        this.conv = cv;
+    }
+
+    */
     public void setConv(boolean b)
     {
         conv = b;
@@ -119,21 +136,6 @@ public class SharingEntity implements Serializable
     public int getCountShare()
     {
         return countShare;
-    }
-
-    public SharingEntity(int qualCount,int catCount)
-    {
-        this.countShare = 0;
-        this.qualities = new ArrayList<Double>();
-        this.modeMap = new ArrayList<HashMap<Integer,Integer>>();
-        for(int i = 0 ; i < qualCount; i++)
-        {
-            qualities.add(0.0);
-        }
-        for(int i = 0 ; i < catCount; i++)
-        {
-            modeMap.add(new HashMap<Integer,Integer>());
-        }
     }
 
     public int getFinalCount()
