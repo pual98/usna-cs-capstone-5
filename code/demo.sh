@@ -40,11 +40,13 @@ cp "file.txt" "filterCommands.txt" "Fast Snort Data/file3.txt" "threeClusters.cs
 
 trap 'kill %1; kill %2; kill %3; kill %4' SIGINT
 
-cd "$tmp_dir1" || exit; java Server &
-sleep 5;
-cd "$tmp_dir2" || exit; java IDS -f "$tmp_dir2/file1.txt" &
-cd "$tmp_dir3" || exit; java IDS -f "$tmp_dir3/file2.txt" &
-cd "$tmp_dir4" || exit; java IDS -f "$tmp_dir4/file3.txt"
+{
+    cd "$tmp_dir1" || exit; java Server &
+    sleep 5;
+    cd "$tmp_dir2" || exit; java IDS -f "$tmp_dir2/file1.txt" &
+    cd "$tmp_dir3" || exit; java IDS -f "$tmp_dir3/file2.txt" &
+    cd "$tmp_dir4" || exit; java IDS -f "$tmp_dir4/file3.txt"
+} 2>&1 | grep -E "$1"
 
 # ...
 rm -rf "$tmp_dir1"
