@@ -8,8 +8,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.event.*;
 
-import java.util.logging.Level; 
-import java.util.logging.Logger; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.*;
 
 public class Client implements Runnable
@@ -250,9 +250,9 @@ public class Client implements Runnable
                                         if (algorithm.equals("Distributed (none)")){
                                             selectedAlg = DISTRIBUTED;
                                         }else if (algorithm.equals("Secret sharing")){
-                                            selectedAlg = SECRET_SHARE; 
+                                            selectedAlg = SECRET_SHARE;
                                         }else if (algorithm.equals("Differential Privacy")){
-                                            selectedAlg = DIFFERENTIAL_PRIVACY; 
+                                            selectedAlg = DIFFERENTIAL_PRIVACY;
                                         }
                                         if (selectedAlg == 0)
                                             JOptionPane.showMessageDialog(null,"Selected algorithm not yet implemented; please choose another." , "Error!", JOptionPane.ERROR_MESSAGE);
@@ -483,7 +483,7 @@ public class Client implements Runnable
         return vector;
     }
     public int[] decode(int[][] vectorAggregate){
-        // TODO : Should return a vector of integers where vector[i] represents the 
+        // TODO : Should return a vector of integers where vector[i] represents the
         // estimated frequency i occurred in the aggregate of vectors
         int[] vector = new int[vectorAggregate[0].length];
         return vector;
@@ -627,8 +627,10 @@ public class Client implements Runnable
                 // sumlocal
                 for(Entity en : dataset){
                     if(en.getAssignedCluster() == c.getId())
-                        clusterData.addEntity(en);
+                      clusterData.addEntity(en);
                 }
+
+                System.out.println("AFTER ADDING ENTITIES TO CLUSTER DATA: "+ ID + " countShare = " + clusterData.getCountShare());
 
                 ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
 
@@ -647,7 +649,7 @@ public class Client implements Runnable
                     if (id == ID){
                         receivedShares.add(shares.get(count));
                     }else{
-                        // Send shares 
+                        // Send shares
                         Message msg = new Message(21, groupname, ID, id);
                         msg.setEntity(shares.get(count));
                         sendMessage(msg);
@@ -665,6 +667,11 @@ public class Client implements Runnable
                     try{
                         Thread.sleep(500);
                     }catch (InterruptedException e) {}
+                }
+
+                LOGGER.log(Level.INFO, "ID: "+ ID + " received: ");
+                for(SharingEntity se: receivedShares) {
+                  LOGGER.log(Level.INFO, se.toEntity().toString());
                 }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
@@ -689,7 +696,7 @@ public class Client implements Runnable
                 LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
                 */
-                
+
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
 
                 Message msg = new Message(12, groupname, ID, 0);
@@ -722,6 +729,7 @@ public class Client implements Runnable
                         converged = false;
                     clusterData.addSharingEntity(se);
                 }
+                LOGGER.log(Level.INFO, "countShare = " + clusterData.getCountShare());
                 c = new EntityCluster(clusterData.toEntity(), c.getId());
                 nc.add(c);
 
