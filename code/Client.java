@@ -347,9 +347,12 @@ public class Client implements Runnable
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
                 // sumlocal
+                int numAdded = 0;
                 for(Entity en : dataset){
-                    if(en.getAssignedCluster() == c.getId())
-                        clusterData.addEntity(en);
+                    if(en.getAssignedCluster() == c.getId()) {
+                      numAdded++;
+                      clusterData.addEntity(en);
+                    }
                 }
 
                 Message msg = new Message(12, groupname, ID, 0);
@@ -625,11 +628,20 @@ public class Client implements Runnable
                 clusterData.setClusterLabel(c.getId());
                 clusterData.setConv(converged);
                 // sumlocal
+                int numAdded = 0;
                 for(Entity en : dataset){
-                    if(en.getAssignedCluster() == c.getId())
+                    if(en.getAssignedCluster() == c.getId()) {
+                      numAdded++;
                       clusterData.addEntity(en);
+                    }
+                }
+                if(numAdded == 0) {
+                  Entity empty = Entity.getEmptyEntity();
+                  clusterData.addEntity(empty);
                 }
 
+
+                System.out.println("Number Added to ClusterData: "+numAdded);
                 System.out.println("AFTER ADDING ENTITIES TO CLUSTER DATA: "+ ID + " countShare = " + clusterData.getCountShare());
 
                 ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
@@ -644,18 +656,19 @@ public class Client implements Runnable
                     }catch (InterruptedException e) {}
                 }
 
-                int count = 0;
+                int assignedShare = 0;
                 for ( int id : memIDs ){
-                    if (id == ID){
-                        receivedShares.add(shares.get(count));
-                    }else{
-                        // Send shares
-                        Message msg = new Message(21, groupname, ID, id);
-                        msg.setEntity(shares.get(count));
-                        sendMessage(msg);
-                        LOGGER.log(Level.INFO, "ID: " + ID + " sending share "+count);
+                    if (id == ID) {
+                      receivedShares.add(shares.get(assignedShare));
                     }
-                    count++;
+                    else{
+                      // Send shares
+                      Message msg = new Message(21, groupname, ID, id);
+                      msg.setEntity(shares.get(assignedShare));
+                      sendMessage(msg);
+                      LOGGER.log(Level.INFO, "ID: " + ID + " sending share "+assignedShare);
+                    }
+                    assignedShare++;
                 }
 
                 // wait on shares
@@ -669,10 +682,10 @@ public class Client implements Runnable
                     }catch (InterruptedException e) {}
                 }
 
-                LOGGER.log(Level.INFO, "ID: "+ ID + " received: ");
-                for(SharingEntity se: receivedShares) {
-                  LOGGER.log(Level.INFO, se.toEntity().toString());
-                }
+                // LOGGER.log(Level.INFO, "ID: "+ ID + " received: ");
+                // for(SharingEntity se: receivedShares) {
+                //   LOGGER.log(Level.INFO, se.toEntity().toString());
+                // }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
 
@@ -686,16 +699,6 @@ public class Client implements Runnable
                     }
                 }
 
-                // Add categorical data
-
-                /*
-                Message msg = new Message(12, groupname, ID, 0);
-                clusterData.setClusterLabel(c.getId());
-                clusterData.setIterationLabel(itt);
-                msg.setEntity(clusterData);
-                LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
-                sendMessage(msg);
-                */
 
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
 
@@ -707,12 +710,14 @@ public class Client implements Runnable
                 LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + intermediateEntity.toEntity() );
                 sendMessage(msg);
 
+                if(numAdded == 0)
+                  intermediateEntity.decrementCount();
                 confirmedSharingEntities.add(intermediateEntity);
                 try{
                     Thread.sleep(1000);
                 }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
-                    LOGGER.log(Level.INFO, "ID: " + ID + " waitingfor receivedEntities");
+                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
                     try{
                         Thread.sleep(500);
                     }catch (InterruptedException e) {}
@@ -736,9 +741,9 @@ public class Client implements Runnable
                 receivedEntities.removeAll(confirmedSharingEntities);
                 receivedShares.removeAll(intermediateConfirmed);
                 LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
-                LOGGER.log(Level.INFO, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString());
+                LOGGER.log(Level.INFO, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
             }
-
+            System.out.println("END OF ITERATION "+itt + "\n\n");
             this.clusters = nc;
         }
 

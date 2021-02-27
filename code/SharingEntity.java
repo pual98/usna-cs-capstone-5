@@ -159,9 +159,8 @@ public class SharingEntity implements Serializable
     public void addSharingEntity(SharingEntity b)
     {
         ArrayList<Double> retQuals = new ArrayList<Double>();
-        for(int i = 0 ; i <  b.getNumQuals(); i++)
-        {
-            retQuals.add(qualities.get(i) + b.getQual(i));
+        for(int i = 0 ; i <  b.getNumQuals(); i++) {
+          retQuals.add(qualities.get(i) + b.getQual(i));
         }
         qualities = retQuals;
         modeMap =  KMode.mergeMaps(modeMap, b.modeMap);
@@ -169,9 +168,14 @@ public class SharingEntity implements Serializable
         System.out.println("AFTER addSharingEntity countShare = "+countShare);
     }
 
+    public void decrementCount() {
+      countShare--;
+    }
+
 
     public Entity toEntity()
     {
+        System.out.println("INSIDE toEntity: COUNTSHARE = "+ countShare);
         ArrayList<Double> retQuals = new ArrayList<Double>();
         for(int i = 0 ; i  < qualities.size(); i++)
         {

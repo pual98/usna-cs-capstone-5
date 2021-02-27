@@ -49,6 +49,10 @@ public class EntityCluster implements Serializable
     id = ij;
   }
 
+  public int getSize() {
+    return Entities.size();
+  }
+
   public void clear() {
     Entities.clear();
   }
