@@ -38,6 +38,7 @@ public class Client implements Runnable
     public final static int DIFFERENTIAL_PRIVACY = 0;
 
     public Client() {
+        LOGGER.setLevel(Level.WARNING);
         boolean haveID = false;
         try{
             File myFile = new File(".config");
@@ -282,7 +283,6 @@ public class Client implements Runnable
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
-        //ArrayList<Entity> dataset = Dataset.build("threeClusters.csv");
         if (isCoordinator){
             //int NUM_CLUSTERS = 3;
             this.clusters = new ArrayList<EntityCluster>();
@@ -347,10 +347,10 @@ public class Client implements Runnable
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
                 // sumlocal
-                int numAdded = 0;
+//                int numAdded = 0;
                 for(Entity en : dataset){
                     if(en.getAssignedCluster() == c.getId()) {
-                      numAdded++;
+//                      numAdded++;
                       clusterData.addEntity(en);
                     }
                 }
@@ -359,7 +359,7 @@ public class Client implements Runnable
                 clusterData.setClusterLabel(c.getId());
                 clusterData.setIterationLabel(itt);
                 msg.setEntity(clusterData);
-                LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
+                LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
                 // wait on sums
                 try{
@@ -552,16 +552,12 @@ public class Client implements Runnable
         else
             JOptionPane.showMessageDialog(null, "Correlation Complete", "No New Alert Types Found!", JOptionPane.INFORMATION_MESSAGE);
 
-
-
-
     }
 
     public void SecretShareDiff(ArrayList<Entity> dataset) {
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
-
-        //ArrayList<Entity> dataset = Dataset.build("threeClusters.csv");
+        LOGGER.log(Level.WARNING, ID+": is COORDINATOR");
         if (isCoordinator){
             //int NUM_CLUSTERS = 3;
             this.clusters = new ArrayList<EntityCluster>();
@@ -577,9 +573,8 @@ public class Client implements Runnable
             msg.setClusters(this.clusters);
             sendMessage(msg);
         }
-        /*
-         * receive cents
-         */
+
+        // Wait to receive the clusters from the coordinator
         while (this.clusters == null){
             try{
                 Thread.sleep(500);
@@ -588,19 +583,22 @@ public class Client implements Runnable
 
         Random r = new Random();
         boolean converged = false;
-        int itt = 0;
 
+        // Iteration counter
+        int itt = 0;
         for(int i = 0; i < NUM_CLUSTERS; i++)
             clustersPresent.add(false);
 
         while(!converged) {
+            if(isCoordinator)
+            LOGGER.log(Level.WARNING, "ID: START OF ITERATION "+itt+"\n");
             int clabel = 0;
             for(EntityCluster c: clusters){
                 c.setId(clabel);
                 clabel++;
             }
             for (int i = 0; i < NUM_CLUSTERS; i++)
-                LOGGER.log(Level.INFO, ID+": secret sharing iteration "+itt+", cluster "+ i + ", centroid: "+ clusters.get(i).getCentroid());
+                LOGGER.log(Level.WARNING, ID+": secret sharing iteration "+itt+", cluster "+ i + ", centroid: "+ clusters.get(i).getCentroid());
 
             converged = true;
 
@@ -617,32 +615,32 @@ public class Client implements Runnable
                         converged = false;
                 }
             }
-            itt++;
 
             //for each cluster:
             ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
             for(EntityCluster c : this.clusters)
             {
                 SharingEntity clusterData = new SharingEntity();
+                clusterData.setConv(converged);
+
                 clusterData.setIterationLabel(itt);
                 clusterData.setClusterLabel(c.getId());
-                clusterData.setConv(converged);
                 // sumlocal
-                int numAdded = 0;
+//                int numAdded = 0;
                 for(Entity en : dataset){
                     if(en.getAssignedCluster() == c.getId()) {
-                      numAdded++;
+//                      numAdded++;
                       clusterData.addEntity(en);
                     }
                 }
-                if(numAdded == 0) {
-                  Entity empty = Entity.getEmptyEntity();
-                  clusterData.addEntity(empty);
-                }
+//                if(numAdded == 0) {
+//                  Entity empty = Entity.getEmptyEntity();
+//                  clusterData.addEntity(empty);
+//                }
 
 
-                System.out.println("Number Added to ClusterData: "+numAdded);
-                System.out.println("AFTER ADDING ENTITIES TO CLUSTER DATA: "+ ID + " countShare = " + clusterData.getCountShare());
+//                System.out.println("Number Added to ClusterData: "+numAdded);
+//                System.out.println("AFTER ADDING ENTITIES TO CLUSTER DATA: "+ ID + " countShare = " + clusterData.getCountShare());
 
                 ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
 
@@ -682,10 +680,6 @@ public class Client implements Runnable
                     }catch (InterruptedException e) {}
                 }
 
-                // LOGGER.log(Level.INFO, "ID: "+ ID + " received: ");
-                // for(SharingEntity se: receivedShares) {
-                //   LOGGER.log(Level.INFO, se.toEntity().toString());
-                // }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
 
@@ -706,12 +700,16 @@ public class Client implements Runnable
                 LOGGER.log(Level.INFO, "ID: " + ID + " setting cluster label to c.getId(): "+c.getId());
                 intermediateEntity.setClusterLabel(c.getId());
                 intermediateEntity.setIterationLabel(itt);
+
+                if (isCoordinator)
+                LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + intermediateEntity.toEntity() );
+
+//                if(numAdded == 0)
+//                  intermediateEntity.decrementCount();
+
                 msg.setEntity(intermediateEntity);
-                LOGGER.log(Level.INFO, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + intermediateEntity.toEntity() );
                 sendMessage(msg);
 
-                if(numAdded == 0)
-                  intermediateEntity.decrementCount();
                 confirmedSharingEntities.add(intermediateEntity);
                 try{
                     Thread.sleep(1000);
@@ -734,16 +732,21 @@ public class Client implements Runnable
                         converged = false;
                     clusterData.addSharingEntity(se);
                 }
-                LOGGER.log(Level.INFO, "countShare = " + clusterData.getCountShare());
+                if (isCoordinator)
+                LOGGER.log(Level.WARNING, "countShare = " + clusterData.getCountShare());
+
                 c = new EntityCluster(clusterData.toEntity(), c.getId());
                 nc.add(c);
 
                 receivedEntities.removeAll(confirmedSharingEntities);
                 receivedShares.removeAll(intermediateConfirmed);
                 LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
-                LOGGER.log(Level.INFO, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
+                if (isCoordinator)
+                LOGGER.log(Level.WARNING, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
             }
-            System.out.println("END OF ITERATION "+itt + "\n\n");
+            if (isCoordinator)
+            LOGGER.log(Level.WARNING, "ID: END OF ITERATION "+itt+"\n");
+            itt++;
             this.clusters = nc;
         }
 

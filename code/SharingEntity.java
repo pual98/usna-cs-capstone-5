@@ -48,7 +48,6 @@ public class SharingEntity implements Serializable
         }
     }
 
-    /*
     public SharingEntity(int cs, ArrayList<Double> qual,  ArrayList<HashMap<Integer,Integer>> cat)
     {
         this.countShare = cs;
@@ -67,7 +66,6 @@ public class SharingEntity implements Serializable
         this.conv = cv;
     }
 
-    */
     public void setConv(boolean b)
     {
         conv = b;
@@ -167,7 +165,6 @@ public class SharingEntity implements Serializable
         qualities = retQuals;
         modeMap =  KMode.mergeMaps(modeMap, b.modeMap);
         countShare = countShare + b.countShare;
-        System.out.println("AFTER addSharingEntity countShare = "+countShare);
     }
 
     public void decrementCount() {
@@ -177,8 +174,11 @@ public class SharingEntity implements Serializable
 
     public Entity toEntity()
     {
-        System.out.println("INSIDE toEntity: COUNTSHARE = "+ countShare);
         ArrayList<Double> retQuals = new ArrayList<Double>();
+
+        if (countShare == 0){
+            return Entity.getEmptyEntity();
+        }
         for(int i = 0 ; i  < qualities.size(); i++)
         {
             retQuals.add(qualities.get(i) / countShare);
@@ -247,7 +247,6 @@ public class SharingEntity implements Serializable
             finalShare.setClusterLabel(clusterLabel);
             finalShare.setIterationLabel(iterationLabel);
             finalShare.countShare = countShare-2;
-            System.out.println("COUNT SHARE AT THE END OF MAKESHARE: "+ finalShare.countShare);
             ret.add(finalShare);
         }
         return ret;
@@ -255,7 +254,6 @@ public class SharingEntity implements Serializable
 
     public static void main(String[] args)
     {
-        System.out.println("testing share splitting");
         SharingEntity toSplit = new SharingEntity();
         ArrayList<Double> qualss = new ArrayList<Double>();
         qualss.add(0.8578789798);
