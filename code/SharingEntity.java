@@ -253,7 +253,6 @@ public class SharingEntity implements Serializable
     return ret;
   }
 
-
   public static void main(String[] args)
   {
     System.out.println("testing share splitting");
