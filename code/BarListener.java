@@ -95,10 +95,11 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
         JOptionPane.showMessageDialog(null, "You need to upload Snort Data prior to running IDS!", "No File Selected", JOptionPane.ERROR_MESSAGE);
         return;
       }
-
       //Parse filename into CSV file to be sent to kPrototypes
-      // this.client.kPrototypes(d.getEntitiesFromFile());
-      this.client.SecretShareDiff(d.getEntitiesFromFile());
+      if(client.getAlgorithm().equals("Distributed (none)"))
+        this.client.kPrototypes(d.getEntitiesFromFile());
+      else if(client.getAlgorithm().equals("Secret Sharing"))
+        this.client.SecretShareDiff(d.getEntitiesFromFile());
       this.d.populateTable();
       modelCreated = true;
       this.d.setAlgorithmComplete();

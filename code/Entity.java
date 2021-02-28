@@ -84,9 +84,9 @@ public class Entity implements Serializable
     return this.cluster_number;
   }
 
-  public static Entity createRandomEntity(int d, int dCat)
+  public static Entity createRandomEntity(int d, int dCat, int seed)
   {
-    Random r = new Random();
+    Random r = new Random(seed);
     ArrayList<Double> retQual = new ArrayList<Double>();
     for(int i  = 0 ; i  < d ; i ++)
     {
@@ -121,7 +121,7 @@ public class Entity implements Serializable
   {
     ArrayList<Entity> ret = new ArrayList<Entity>(number);
     for(int i = 0; i < number; i++) {
-      ret.add(createRandomEntity(d, dCat));
+      ret.add(createRandomEntity(d, dCat, 2021));
     }
     return ret;
   }
@@ -211,13 +211,13 @@ public class Entity implements Serializable
   public static void main(String[] args)
   {
     Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    Entity a = Entity.createRandomEntity(2,2);
-    Entity b = Entity.createRandomEntity(2,2);
-    a = Entity.createRandomEntity(2,0);
-    b = Entity.createRandomEntity(2,0);
-    a = Entity.createRandomEntity(0,0);
-    b = Entity.createRandomEntity(0,0);
-    a = Entity.createRandomEntity(0,2);
-    b = Entity.createRandomEntity(0,2);
+    // Entity a = Entity.createRandomEntity(2,2);
+    // Entity b = Entity.createRandomEntity(2,2);
+    // a = Entity.createRandomEntity(2,0);
+    // b = Entity.createRandomEntity(2,0);
+    // a = Entity.createRandomEntity(0,0);
+    // b = Entity.createRandomEntity(0,0);
+    // a = Entity.createRandomEntity(0,2);
+    // b = Entity.createRandomEntity(0,2);
   }
 }

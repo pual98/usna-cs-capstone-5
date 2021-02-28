@@ -17,7 +17,7 @@ public class Client implements Runnable
     final static int ServerPort = 1234;
     static int ID = 0;
     static int NUM_CLUSTERS = 0;
-    static String ALGORITHM = "Distributed";
+    static String algorithm = "";
     private boolean isCoordinator = false;
     public boolean inGroup = false; //used to check if Client tries to join more than one CIDS
     public String groupname = null;
@@ -34,7 +34,7 @@ public class Client implements Runnable
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public final static int DISTRIBUTED = 1;
-    public final static int SECRET_SHARE = 0;
+    public final static int SECRET_SHARE = 1;
     public final static int DIFFERENTIAL_PRIVACY = 0;
 
     public Client() {
@@ -143,7 +143,7 @@ public class Client implements Runnable
                                     int requestingID = msg.source;
                                     int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+requestingID+" to join "+gn+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
                                     if (reply == JOptionPane.YES_OPTION) {
-                                        Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS+":"+ALGORITHM, ID, requestingID);
+                                        Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS+":"+algorithm, ID, requestingID);
                                         sendMessage(toSend);
                                         toSend = new Message(04, gn+":"+requestingID, ID, 0);
                                         sendMessage(toSend);
@@ -159,8 +159,8 @@ public class Client implements Runnable
                                     String gn= msg.msg.split(":")[0];
                                     if(msg.msg.contains("accept")) {
                                         NUM_CLUSTERS = Integer.parseInt(msg.msg.split(":")[2]);
-                                        ALGORITHM = msg.msg.split(":")[3];
-                                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS+"\n       Algorithm = "+ALGORITHM, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                                        algorithm = msg.msg.split(":")[3];
+                                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS+"\n       Algorithm = "+algorithm, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                                         setGroupStatus();
                                         groupname = gn;
                                     }
@@ -239,18 +239,17 @@ public class Client implements Runnable
                                     String num = (String) JOptionPane.showInputDialog(null, prompt, "Select Cluster Number", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
 
                                     int selectedAlg = 0;
-                                    String algorithm = "";
                                     do{
                                         prompt = "Select the algorithm to be used";
                                         options = new ArrayList<String>();
                                         options.add("Distributed (none)");
-                                        options.add("Secret sharing");
+                                        options.add("Secret Sharing");
                                         options.add("Differential privacy");
                                         choices = options.toArray();
                                         algorithm = (String) JOptionPane.showInputDialog(null, prompt, "Select algorithm", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
                                         if (algorithm.equals("Distributed (none)")){
                                             selectedAlg = DISTRIBUTED;
-                                        }else if (algorithm.equals("Secret sharing")){
+                                        }else if (algorithm.equals("Secret Sharing")){
                                             selectedAlg = SECRET_SHARE;
                                         }else if (algorithm.equals("Differential Privacy")){
                                             selectedAlg = DIFFERENTIAL_PRIVACY;
@@ -288,8 +287,8 @@ public class Client implements Runnable
             this.clusters = new ArrayList<EntityCluster>();
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
-                    EntityCluster c = new EntityCluster(i);
-                    Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
+                    EntityCluster c = new EntityCluster(i);               //last param here is a seed for the random creation
+                    Entity randomCentroid = Entity.createRandomEntity(3,4,3); //params for createRandomEntity function depend on the # of attributes
                     c.setCentroid(randomCentroid);
                     this.clusters.add(c);
                 }
@@ -307,7 +306,7 @@ public class Client implements Runnable
             }catch (InterruptedException e) {}
         }
 
-        Random r = new Random();
+        Random r = new Random(20);
         boolean converged = false;
         int itt = 0;
 
@@ -565,8 +564,8 @@ public class Client implements Runnable
             this.clusters = new ArrayList<EntityCluster>();
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
-                    EntityCluster c = new EntityCluster(i);
-                    Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
+                    EntityCluster c = new EntityCluster(i);               //last param here is for the seed
+                    Entity randomCentroid = Entity.createRandomEntity(3,4,3); //params for createRandomEntity function depend on the # of attributes
                     c.setCentroid(randomCentroid);
                     this.clusters.add(c);
                 }
@@ -583,7 +582,7 @@ public class Client implements Runnable
             }catch (InterruptedException e) {}
         }
 
-        Random r = new Random();
+        Random r = new Random(20);
         boolean converged = false;
 
         // Iteration counter
@@ -820,6 +819,10 @@ Given: limit, a constant, large prime number
                 count++;
         }
         return count;
+    }
+
+    public String getAlgorithm() {
+      return algorithm;
     }
 
     public static void main(String args[]) throws UnknownHostException, IOException {
