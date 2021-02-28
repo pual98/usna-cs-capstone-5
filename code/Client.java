@@ -427,6 +427,7 @@ public class Client implements Runnable
 
         if(cluster != en.getAssignedCluster()) {
             converged = false;
+            System.out.println("Entity: "+ en + " new assignment: "+cluster);
         }
         en.setCluster(cluster);
         //possible update to total number of entities in cluster
@@ -455,6 +456,7 @@ public class Client implements Runnable
 
             if(cluster != en.getAssignedCluster()) {
                 converged = false;
+                System.out.println("Entity: "+ en + " new assignment: "+cluster);
             }
             en.setCluster(cluster);
         }
@@ -680,18 +682,24 @@ public class Client implements Runnable
                     }catch (InterruptedException e) {}
                 }
 
+                System.out.println("ID: "+ID+" Received:");
+                for(SharingEntity e : receivedShares) {
+                  System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
+                }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
 
                 SharingEntity intermediateEntity = new SharingEntity();
+                intermediateEntity.setConv(converged);
                 ArrayList<SharingEntity> intermediateConfirmed = new ArrayList<SharingEntity>();
 
                 for (SharingEntity en : receivedShares){
                     if(en.getClusterLabel() == c.getId() && en.getIterationLabel() == itt){
-                        intermediateEntity.addSharingEntity(en);
-                        intermediateConfirmed.add(en);
+                      intermediateEntity.addSharingEntity(en);
+                      intermediateConfirmed.add(en);
                     }
                 }
+                System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
 
 
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
@@ -727,6 +735,7 @@ public class Client implements Runnable
                 }
 
                 clusterData = new SharingEntity();
+                clusterData.setConv(converged);
                 for(SharingEntity se : confirmedSharingEntities) {
                     if(se.getConv() == false)
                         converged = false;
@@ -741,11 +750,11 @@ public class Client implements Runnable
                 receivedEntities.removeAll(confirmedSharingEntities);
                 receivedShares.removeAll(intermediateConfirmed);
                 LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
-                if (isCoordinator)
+                // if (isCoordinator)
                 LOGGER.log(Level.WARNING, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
             }
             if (isCoordinator)
-            LOGGER.log(Level.WARNING, "ID: END OF ITERATION "+itt+"\n");
+            LOGGER.log(Level.WARNING, "ID: END OF ITERATION "+itt+"\n\n\n");
             itt++;
             this.clusters = nc;
         }
