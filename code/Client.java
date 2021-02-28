@@ -495,7 +495,7 @@ public class Client implements Runnable
         }
 
         double ret = (count_vPrime - (vectorAggregate.length*q))/(p-q);
-        
+
         return ret;
     }
     public void setGroupStatus() { this.inGroup = true; }
@@ -776,7 +776,7 @@ public class Client implements Runnable
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
                     EntityCluster c = new EntityCluster(i);
-                    Entity randomCentroid = Entity.createRandomEntity(3,4); //params for createRandomEntity function depend on the # of attributes
+                    Entity randomCentroid = Entity.createRandomEntity(3,4,3); //params for createRandomEntity function depend on the # of attributes
                     c.setCentroid(randomCentroid);
                     this.clusters.add(c);
                 }
