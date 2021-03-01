@@ -96,6 +96,11 @@ public class SharingEntity implements Serializable
     return modeMap;
   }
 
+  public void setModeMap(ArrayList<HashMap<Integer,Integer>> newMap)
+  {
+      this.modeMap = newMap;
+  }
+
   public void setClusterLabel(int label)
   {
     clusterLabel = label;

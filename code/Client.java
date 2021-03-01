@@ -35,7 +35,7 @@ public class Client implements Runnable
 
     public final static int DISTRIBUTED = 1;
     public final static int SECRET_SHARE = 1;
-    public final static int DIFFERENTIAL_PRIVACY = 0;
+    public final static int DIFFERENTIAL_PRIVACY = 1;
 
     public Client() {
         LOGGER.setLevel(Level.WARNING);
@@ -244,7 +244,7 @@ public class Client implements Runnable
                                         options = new ArrayList<String>();
                                         options.add("Distributed (none)");
                                         options.add("Secret Sharing");
-                                        options.add("Differential privacy");
+                                        options.add("Differential Privacy");
                                         choices = options.toArray();
                                         algorithm = (String) JOptionPane.showInputDialog(null, prompt, "Select algorithm", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
                                         if (algorithm.equals("Distributed (none)")){
@@ -464,6 +464,8 @@ public class Client implements Runnable
     public int[] unaryEncode(int c){
         // Based on max port number
         int vector[] = new int[65535];
+        if (c >= 65535)
+            return vector;
         for (int i = 0; i < vector.length; i++)
             vector[i] = 0;
         vector[c] = 1;
@@ -476,15 +478,17 @@ public class Client implements Runnable
         double epsilon = 1;
         double q = 1/(java.lang.Math.exp(epsilon) + 1);
         for (int i = 0; i < vector.length; i++)
-            if (vector[i] == 1)
+            if (vector[i] == 1){
                 if(rand.nextFloat() <= p)
                     vector[i] = 0;
-                else if (vector[i] == 0)
-                    if(rand.nextFloat() <= q)
-                        vector[i] = 1;
+            } else if (vector[i] == 0)
+                if(rand.nextFloat() <= q)
+                    vector[i] = 1;
         return vector;
     }
-    public double decode(int[][] vectorAggregate, int c){
+    public int decode(ArrayList<int[]> vectorAggregate, int c){
+        if (c >= 65535)
+            return 1;
         double p = 1/2;
         double epsilon = 1;
         double q = 1/(java.lang.Math.exp(epsilon) + 1);
@@ -494,7 +498,7 @@ public class Client implements Runnable
             count_vPrime += v[c];
         }
 
-        double ret = (count_vPrime - (vectorAggregate.length*q))/(p-q);
+        int ret = (int) Math.round((count_vPrime - (vectorAggregate.size()*q))/(p-q));
 
         return ret;
     }
@@ -843,6 +847,26 @@ public class Client implements Runnable
                       clusterData.addEntity(en);
                     }
                 }
+                
+                ArrayList<HashMap<Integer,Integer>> categoricalModeMap = clusterData.getModeMap();
+
+                // Confusing, but each integer should be mapped to an aggregate (arraylist) of unary encoded values
+                ArrayList<HashMap<Integer,Integer>> categoricalDeduced = new ArrayList<HashMap<Integer, Integer>>();
+
+                for (HashMap<Integer,Integer> m : categoricalModeMap){
+                    HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
+                    for (int key : m.keySet()){
+                        ArrayList<int[]> toAdd = new ArrayList<int[]>();
+                        int number = m.get(key);
+                        for (int i = 0; i < number; i++){
+                            int vector[] = unaryEncode(key);
+                            vector = perturb(vector);
+                            toAdd.add(vector);
+                        }
+                        nmap.put(key,decode(toAdd, key));
+                    }
+                    categoricalDeduced.add(nmap);
+                }
 
                 ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
 
@@ -899,6 +923,7 @@ public class Client implements Runnable
                       intermediateConfirmed.add(en);
                     }
                 }
+
                 System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
 
 
@@ -909,8 +934,10 @@ public class Client implements Runnable
                 intermediateEntity.setClusterLabel(c.getId());
                 intermediateEntity.setIterationLabel(itt);
 
+                intermediateEntity.setModeMap(categoricalDeduced);
+
                 if (isCoordinator)
-                LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + intermediateEntity.toEntity() );
+                LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending intermediate " + intermediateEntity.toEntity() );
 
                 msg.setEntity(intermediateEntity);
                 sendMessage(msg);

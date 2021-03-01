@@ -100,6 +100,8 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
         this.client.kPrototypes(d.getEntitiesFromFile());
       else if(client.getAlgorithm().equals("Secret Sharing"))
         this.client.SecretShareDiff(d.getEntitiesFromFile());
+      else if(client.getAlgorithm().equals("Differential Privacy"))
+        this.client.DifferentialPrivacy(d.getEntitiesFromFile());
       this.d.populateTable();
       modelCreated = true;
       this.d.setAlgorithmComplete();
