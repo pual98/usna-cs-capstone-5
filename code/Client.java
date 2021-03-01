@@ -498,7 +498,7 @@ public class Client implements Runnable
             count_vPrime += v[c];
         }
 
-        int ret = (int) Math.round((count_vPrime - (vectorAggregate.size()*q))/(p-q));
+        int ret = (int) Math.abs(Math.round((count_vPrime - (vectorAggregate.size()*q))/(p-q)));
 
         return ret;
     }
