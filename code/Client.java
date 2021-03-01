@@ -288,7 +288,7 @@ public class Client implements Runnable
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
                     EntityCluster c = new EntityCluster(i);               //last param here is a seed for the random creation
-                    Entity randomCentroid = Entity.createRandomEntity(3,4,3); //params for createRandomEntity function depend on the # of attributes
+                    Entity randomCentroid = Entity.createRandomEntity(3,4,3+i); //params for createRandomEntity function depend on the # of attributes
                     c.setCentroid(randomCentroid);
                     this.clusters.add(c);
                 }
@@ -612,7 +612,7 @@ public class Client implements Runnable
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
                     EntityCluster c = new EntityCluster(i);               //last param here is for the seed
-                    Entity randomCentroid = Entity.createRandomEntity(3,4,3); //params for createRandomEntity function depend on the # of attributes
+                    Entity randomCentroid = Entity.createRandomEntity(3,4,3+i); //params for createRandomEntity function depend on the # of attributes
                     c.setCentroid(randomCentroid);
                     this.clusters.add(c);
                 }
@@ -817,7 +817,7 @@ public class Client implements Runnable
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
                     EntityCluster c = new EntityCluster(i);
-                    Entity randomCentroid = Entity.createRandomEntity(3,4,3); //params for createRandomEntity function depend on the # of attributes
+                    Entity randomCentroid = Entity.createRandomEntity(3,4,3+i); //params for createRandomEntity function depend on the # of attributes
                     c.setCentroid(randomCentroid);
                     this.clusters.add(c);
                 }
@@ -884,7 +884,7 @@ public class Client implements Runnable
                       clusterData.addEntity(en);
                     }
                 }
-                
+
                 ArrayList<HashMap<Integer,Integer>> categoricalModeMap = clusterData.getModeMap();
 
                 // Confusing, but each integer should be mapped to an aggregate (arraylist) of unary encoded values
