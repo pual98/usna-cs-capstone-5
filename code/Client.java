@@ -461,6 +461,38 @@ public class Client implements Runnable
         return converged;
     }
 
+    public HashMap<Integer,Integer> binaryLocalHash(int c){
+        // Based on max port number
+        HashMap<Integer, Integer> vector = new HashMap<Integer, Integer>();
+        vector.put(c, 1);
+        return vector;
+    }
+    public HashMap<Integer,Integer> perturbHash(HashMap<Integer, Integer> vector, int c){
+        // Based on max port number
+        Random rand = new Random();
+        double p = 1/2;
+        double epsilon = 1;
+        double q = 1/(java.lang.Math.exp(epsilon) + 1);
+        if (vector.get(c) == 1)
+            if(rand.nextFloat() <= p)
+                vector.put(c, 0);
+        return vector;
+    }
+    public int decodeHash(ArrayList<HashMap<Integer,Integer>> vectorAggregate, int c){
+        double p = 1/2;
+        double epsilon = 1;
+        double q = 1/(java.lang.Math.exp(epsilon) + 1);
+
+        int count_vPrime = 0;
+        for (HashMap<Integer,Integer> hm : vectorAggregate){
+            count_vPrime+=hm.get(c);
+        }
+
+        int ret = (int) Math.abs(Math.round((count_vPrime - (vectorAggregate.size()*q))/(p-q)));
+
+        return ret;
+    }
+
     public int[] unaryEncode(int c){
         // Based on max port number
         int vector[] = new int[65535];
@@ -471,6 +503,7 @@ public class Client implements Runnable
         vector[c] = 1;
         return vector;
     }
+
 
     public int[] perturb(int[] vector){
         Random rand = new Random();
@@ -856,14 +889,21 @@ public class Client implements Runnable
                 for (HashMap<Integer,Integer> m : categoricalModeMap){
                     HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
                     for (int key : m.keySet()){
-                        ArrayList<int[]> toAdd = new ArrayList<int[]>();
+                        // ArrayList<int[]> toAdd = new ArrayList<int[]>();
+                        ArrayList<HashMap<Integer,Integer>> toAdd = new ArrayList<HashMap<Integer,Integer>>();
+
                         int number = m.get(key);
                         for (int i = 0; i < number; i++){
-                            int vector[] = unaryEncode(key);
-                            vector = perturb(vector);
-                            toAdd.add(vector);
+                            //int vector[] = unaryEncode(key);
+                            //vector = perturb(vector);
+                            //toAdd.add(vector);
+                            HashMap<Integer,Integer> binaryHashMap = binaryLocalHash(key);
+                            binaryHashMap = perturbHash(binaryHashMap, key);
+                            toAdd.add(binaryHashMap);
+
                         }
-                        nmap.put(key,decode(toAdd, key));
+                        //nmap.put(key,decode(toAdd, key));
+                        nmap.put(key,decodeHash(toAdd, key));
                     }
                     categoricalDeduced.add(nmap);
                 }
