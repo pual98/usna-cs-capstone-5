@@ -488,6 +488,10 @@ public class Client implements Runnable
             count_vPrime+=hm.get(c);
         }
 
+        // TODO CHECK THIS!!! whyyyy
+        if (count_vPrime == 0)
+            count_vPrime = 1;
+
         int ret = (int) Math.abs(Math.round((count_vPrime - (vectorAggregate.size()*q))/(p-q)));
 
         return ret;
@@ -889,7 +893,7 @@ public class Client implements Runnable
                 for (HashMap<Integer,Integer> m : categoricalModeMap){
                     HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
                     for (int key : m.keySet()){
-                        // ArrayList<int[]> toAdd = new ArrayList<int[]>();
+                        //ArrayList<int[]> toAdd = new ArrayList<int[]>();
                         ArrayList<HashMap<Integer,Integer>> toAdd = new ArrayList<HashMap<Integer,Integer>>();
 
                         int number = m.get(key);
@@ -900,7 +904,6 @@ public class Client implements Runnable
                             HashMap<Integer,Integer> binaryHashMap = binaryLocalHash(key);
                             binaryHashMap = perturbHash(binaryHashMap, key);
                             toAdd.add(binaryHashMap);
-
                         }
                         //nmap.put(key,decode(toAdd, key));
                         nmap.put(key,decodeHash(toAdd, key));
