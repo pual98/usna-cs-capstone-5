@@ -2,7 +2,7 @@
  * This class parses Snort alert data in the fast format.
  * The following line is an instance of data that can be parsed with an AlertParser:
  * 03/16-09:29:49.830000  [**] [1:384:5] ICMP PING [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.110 -> 192.168.22.245
- * Each line of data is then normalized for the k-Prototypes algorithm and made into an Entity 
+ * Each line of data is then normalized for the k-Prototypes algorithm and made into an Entity
 **/
 
 import java.time.*;

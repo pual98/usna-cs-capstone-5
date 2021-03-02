@@ -35,6 +35,7 @@ public class Server
         // server is listening on port 1234
         ServerSocket ss = new ServerSocket(1234);
         Socket s;
+        LOGGER.setLevel(Level.WARNING);
 
         // running infinite loop for getting
         // client request
