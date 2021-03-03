@@ -29,8 +29,9 @@ public class Client implements Runnable
     public ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
     public ArrayList<EntityCluster> clusters = null;
     public ArrayList<Integer> memIDs = new ArrayList<Integer>();
-    public String filename;
     public ArrayList<Boolean> clustersPresent = new ArrayList<Boolean>();
+    public ArrayList<Entity> uploadedData = new ArrayList<Entity>();
+    public String filename;
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public final static int DISTRIBUTED = 1;
@@ -279,6 +280,10 @@ public class Client implements Runnable
     }
 
     public void kPrototypes(ArrayList<Entity> dataset) {
+        for(Entity e : dataset)
+          uploadedData.add(e);
+
+
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
@@ -387,6 +392,7 @@ public class Client implements Runnable
         //identify which clusters this client's data belong to
         for(int i = 0; i < dataset.size(); i++) {
             int num = dataset.get(i).getAssignedCluster();
+            uploadedData.add(dataset.get(i));
             clustersPresent.set(num, true);
         }
 
@@ -572,6 +578,7 @@ public class Client implements Runnable
             //assign a cluster to the new instance of data
             int clusterID = clusters.get(minIndex).getId();
             newData.get(i).setCluster(clusterID);
+            uploadedData.add(newData.get(i));
 
             //check for data that appears in a new cluster (cluster that wasn't used by initial data)
             if(!clustersPresent.get(clusterID)) {
@@ -599,10 +606,12 @@ public class Client implements Runnable
         }
         else
             JOptionPane.showMessageDialog(null, "Correlation Complete", "No New Alert Types Found!", JOptionPane.INFORMATION_MESSAGE);
-
     }
 
     public void SecretShareDiff(ArrayList<Entity> dataset) {
+        for(Entity e : dataset)
+          uploadedData.add(e);
+
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
         LOGGER.log(Level.WARNING, ID+": is COORDINATOR");
@@ -795,6 +804,7 @@ public class Client implements Runnable
         //identify which clusters this client's data belong to
         for(int i = 0; i < dataset.size(); i++) {
             int num = dataset.get(i).getAssignedCluster();
+            uploadedData.add(dataset.get(i));
             clustersPresent.set(num, true);
         }
 
@@ -1029,6 +1039,7 @@ public class Client implements Runnable
         //identify which clusters this client's data belong to
         for(int i = 0; i < dataset.size(); i++) {
             int num = dataset.get(i).getAssignedCluster();
+            uploadedData.add(dataset.get(i));
             clustersPresent.set(num, true);
         }
 
@@ -1051,6 +1062,10 @@ public class Client implements Runnable
 
     public String getAlgorithm() {
       return algorithm;
+    }
+
+    public ArrayList<Entity> getDataset() {
+      return uploadedData;
     }
 
     public static void main(String args[]) throws UnknownHostException, IOException {

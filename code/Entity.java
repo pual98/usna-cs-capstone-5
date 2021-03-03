@@ -30,6 +30,24 @@ public class Entity implements Serializable
     return new Entity(qualities,categories);
   }
 
+  public String genCSVOutput()
+	{
+    String output = "";
+    for(Double q: qualities) {
+      output += String.valueOf(q) + ",";
+    }
+    int j = 0;
+    for(Integer i: categories) {
+      output += String.valueOf(i);
+      if(j < dCat)
+        output += ",";
+      j++;
+    }
+    output += cluster_number;
+    output += "\n";
+    return output;
+	}
+
   public int getEntitySizeInBytes()
   {
     return (d * 8) + (dCat * 4) + 12;//quality size + category size + Entity structure

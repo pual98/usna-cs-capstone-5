@@ -21,6 +21,7 @@ public class Menu extends JMenuBar {
     //Specific elements--sub menu options
     private JMenuItem filterHelp;
     private JMenuItem export;
+    private JMenuItem getData;
     private JMenuItem sendToClient;
     private JMenuItem sendToGroup;
 
@@ -38,7 +39,9 @@ public class Menu extends JMenuBar {
 
         //Add sub menus
         export = new JMenuItem("Export Table as CSV");
+        getData = new JMenuItem("Export Data as CSV");
         file.add(export);
+        file.add(getData);
 
         filterHelp = new JMenuItem("Filter Commands");
         help.add(filterHelp);
@@ -115,6 +118,42 @@ public class Menu extends JMenuBar {
                 }
 
                 } catch (IOException e) { e.printStackTrace(); }
+              }
+            }
+        });
+
+        getData.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+
+              ArrayList<Entity> data = client.getDataset();
+              if(data.size() == 0) {
+                JOptionPane.showMessageDialog(null, "You must upload data and run instrusion\n on data prior to exporting!", "Upload Required", JOptionPane.ERROR_MESSAGE);
+                return;
+              }
+              else {
+                try {
+                  JFileChooser chooser = new JFileChooser();
+                  int ret = chooser.showSaveDialog(null);
+                  if(ret == JFileChooser.APPROVE_OPTION) {
+                    File fname = chooser.getSelectedFile();
+                    if(fname == null)
+                      return;
+                    if (!fname.getName().toLowerCase().endsWith(".csv"))
+                      fname = new File(fname.getParentFile(), fname.getName() + ".csv");
+
+                    FileWriter csv = new FileWriter(fname);
+                    for(Entity e: data) {
+                      String line = e.genCSVOutput();
+                      csv.write(line);
+                    }
+                    csv.close();
+                    JOptionPane.showMessageDialog(null, "Data Exported as \n" + fname, "Export Complete", JOptionPane.INFORMATION_MESSAGE);
+                  }
+                } catch (IOException e) {
+                  System.out.println("Export Failed!");
+                  e.printStackTrace();
+                }
               }
             }
         });
