@@ -3,8 +3,8 @@ import java.util.*;
 import java.net.*;
 
 
-import java.util.logging.Level; 
-import java.util.logging.Logger; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.*;
 /*
    Most of this code is implemented from the following example
@@ -58,7 +58,7 @@ public class Server
 
             // add this client to active clients list
             ar.add(mtch);
-            
+
             LOGGER.log(Level.INFO, "Server: Client added to the server's cleint list");
 
             // start the thread.
@@ -236,21 +236,6 @@ class ClientHandler implements Runnable
             // right dest
         } else if(received.type == 21) {
             sendMessage(received);
-            /*
-            int num = received.dest;
-            String group_name = received.msg;
-
-            if (Server.groups.containsKey(group_name)){
-                ArrayList<String> partners = Server.groups.get(group_name);
-                for(String p : partners){
-                    if(Integer.parseInt(p) == received.dest) {
-                        Message m = new Message(22, ""+num, received.source, Integer.parseInt(p));
-                        m.setEntity(received.en);
-                        this.sendMessage(m);
-                    }
-                }
-            }
-            */
           return;
         }
     }

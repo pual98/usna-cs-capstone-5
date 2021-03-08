@@ -73,7 +73,7 @@ public class SharingEntity implements Serializable
   {
     return qualities;
   }
-  
+
   public HashMap<Integer, Integer> getCat(int i){
     return modeMap.get(i) ;
   }
@@ -221,10 +221,10 @@ public class SharingEntity implements Serializable
     numCats = toAdd.getCategoryCount();
   }
 
-  
-  /* Method makes shares of a single hashmap*/ 
+
+  /* Method makes shares of a single hashmap*/
   private ArrayList<HashMap<Integer, Integer>> splitMap(int shares, HashMap<Integer, Integer> map, Random rand){
-    
+
     // make empty list of hashmap shares
     ArrayList<HashMap<Integer, Integer>> ret = new ArrayList<HashMap<Integer, Integer>>();
     for(int i=0; i < shares ; i++){
@@ -234,7 +234,7 @@ public class SharingEntity implements Serializable
     // for every entry in map //
     Set<Map.Entry<Integer, Integer>> pairs = map.entrySet();
     for(Map.Entry<Integer, Integer> entry : pairs){
-      
+
       // make share of each value //
       ArrayList<Integer> cquals = new ArrayList<Integer>();
       int sum = 0 ;
@@ -251,14 +251,14 @@ public class SharingEntity implements Serializable
         ret.get(k).put((int)entry.getKey(), cquals.get(k)) ;
       }
     }
-    
+
     return ret ;
   }
-  
+
   public ArrayList<SharingEntity> makeShares(int shares, Random rand)
   {
     ArrayList<SharingEntity> ret = new ArrayList<SharingEntity>();
-    
+
     // for each sharing entity, make a share //
     ArrayList<ArrayList<HashMap<Integer,Integer>>> mapShares = new
       ArrayList<ArrayList<HashMap<Integer,Integer>>>();
@@ -272,28 +272,27 @@ public class SharingEntity implements Serializable
         mapShares.get(i).add(mapShare.get(i));
       }
     }
-    
+
     for(int i = 0 ; i < shares-1; i++)
     {
 
       // make shares of qualities //
       ArrayList<Double> squal = new ArrayList<Double>();
       for(int j = 0; j < numQuals; j++)
-      {
         squal.add((double)rand.nextFloat());
-      }
-      
+      ArrayList<Integer> countShares = new ArrayList<Integer>();
+
       // Create SharingEntity with created shares
       SharingEntity toAdd = new SharingEntity();
       toAdd.setClusterLabel(clusterLabel);
       toAdd.setIterationLabel(iterationLabel);
       toAdd.setConv(conv);
-      toAdd.countShare = 1;
+      toAdd.countShare = rand.nextInt();
       toAdd.setQuals(squal);
       toAdd.setModeMap(mapShares.get(i));
       ret.add(toAdd);
     }
-    
+
     // make final quality share
     ArrayList<Double> finalShareQuals = new ArrayList<Double>();
     for(int j = 0; j < numQuals; j++)
@@ -315,7 +314,12 @@ public class SharingEntity implements Serializable
     finalShare.setClusterLabel(clusterLabel);
     finalShare.setConv(conv);
     finalShare.setIterationLabel(iterationLabel);
-    finalShare.countShare = countShare-2;
+
+    int count = 0;
+    for(int j = 0; j < shares-1; j++){
+      count += ret.get(j).getCountShare();
+    }
+    finalShare.countShare = countShare-count;
     // System.out.println("COUNT SHARE AT THE END OF MAKESHARE: "+ finalShare.countShare);
     ret.add(finalShare);
     return ret;

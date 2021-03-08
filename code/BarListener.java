@@ -95,6 +95,10 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
         JOptionPane.showMessageDialog(null, "You need to upload Snort Data prior to running IDS!", "No File Selected", JOptionPane.ERROR_MESSAGE);
         return;
       }
+      if(modelCreated) {
+        JOptionPane.showMessageDialog(null, "You already ran intrusion detection to create learned model", "Model already created", JOptionPane.ERROR_MESSAGE);
+        return;
+      }
       //Parse filename into CSV file to be sent to kPrototypes
       if(client.getAlgorithm().equals("Distributed (none)"))
         this.client.kPrototypes(d.getEntitiesFromFile());
@@ -106,6 +110,7 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
       modelCreated = true;
       this.d.setAlgorithmComplete();
     }
+
     if (e.getActionCommand() == "Correlate New Data"){
       if(!modelCreated) {
         JOptionPane.showMessageDialog(null, "You must run intrusion detection\non initial data before correlating new data.", "No Learned Model", JOptionPane.ERROR_MESSAGE);

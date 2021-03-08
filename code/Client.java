@@ -24,6 +24,7 @@ public class Client implements Runnable
     public ObjectInputStream dis;
     public ObjectOutputStream dos;
     public Scanner scn;
+    public int numMembersinGroup = 0;
 
     public ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
     public ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
@@ -288,7 +289,6 @@ public class Client implements Runnable
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
         if (isCoordinator){
-            //int NUM_CLUSTERS = 3;
             this.clusters = new ArrayList<EntityCluster>();
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
@@ -430,7 +430,6 @@ public class Client implements Runnable
 
         if(cluster != en.getAssignedCluster()) {
             converged = false;
-            System.out.println("Entity: "+ en + " new assignment: "+cluster);
         }
         en.setCluster(cluster);
         //possible update to total number of entities in cluster
@@ -587,7 +586,6 @@ public class Client implements Runnable
             }
         }
 
-        System.out.println("newClusters = " + newClusters.size());
         int len = newClusters.size();
         if(len != 0) {
             String alert = "Data Correlated to New Cluster";
@@ -616,7 +614,6 @@ public class Client implements Runnable
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
         LOGGER.log(Level.WARNING, ID+": is COORDINATOR");
         if (isCoordinator){
-            //int NUM_CLUSTERS = 3;
             this.clusters = new ArrayList<EntityCluster>();
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
@@ -689,17 +686,16 @@ public class Client implements Runnable
                     }
                 }
 
-                ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
-
-                while (memIDs.size() < 3){
-                    Message requestForPartners = new Message(5, groupname, ID, 0);
-                    // TODO: verify better message sending protocol
-                    sendMessage(requestForPartners);
-                    LOGGER.log(Level.INFO, "ID: " + ID + " requesting list of partners");
-                    try{
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e) {}
+                Message requestForPartners = new Message(5, groupname, ID, 0);
+                sendMessage(requestForPartners);
+                numMembersinGroup = memIDs.size();
+                //wait for server to respond
+                while(numMembersinGroup == 0){
+                  numMembersinGroup = memIDs.size();
                 }
+
+
+                ArrayList<SharingEntity> shares = clusterData.makeShares(numMembersinGroup, new Random());
 
                 int assignedShare = 0;
                 for ( int id : memIDs ){
@@ -923,18 +919,17 @@ public class Client implements Runnable
 
                 ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
 
-                while (memIDs.size() < 3){
-                    Message requestForPartners = new Message(5, groupname, ID, 0);
-                    // TODO: verify better message sending protocol
-                    sendMessage(requestForPartners);
-                    LOGGER.log(Level.INFO, "ID: " + ID + " requesting list of partners");
-                    try{
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e) {}
+                Message requestForPartners = new Message(5, groupname, ID, 0);
+                sendMessage(requestForPartners);
+                numMembersinGroup = memIDs.size();
+                //wait for server to respond
+                while(numMembersinGroup == 0){
+                  numMembersinGroup = memIDs.size();
                 }
 
+
                 int assignedShare = 0;
-                for ( int id : memIDs ){
+                for (int id : memIDs){
                     if (id == ID) {
                       receivedShares.add(shares.get(assignedShare));
                     }
