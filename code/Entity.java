@@ -3,8 +3,8 @@ import java.util.List;
 import java.util.Random;
 import java.io.*;
 
-import java.util.logging.Level; 
-import java.util.logging.Logger; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.*;
 
 public class Entity implements Serializable
@@ -29,6 +29,24 @@ public class Entity implements Serializable
   {
     return new Entity(qualities,categories);
   }
+
+  public String genCSVOutput()
+	{
+    String output = "";
+    for(Double q: qualities) {
+      output += String.valueOf(q) + ",";
+    }
+    int j = 0;
+    for(Integer i: categories) {
+      output += String.valueOf(i);
+      if(j < dCat)
+        output += ",";
+      j++;
+    }
+    output += cluster_number;
+    output += "\n";
+    return output;
+	}
 
   public int getEntitySizeInBytes()
   {
@@ -84,9 +102,9 @@ public class Entity implements Serializable
     return this.cluster_number;
   }
 
-  public static Entity createRandomEntity(int d, int dCat)
+  public static Entity createRandomEntity(int d, int dCat, int seed)
   {
-    Random r = new Random();
+    Random r = new Random(seed);
     ArrayList<Double> retQual = new ArrayList<Double>();
     for(int i  = 0 ; i  < d ; i ++)
     {
@@ -121,7 +139,7 @@ public class Entity implements Serializable
   {
     ArrayList<Entity> ret = new ArrayList<Entity>(number);
     for(int i = 0; i < number; i++) {
-      ret.add(createRandomEntity(d, dCat));
+      ret.add(createRandomEntity(d, dCat, 2021));
     }
     return ret;
   }
@@ -137,6 +155,23 @@ public class Entity implements Serializable
         sum+=1;
     }
     return Math.sqrt(sum);
+  }
+
+  public static Entity getEmptyEntity() {
+    ArrayList<Double> qualities = new ArrayList<Double>();
+    ArrayList<Integer> categories = new ArrayList<Integer>();
+    //three qualities set to zero
+    qualities.add(new Double(0));
+    qualities.add(new Double(0));
+    qualities.add(new Double(0));
+    //four categories set to zero
+    categories.add(new Integer(0));
+    categories.add(new Integer(0));
+    categories.add(new Integer(0));
+    categories.add(new Integer(0));
+
+    Entity empty = new Entity(qualities, categories);
+    return empty;
   }
 
 
@@ -194,13 +229,13 @@ public class Entity implements Serializable
   public static void main(String[] args)
   {
     Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    Entity a = Entity.createRandomEntity(2,2);
-    Entity b = Entity.createRandomEntity(2,2);
-    a = Entity.createRandomEntity(2,0);
-    b = Entity.createRandomEntity(2,0);
-    a = Entity.createRandomEntity(0,0);
-    b = Entity.createRandomEntity(0,0);
-    a = Entity.createRandomEntity(0,2);
-    b = Entity.createRandomEntity(0,2);
+    // Entity a = Entity.createRandomEntity(2,2);
+    // Entity b = Entity.createRandomEntity(2,2);
+    // a = Entity.createRandomEntity(2,0);
+    // b = Entity.createRandomEntity(2,0);
+    // a = Entity.createRandomEntity(0,0);
+    // b = Entity.createRandomEntity(0,0);
+    // a = Entity.createRandomEntity(0,2);
+    // b = Entity.createRandomEntity(0,2);
   }
 }

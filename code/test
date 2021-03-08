@@ -1,0 +1,249 @@
+Feb 21, 2021 9:05:19 PM Client$2 run
+INFO: 4610: client read msg: Message@45760736
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 4610 completed one revolution
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 4610 final centroid val: (0.4698739709456179,0.44737809719947647,0.5137669701925298,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 0
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 1
+Feb 21, 2021 9:05:20 PM Client$2 run
+INFO: 4664: client read msg: Message@3ab33837
+Feb 21, 2021 9:05:20 PM Client$2 run
+INFO: 456: client read msg: Message@4bee147
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 456 received 3 shares (including own)
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 456 setting cluster label to c.getId(): 1
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 456 iteration 5 cluster 1 sending (0.5350644561566262,0.47125309556564837,0.48231040007003917,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:20 PM Client$2 run
+INFO: 4610: client read msg: Message@588984a8
+Feb 21, 2021 9:05:20 PM Client$2 run
+INFO: 4664: client read msg: Message@99c71d9
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 4664 received 3 shares (including own)
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 4664 setting cluster label to c.getId(): 1
+Feb 21, 2021 9:05:20 PM Client SecretShareDiff
+INFO: ID: 4664 iteration 5 cluster 1 sending (0.805985160015009,0.5619023468834446,0.5760705062366475,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:20 PM Client$2 run
+INFO: 456: client read msg: Message@620b01e
+Feb 21, 2021 9:05:20 PM Client$2 run
+INFO: 4610: client read msg: Message@dbb5dca
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 4610 received 3 shares (including own)
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 4610 setting cluster label to c.getId(): 1
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 4610 iteration 5 cluster 1 sending (0.89103689612239,0.8867834723406025,-0.06397702946833686,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:21 PM Client$2 run
+INFO: 4664: client read msg: Message@7304afad
+Feb 21, 2021 9:05:21 PM Client$2 run
+INFO: 456: client read msg: Message@61b52499
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 456 completed one revolution
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 456 final centroid val: (0.8788866481070499,0.84037188298958,0.027458332775232325,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 456 sending share 1
+Feb 21, 2021 9:05:21 PM Client$2 run
+INFO: 4664: client read msg: Message@52520395
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 456 sending share 2
+Feb 21, 2021 9:05:21 PM Client$2 run
+INFO: 4610: client read msg: Message@2af70738
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 4664 completed one revolution
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 4664 final centroid val: (0.8401836904129952,0.8274219899441805,0.014064031894288292,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 4664 sending share 0
+Feb 21, 2021 9:05:21 PM Client SecretShareDiff
+INFO: ID: 4664 sending share 2
+Feb 21, 2021 9:05:21 PM Client$2 run
+INFO: 456: client read msg: Message@2e4037b2
+Feb 21, 2021 9:05:21 PM Client$2 run
+INFO: 4610: client read msg: Message@2e6f45cc
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 4610 completed one revolution
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 4610 final centroid val: (0.6705248080858176,0.5165777212245465,0.5291904531533432,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 0
+Feb 21, 2021 9:05:22 PM Client$2 run
+INFO: 456: client read msg: Message@1ac4d040
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 1
+Feb 21, 2021 9:05:22 PM Client$2 run
+INFO: 4664: client read msg: Message@bdb77e1
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 456 received 3 shares (including own)
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 456 setting cluster label to c.getId(): 2
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 456 iteration 5 cluster 2 sending (0.6122772011539491,0.5713479644516547,0.3542027427075794,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:22 PM Client$2 run
+INFO: 4664: client read msg: Message@3622cf0a
+Feb 21, 2021 9:05:22 PM Client$2 run
+INFO: 4610: client read msg: Message@200cf88b
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 4664 received 3 shares (including own)
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 4664 setting cluster label to c.getId(): 2
+Feb 21, 2021 9:05:22 PM Client SecretShareDiff
+INFO: ID: 4664 iteration 5 cluster 2 sending (0.5018351556349624,0.3021810351287915,0.544294590518711,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:22 PM Client$2 run
+INFO: 456: client read msg: Message@4904ef6b
+Feb 21, 2021 9:05:22 PM Client$2 run
+INFO: 4610: client read msg: Message@1c2d9d80
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 4610 received 3 shares (including own)
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 4610 setting cluster label to c.getId(): 2
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 4610 iteration 5 cluster 2 sending (0.7734435006897575,0.7716180217884144,-0.010134300925938887,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:23 PM Client$2 run
+INFO: 4664: client read msg: Message@412c07a1
+Feb 21, 2021 9:05:23 PM Client$2 run
+INFO: 456: client read msg: Message@33f1a9ea
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 456 completed one revolution
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 456 final centroid val: (0.7681865649790196,0.7625321446272604,5.965808439575619E-4,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: 456: secret sharing iteration 5, cluster 0, centroid: (-0.19961429501897662,0.17394170138893283,-0.20924996619248906,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: 456: secret sharing iteration 5, cluster 1, centroid: (0.8788866481070499,0.84037188298958,0.027458332775232325,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: 456: secret sharing iteration 5, cluster 2, centroid: (0.7681865649790196,0.7625321446272604,5.965808439575619E-4,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 456 sending share 1
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 456 sending share 2
+Feb 21, 2021 9:05:23 PM Client$2 run
+INFO: 4664: client read msg: Message@6f491c93
+Feb 21, 2021 9:05:23 PM Client$2 run
+INFO: 4610: client read msg: Message@2b561e0d
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 4664 completed one revolution
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 4664 final centroid val: (0.7703241529568065,0.7677418271302836,-0.0030826162104514356,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: 4664: secret sharing iteration 5, cluster 0, centroid: (-0.19397109642312102,0.05414782634335339,-0.0965494267557847,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: 4664: secret sharing iteration 5, cluster 1, centroid: (0.8401836904129952,0.8274219899441805,0.014064031894288292,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: 4664: secret sharing iteration 5, cluster 2, centroid: (0.7703241529568065,0.7677418271302836,-0.0030826162104514356,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 4664 sending share 0
+Feb 21, 2021 9:05:23 PM Client SecretShareDiff
+INFO: ID: 4664 sending share 2
+Feb 21, 2021 9:05:23 PM Client$2 run
+INFO: 456: client read msg: Message@254d0bed
+Feb 21, 2021 9:05:23 PM Client$2 run
+INFO: 4610: client read msg: Message@7527d90f
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 4610 completed one revolution
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 4610 final centroid val: (0.5570561783944558,0.43676449979022314,0.44924866661314516,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: 4610: secret sharing iteration 5, cluster 0, centroid: (0.4698739709456179,0.44737809719947647,0.5137669701925298,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: 4610: secret sharing iteration 5, cluster 1, centroid: (0.6705248080858176,0.5165777212245465,0.5291904531533432,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: 4610: secret sharing iteration 5, cluster 2, centroid: (0.5570561783944558,0.43676449979022314,0.44924866661314516,-1,-1,-1,-1) 2
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 0
+Feb 21, 2021 9:05:24 PM Client$2 run
+INFO: 456: client read msg: Message@6b1dc0fb
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 1
+Feb 21, 2021 9:05:24 PM Client$2 run
+INFO: 4664: client read msg: Message@3c0e9a1c
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 456 received 3 shares (including own)
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 456 setting cluster label to c.getId(): 0
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 456 iteration 6 cluster 0 sending (0.637321598196913,0.4010237324121213,0.41272702253606414,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:24 PM Client$2 run
+INFO: 4664: client read msg: Message@4664347b
+Feb 21, 2021 9:05:24 PM Client$2 run
+INFO: 4610: client read msg: Message@5e030c1d
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 4664 received 3 shares (including own)
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 4664 setting cluster label to c.getId(): 0
+Feb 21, 2021 9:05:24 PM Client SecretShareDiff
+INFO: ID: 4664 iteration 6 cluster 0 sending (0.4638772308116825,0.5695990156484588,0.6524000259845483,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:24 PM Client$2 run
+INFO: 456: client read msg: Message@5b4b0871
+Feb 21, 2021 9:05:24 PM Client$2 run
+INFO: 4610: client read msg: Message@1aa47428
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 4610 received 3 shares (including own)
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 4610 setting cluster label to c.getId(): 0
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 4610 iteration 6 cluster 0 sending (0.21726608117096444,0.3186447073636234,0.19923019092697283,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:25 PM Client$2 run
+INFO: 456: client read msg: Message@5c73a1f5
+Feb 21, 2021 9:05:25 PM Client$2 run
+INFO: 4664: client read msg: Message@124356a
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 456 completed one revolution
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 456 final centroid val: (-0.0293450684697536,0.06769039907878789,-0.25393964413060255,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 456 sending share 1
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 456 sending share 2
+Feb 21, 2021 9:05:25 PM Client$2 run
+INFO: 4664: client read msg: Message@2afb6be9
+Feb 21, 2021 9:05:25 PM Client$2 run
+INFO: 4610: client read msg: Message@377f5927
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 4664 completed one revolution
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 4664 final centroid val: (-0.2027894358549842,0.23626568231512546,-0.014266640682118433,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 4664 sending share 0
+Feb 21, 2021 9:05:25 PM Client$2 run
+INFO: 456: client read msg: Message@657d27ab
+Feb 21, 2021 9:05:25 PM Client SecretShareDiff
+INFO: ID: 4664 sending share 2
+Feb 21, 2021 9:05:25 PM Client$2 run
+INFO: 4610: client read msg: Message@3c83b0ba
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 4610 completed one revolution
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 4610 final centroid val: (0.5505994145042977,0.4853113740302901,0.5325635242603062,-1,-1,-1,-1) 0
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 0
+Feb 21, 2021 9:05:26 PM Client$2 run
+INFO: 456: client read msg: Message@76f9d71a
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 4610 sending share 1
+Feb 21, 2021 9:05:26 PM Client$2 run
+INFO: 4664: client read msg: Message@65d5d25e
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 456 received 3 shares (including own)
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 456 setting cluster label to c.getId(): 1
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 456 iteration 6 cluster 1 sending (0.4604143667758822,0.6275229204421117,0.5954752890579836,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:26 PM Client$2 run
+INFO: 4664: client read msg: Message@777ddf3d
+Feb 21, 2021 9:05:26 PM Client$2 run
+INFO: 4610: client read msg: Message@102b34a9
+^CFeb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 4664 received 3 shares (including own)
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 4664 setting cluster label to c.getId(): 1
+Feb 21, 2021 9:05:26 PM Client SecretShareDiff
+INFO: ID: 4664 iteration 6 cluster 1 sending (0.4727587094645922,0.8188950701612785,0.5955726190115026,-1,-1,-1,-1) 1
+Feb 21, 2021 9:05:26 PM Client$2 run
+INFO: 4610: client read msg: Message@27930247
+
