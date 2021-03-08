@@ -248,10 +248,9 @@ public class SharingEntity implements Serializable
 
       // add one share of each key-value pair to each hashmap //
       for(int k=0; k < shares; k++){
-        ret.get(k).put((int)entry.getKey(), cquals.get(k)) ;
+          ret.get(k).put((int)entry.getKey(), cquals.get(k)) ;
       }
     }
-
     return ret ;
   }
 
