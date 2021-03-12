@@ -183,6 +183,7 @@ public class Client implements Runnable
                                     //    EXAMPLE: 12,13,1,2 where each is an ID
                                 }else if(msg.type == 06){
                                     ArrayList<String> mems = msg.members;
+                                    numMembersinGroup = mems.size();
                                     for(int i = 0; i < mems.size(); i++) {
                                         int idToAdd = Integer.parseInt(mems.get(i));
                                         if (!memIDs.contains(idToAdd)){
@@ -688,12 +689,10 @@ public class Client implements Runnable
 
                 Message requestForPartners = new Message(5, groupname, ID, 0);
                 sendMessage(requestForPartners);
-                numMembersinGroup = memIDs.size();
                 //wait for server to respond
-                while(numMembersinGroup == 0){
+                while(numMembersinGroup < 3){
                   numMembersinGroup = memIDs.size();
                 }
-
 
                 ArrayList<SharingEntity> shares = clusterData.makeShares(numMembersinGroup, new Random());
 
