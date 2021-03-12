@@ -74,12 +74,11 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
       String group_name = null ;
       group_name = JOptionPane.showInputDialog("Enter Group's Name");
 
-      while(group_name.equals("")) {
-        JOptionPane.showMessageDialog(null, "Please input a name of a group.", "No Group Name Provided", JOptionPane.ERROR_MESSAGE);
-        group_name = JOptionPane.showInputDialog("Enter Group's Name");
-      }
-
       if(group_name != null) {
+        if(group_name.equals("")) {
+          JOptionPane.showMessageDialog(null, "Please input a name of a group.", "No Group Name Provided", JOptionPane.ERROR_MESSAGE);
+          group_name = JOptionPane.showInputDialog("Enter Group's Name");
+        }
         // send Message Type 02 to Server //
         Message msg = new Message(02, group_name, client.getID(), 0);
         this.client.sendMessage(msg);
@@ -103,7 +102,7 @@ public class BarListener implements ActionListener,ChangeListener,MouseListener 
       if(client.getAlgorithm().equals("Distributed (none)"))
         this.client.kPrototypes(d.getEntitiesFromFile());
       else if(client.getAlgorithm().equals("Secret Sharing"))
-        this.client.SecretShareDiff(d.getEntitiesFromFile());
+        this.client.SecretSharing(d.getEntitiesFromFile());
       else if(client.getAlgorithm().equals("Differential Privacy"))
         this.client.DifferentialPrivacy(d.getEntitiesFromFile());
       this.d.populateTable();

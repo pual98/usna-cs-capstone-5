@@ -24,7 +24,6 @@ public class Client implements Runnable
     public ObjectInputStream dis;
     public ObjectOutputStream dos;
     public Scanner scn;
-    public int numMembersinGroup = 0;
 
     public ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
     public ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
@@ -606,7 +605,7 @@ public class Client implements Runnable
             JOptionPane.showMessageDialog(null, "Correlation Complete", "No New Alert Types Found!", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void SecretShareDiff(ArrayList<Entity> dataset) {
+    public void SecretSharing(ArrayList<Entity> dataset) {
         for(Entity e : dataset)
           uploadedData.add(e);
 
@@ -686,16 +685,19 @@ public class Client implements Runnable
                     }
                 }
 
-                Message requestForPartners = new Message(5, groupname, ID, 0);
-                sendMessage(requestForPartners);
-                numMembersinGroup = memIDs.size();
-                //wait for server to respond
-                while(numMembersinGroup == 0){
-                  numMembersinGroup = memIDs.size();
+                ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
+
+                while (memIDs.size() < 3){
+                    Message requestForPartners = new Message(5, groupname, ID, 0);
+                    // TODO: verify better message sending protocol
+                    sendMessage(requestForPartners);
+                    LOGGER.log(Level.INFO, "ID: " + ID + " requesting list of partners");
+                    try{
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e) {}
                 }
 
 
-                ArrayList<SharingEntity> shares = clusterData.makeShares(numMembersinGroup, new Random());
 
                 int assignedShare = 0;
                 for ( int id : memIDs ){
@@ -919,14 +921,15 @@ public class Client implements Runnable
 
                 ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
 
-                Message requestForPartners = new Message(5, groupname, ID, 0);
-                sendMessage(requestForPartners);
-                numMembersinGroup = memIDs.size();
-                //wait for server to respond
-                while(numMembersinGroup == 0){
-                  numMembersinGroup = memIDs.size();
+                while (memIDs.size() < 3){
+                    Message requestForPartners = new Message(5, groupname, ID, 0);
+                    // TODO: verify better message sending protocol
+                    sendMessage(requestForPartners);
+                    LOGGER.log(Level.INFO, "ID: " + ID + " requesting list of partners");
+                    try{
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e) {}
                 }
-
 
                 int assignedShare = 0;
                 for (int id : memIDs){
