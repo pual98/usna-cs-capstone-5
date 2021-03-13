@@ -34,6 +34,7 @@ public class Client implements Runnable
     public String filename;
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    public int numMembersinGroup = 0; 
     public final static int DISTRIBUTED = 1;
     public final static int SECRET_SHARE = 1;
     public final static int DIFFERENTIAL_PRIVACY = 1;
@@ -182,6 +183,7 @@ public class Client implements Runnable
                                     //    EXAMPLE: 12,13,1,2 where each is an ID
                                 }else if(msg.type == 06){
                                     ArrayList<String> mems = msg.members;
+                                    numMembersinGroup = mems.size();
                                     for(int i = 0; i < mems.size(); i++) {
                                         int idToAdd = Integer.parseInt(mems.get(i));
                                         if (!memIDs.contains(idToAdd)){
@@ -685,19 +687,14 @@ public class Client implements Runnable
                     }
                 }
 
-                ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
-
-                while (memIDs.size() < 3){
-                    Message requestForPartners = new Message(5, groupname, ID, 0);
-                    // TODO: verify better message sending protocol
-                    sendMessage(requestForPartners);
-                    LOGGER.log(Level.INFO, "ID: " + ID + " requesting list of partners");
-                    try{
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e) {}
+                Message requestForPartners = new Message(5, groupname, ID, 0);
+                sendMessage(requestForPartners);
+                //wait for server to respond
+                while(numMembersinGroup < 3){
+                  numMembersinGroup = memIDs.size();
                 }
 
-
+                ArrayList<SharingEntity> shares = clusterData.makeShares(numMembersinGroup, new Random());
 
                 int assignedShare = 0;
                 for ( int id : memIDs ){
