@@ -88,6 +88,7 @@ class ClientHandler implements Runnable
         this.s = s;
         this.isloggedin=true;
 
+        /*
         try{
             Message m = (Message) this.dis.readObject();
             if((m.msg).contains("new name id")){ // this will always be TRUE
@@ -95,6 +96,7 @@ class ClientHandler implements Runnable
                 LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
             }
         } catch(Exception e) {}
+        */
     }
     // ClientHandler class
     public void sendMessage(Message m) throws IOException{
@@ -247,7 +249,10 @@ class ClientHandler implements Runnable
                 // receive the string
                 //
                 received = (Message)dis.readObject();
-                if(received.equals("logout")){
+                if((received.msg).contains("new name id")){ // this will always be TRUE
+                    this.name = received.msg.split(":")[1];
+                    LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
+                }else if(received.equals("logout")){
                     this.isloggedin=false;
                     this.s.close();
                     break;

@@ -83,6 +83,12 @@ public class Client implements Runnable
             // obtaining input and out streams
             dos = new ObjectOutputStream(s.getOutputStream());
             dis = new ObjectInputStream(s.getInputStream());
+
+            LOGGER.log(Level.INFO, "Client requesting rename");
+            System.out.flush();
+            // write on the output stream
+            Message m = new Message(1000, "new name id:"+ID, ID, 0);
+            dos.writeObject(m);
         } catch(UnknownHostException e) {} catch (IOException e) {}
     }
     public int getID() {
@@ -276,7 +282,7 @@ public class Client implements Runnable
                     }
                 });
 
-        sendMessage.start();
+        //sendMessage.start();
         readMessage.start();
 
     }
