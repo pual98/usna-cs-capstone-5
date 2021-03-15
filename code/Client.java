@@ -108,6 +108,15 @@ public class Client implements Runnable
                             Message m = new Message(1000, "new name id:"+ID, ID, 0);
                             dos.writeObject(m);
                         } catch (IOException e) { e.printStackTrace(); }
+
+                        while (true) {
+                            // read the message to deliver.
+                            try {
+                                String msg = scn.nextLine();
+                                Message m = new Message(1000, msg, ID, 0);
+                                dos.writeObject(msg);
+                            } catch (IOException e) { e.printStackTrace(); } catch (NoSuchElementException e) { }
+                        }
                     }
                 });
 
