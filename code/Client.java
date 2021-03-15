@@ -34,7 +34,7 @@ public class Client implements Runnable
     public String filename;
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public int numMembersinGroup = 0; 
+    public int numMembersinGroup = 0;
     public final static int DISTRIBUTED = 1;
     public final static int SECRET_SHARE = 1;
     public final static int DIFFERENTIAL_PRIVACY = 1;
@@ -108,15 +108,6 @@ public class Client implements Runnable
                             Message m = new Message(1000, "new name id:"+ID, ID, 0);
                             dos.writeObject(m);
                         } catch (IOException e) { e.printStackTrace(); }
-
-                        while (true) {
-                            // read the message to deliver.
-                            try {
-                                String msg = scn.nextLine();
-                                Message m = new Message(1000, msg, ID, 0);
-                                dos.writeObject(msg);
-                            } catch (IOException e) { e.printStackTrace(); } catch (NoSuchElementException e) { }
-                        }
                     }
                 });
 
@@ -916,17 +907,15 @@ public class Client implements Runnable
                     categoricalDeduced.add(nmap);
                 }
 
-                ArrayList<SharingEntity> shares = clusterData.makeShares(3, new Random());
-
-                while (memIDs.size() < 3){
-                    Message requestForPartners = new Message(5, groupname, ID, 0);
-                    // TODO: verify better message sending protocol
-                    sendMessage(requestForPartners);
-                    LOGGER.log(Level.INFO, "ID: " + ID + " requesting list of partners");
-                    try{
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e) {}
+                Message requestForPartners = new Message(5, groupname, ID, 0);
+                sendMessage(requestForPartners);
+                //wait for server to respond
+                while(numMembersinGroup < 3){
+                  numMembersinGroup = memIDs.size();
                 }
+
+                ArrayList<SharingEntity> shares = clusterData.makeShares(numMembersinGroup, new Random());
+
 
                 int assignedShare = 0;
                 for (int id : memIDs){

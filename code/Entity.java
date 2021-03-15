@@ -157,24 +157,6 @@ public class Entity implements Serializable
     return Math.sqrt(sum);
   }
 
-  public static Entity getEmptyEntity() {
-    ArrayList<Double> qualities = new ArrayList<Double>();
-    ArrayList<Integer> categories = new ArrayList<Integer>();
-    //three qualities set to zero
-    qualities.add(new Double(0));
-    qualities.add(new Double(0));
-    qualities.add(new Double(0));
-    //four categories set to zero
-    categories.add(new Integer(0));
-    categories.add(new Integer(0));
-    categories.add(new Integer(0));
-    categories.add(new Integer(0));
-
-    Entity empty = new Entity(qualities, categories);
-    return empty;
-  }
-
-
   public String toString()
   {
     String ret = "";
