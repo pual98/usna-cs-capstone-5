@@ -13,6 +13,7 @@ read -r -d '' EXECUTE <<- "SSH"
     WORK_DIRECTORY="$PWD/Documents/usna-cs-capstone-5/code/";
     cd "$WORK_DIRECTORY";
     ./timeTest.sh;
+    killall java;
 SSH
 
 echo -e "${green}Welcome to the Intrusion Detection System testing"

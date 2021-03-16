@@ -23,3 +23,4 @@ fi
 
 # ...
 rm -rf "$tmp_dir1"
+killall java
