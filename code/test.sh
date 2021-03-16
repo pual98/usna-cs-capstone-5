@@ -4,35 +4,64 @@
 
 red=$(tput setaf 1)
 green=$(tput setaf 2)
+yellow=$(tput setaf 3)
 reset=$(tput sgr0)
 
-WORK_DIRECTORY="/home/mids/m216240/Documents/usna-cs-capstone-5/code/"
-read -r -d '' EXECUTE <<- SSH
-    cd "$WORK_DIRECTORY" || exit
-    ./timeTest.sh
+read -r -d '' EXECUTE <<- "SSH"
+    killall java;
+    sleep 1;
+    WORK_DIRECTORY="$PWD/Documents/usna-cs-capstone-5/code/";
+    cd "$WORK_DIRECTORY";
+    ./timeTest.sh;
 SSH
 
-echo -e "${green}Welcome to the Intrusion Detection System demo"
+echo -e "${green}Welcome to the Intrusion Detection System testing"
 echo -e "Authors: Laylon Mokry, Patrick Bishop, Paul Slife, Jose Quiroz"
+echo -e "\n${yellow}WARNING: Before running this script complete the following:"
+echo -e "setup ssh-keys by running the command: ssh-copy-id midn.cs.usn.edu"
+echo -e "If a key is generated, don't set a password (just click enter)"
+echo -e "Then, ssh into midn.cs.usna.edu and make sure the usna-cs-capstone-5\ngithub code is downloaded into your ~/Documents/ directory and checkout the\n'testBranch' branch"
+
+echo -e -n "\nReady to begin [y/n] ${reset}"
+read -r CONTINUE
+
+if [ "$CONTINUE" == "n" ];
+then
+    exit
+fi
+
 echo -e "This may take a moment...${reset}"
 echo -e -n "\n"
 
+echo -e -n "Enter username w/ m [m21xxxx]: "
+read -r USERNAME
+
 declare -a computerList=(
-"midn.cs.usna.edu"
-"m216240@lnx1065211govt.academy.usna.edu"
-"m216240@lnx1065863govt.academy.usna.edu"
-"m216240@lnx1065864govt.academy.usna.edu"
+"$USERNAME@midn.cs.usna.edu"
+"$USERNAME@lnx1065211govt.academy.usna.edu"
+"$USERNAME@lnx1065863govt.academy.usna.edu"
+"$USERNAME@lnx1065864govt.academy.usna.edu"
 )
 
 trap "killall ssh" SIGINT SIGTERM EXIT
 
-for computer in "${computerList[@]}"
+len=${#computerList[@]}
+for i in "${!computerList[@]}"
 do
-    if [ "$computer" == "midn.cs.usna.edu" ]
+    if [ "${computerList[$i]}" == "midn.cs.usna.edu" ]
     then
-        ssh -X "$computer" \'"$EXECUTE"\' &
+        echo "Starting server"
+        printf -v _ %q "$EXECUTE"
+        ssh -f -X "${computerList[$i]}"  "$_"
         sleep 5;
+    elif [ $(("$len"-1)) -ne "$i" ]
+    then
+        echo "Starting normal"
+        printf -v _ %q "$EXECUTE"
+        ssh -f -X "${computerList[$i]}"  "$_"
     else
-        ssh -X "$computer" \'"$EXECUTE"\' &
+        echo "Starting last"
+        printf -v _ %q "$EXECUTE"
+        ssh -X "${computerList[$i]}"  "$_"
     fi
 done
