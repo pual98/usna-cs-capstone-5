@@ -239,6 +239,41 @@ class ClientHandler implements Runnable
         } else if(received.type == 21) {
             sendMessage(received);
           return;
+        } else if(received.type == 22) {
+            // NO AUTH version
+            String groupname = received.msg.split(":")[0];
+            int numClusters = Integer.parseInt(received.msg.split(":")[1]);
+            String algorithm = received.msg.split(":")[2];
+            //create new group
+            if (!Server.groups.containsKey(groupname)){
+                Server.groups.put(groupname,new ArrayList<String>());
+                //add client as the first member (coordinator)
+                Server.groups.get(groupname).add(Integer.toString(received.source));
+                Message msg = new Message(24, groupname, 0, received.source);
+                sendMessage(msg);
+            }
+          return;
+        } else if(received.type == 23) {
+            // NO AUTH version
+            String arr[] = (received.msg).split(":");
+            String groupname = arr[0];
+            String toAdd = arr[1];
+            if (Server.groups.containsKey(groupname))
+                if (!Server.groups.get(groupname).contains(toAdd)){
+                    Server.groups.get(groupname).add(toAdd);
+                    Message msg = new Message(24, groupname, 0, received.source);
+                    sendMessage(msg);
+                    ArrayList<String> partners = Server.groups.get(groupname);
+
+                    for (String p : partners){
+                        int dest = Integer.parseInt(p);
+                        Message m = new Message(6,"", 0, dest);
+                        m.setMembers(partners);
+                        this.sendMessage(m);
+                    }
+
+                }
+          return;
         }
     }
     @Override
@@ -252,7 +287,7 @@ class ClientHandler implements Runnable
                 if((received.msg).contains("new name id")){ // this will always be TRUE
                     this.name = received.msg.split(":")[1];
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
-                }else if(received.equals("logout")){
+                }else if((received.msg).equals("logout")){
                     this.isloggedin=false;
                     this.s.close();
                     break;

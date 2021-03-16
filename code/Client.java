@@ -66,6 +66,7 @@ public class Client implements Runnable
             try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(".config"))) {
                 Random rand = new Random();
                 int random = rand.nextInt(10000);
+                ID = random;
                 String fileContent = "id:"+random;
                 bufferedWriter.write(fileContent);
             } catch (IOException e) { }
@@ -75,7 +76,7 @@ public class Client implements Runnable
         try {
             // getting localhost ip
             //InetAddress ip = InetAddress.getByName("localhost");
-            InetAddress ip = InetAddress.getByName("midn.cs.usna.edu");
+            InetAddress ip = InetAddress.getByName("csmidn.academy.usna.edu");
 
             // establish the connection
             Socket s = new Socket(ip, ServerPort);
@@ -277,6 +278,10 @@ public class Client implements Runnable
                                     receivedShares.add(msg.en);
                                     continue;
                                 }
+                                else if(msg.type == 24) {
+                                    setGroupStatus();
+                                    continue;
+                                }
                             } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
                         }
                     }
@@ -313,9 +318,9 @@ public class Client implements Runnable
          * receive cents
          */
         while (this.clusters == null){
-            try{
-                Thread.sleep(500);
-            }catch (InterruptedException e) {}
+//            try{
+//                Thread.sleep(500);
+//            }catch (InterruptedException e) {}
         }
 
         Random r = new Random(20);
@@ -371,13 +376,13 @@ public class Client implements Runnable
                 LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
                 // wait on sums
-                try{
-                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                try{
+//                    Thread.sleep(1000);
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities, itt, c.getId()) < 2){
-                    try{
-                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    try{
+//                        Thread.sleep(500);
+//                    }catch (InterruptedException e) {}
                 }
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
                 for(SharingEntity se : receivedEntities) {
@@ -637,9 +642,9 @@ public class Client implements Runnable
 
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){
-            try{
-                Thread.sleep(500);
-            }catch (InterruptedException e) {}
+//            try{
+//                Thread.sleep(500);
+//            }catch (InterruptedException e) {}
         }
 
         Random r = new Random(20);
@@ -718,14 +723,14 @@ public class Client implements Runnable
                 }
 
                 // wait on shares
-                try{
-                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                try{
+//                    Thread.sleep(1000);
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){
-                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
-                    try{
-                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
+//                    try{
+//                        Thread.sleep(500);
+//                    }catch (InterruptedException e) {}
                 }
 
                 System.out.println("ID: "+ID+" Received:");
@@ -762,14 +767,14 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-                try{
-                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                try{
+//                    Thread.sleep(1000);
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
-                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
-                    try{
-                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
+//                    try{
+//                        Thread.sleep(500);
+//                    }catch (InterruptedException e) {}
                 }
 
                 for(SharingEntity se : receivedEntities) {
@@ -840,9 +845,9 @@ public class Client implements Runnable
 
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){
-            try{
-                Thread.sleep(500);
-            }catch (InterruptedException e) {}
+//            try{
+//                Thread.sleep(500);
+//            }catch (InterruptedException e) {}
         }
 
         Random r = new Random();
@@ -948,14 +953,14 @@ public class Client implements Runnable
                 }
 
                 // wait on shares
-                try{
-                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                try{
+//                    Thread.sleep(1000);
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){
-                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
-                    try{
-                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
+//                    try{
+//                        Thread.sleep(500);
+//                    }catch (InterruptedException e) {}
                 }
 
                 System.out.println("ID: "+ID+" Received:");
@@ -995,14 +1000,14 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-                try{
-                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                try{
+//                    Thread.sleep(1000);
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
-                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
-                    try{
-                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
+//                    try{
+//                        Thread.sleep(500);
+//                    }catch (InterruptedException e) {}
                 }
 
                 for(SharingEntity se : receivedEntities) {
@@ -1067,9 +1072,85 @@ public class Client implements Runnable
       return uploadedData;
     }
 
+    public void initializePartyTestingConnection(){
+        System.out.println("starting initialize");
+        Message mmsg;
+        this.algorithm = "Distributed (none)";
+        this.NUM_CLUSTERS = 3;
+        this.groupname = "testing_group";
+
+        if (this.isCoordinator){
+            mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
+            this.sendMessage(mmsg);
+        }
+
+        while (this.inGroup == false){
+            if (!this.isCoordinator){
+                mmsg = new Message(23, "testing_group:"+this.getID(), this.getID(), 0);
+                this.sendMessage(mmsg);
+            }
+            try{
+                Thread.sleep(500);
+            }catch (InterruptedException e) {}
+        }
+        Message requestForPartners = new Message(5, groupname, ID, 0);
+        sendMessage(requestForPartners);
+        //wait for server to respond
+        while(numMembersinGroup < 3){
+//          System.out.println("req for partners");
+            numMembersinGroup = memIDs.size();
+//            try{
+//                Thread.sleep(500);
+//            }catch (InterruptedException e) {}
+        }
+        System.out.println("finished initialize");
+    }
+    public ArrayList<Entity> getEntitiesFromFile(String filename){
+        ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
+        try{
+            FileReader fr = new FileReader(filename);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            ArrayList<String> parsedLines = new ArrayList<String>();
+            while ((line = br.readLine()) != null) {
+                AlertParser a = new AlertParser(line);
+                a.parseLine();
+
+                if(a.isTCP()) {
+                    //keep track of parsed lines as strings
+                    String parsedLine = a.genCSVOutput() + ";"+filename;
+                    parsedLines.add(parsedLine);
+                    //keep track of parsed lines as Entities
+                    Entity en = a.genEntityFromLine(parsedLine);
+                    if(en != null)
+                        entitiesFromFile.add(en);
+                }
+            }
+        } catch (Exception e)  {}
+        return entitiesFromFile;
+
+    }
+
     public static void main(String args[]) throws UnknownHostException, IOException {
         Client client = new Client();
         Thread clientThread = new Thread(client);
         clientThread.start();
+
+        // Client -testing -host -file [filename]
+        if (args.length > 1){
+            if (args[0].contains("-testing")){
+                if (args[1].contains("-host")){
+                    client.isCoordinator = true;
+                    if (args[2].contains("-file"))
+                        client.filename = args[3];
+                } else if (args[1].contains("-file"))
+                        client.filename = args[2];
+                client.initializePartyTestingConnection();
+                ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
+                System.out.println("kprototypes");
+                client.kPrototypes(entitiesFromFile);
+                System.out.println("Finished kprototypes");
+            }
+        }
     }
 }

@@ -90,6 +90,14 @@ public class IDS {
 
         // Minor settings.
         f.pack();
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Message msg = new Message(1000, "logout", client.getID(), 0);
+                client.sendMessage(msg);
+                System.exit(0);
+            }
+        });
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
