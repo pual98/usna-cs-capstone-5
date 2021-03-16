@@ -74,8 +74,8 @@ public class Client implements Runnable
 
         try {
             // getting localhost ip
-            InetAddress ip = InetAddress.getByName("localhost");
-            //InetAddress ip = InetAddress.getByName("midn.cs.usna.edu");
+            //InetAddress ip = InetAddress.getByName("localhost");
+            InetAddress ip = InetAddress.getByName("midn.cs.usna.edu");
 
             // establish the connection
             Socket s = new Socket(ip, ServerPort);

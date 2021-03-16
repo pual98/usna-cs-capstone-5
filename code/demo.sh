@@ -5,7 +5,7 @@ red=$(tput setaf 1)
 green=$(tput setaf 2)
 reset=$(tput sgr0)
 
-echo -e "${green}Welcome to the Intrusion Detection System demo"
+echo -e "${green}Welcome to the Intrusion Detection System testing"
 echo -e "Authors: Laylon Mokry, Patrick Bishop, Paul Slife, Jose Quiroz"
 echo -e "This may take a moment...${reset}"
 echo -e -n "\n"
@@ -38,7 +38,7 @@ cp "file.txt" "filterCommands.txt" "Fast Snort Data/file2.txt" "threeClusters.cs
 cp "file.txt" "filterCommands.txt" "Fast Snort Data/file3.txt" "threeClusters.csv" "large.csv" "$tmp_dir4/"
 
 
-trap 'kill %1; kill %2; kill %3; kill %4' SIGINT
+trap "kill %1; kill %2; kill %3; kill %4" SIGINT
 
 cd "$tmp_dir1" || exit; java Server &
 sleep 5;
