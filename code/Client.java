@@ -313,9 +313,9 @@ public class Client implements Runnable
          * receive cents
          */
         while (this.clusters == null){
-            try{
+//            try{
 //                Thread.sleep(500);
-            }catch (InterruptedException e) {}
+//            }catch (InterruptedException e) {}
         }
 
         Random r = new Random(20);
@@ -371,13 +371,13 @@ public class Client implements Runnable
                 LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
                 // wait on sums
-                try{
+//                try{
 //                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities, itt, c.getId()) < 2){
-                    try{
+//                    try{
 //                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    }catch (InterruptedException e) {}
                 }
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
                 for(SharingEntity se : receivedEntities) {
@@ -637,9 +637,9 @@ public class Client implements Runnable
 
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){
-            try{
+//            try{
 //                Thread.sleep(500);
-            }catch (InterruptedException e) {}
+//            }catch (InterruptedException e) {}
         }
 
         Random r = new Random(20);
@@ -718,14 +718,14 @@ public class Client implements Runnable
                 }
 
                 // wait on shares
-                try{
+//                try{
 //                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
-                    try{
+//                    try{
 //                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    }catch (InterruptedException e) {}
                 }
 
                 System.out.println("ID: "+ID+" Received:");
@@ -762,14 +762,14 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-                try{
+//                try{
 //                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
-                    try{
+//                    try{
 //                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    }catch (InterruptedException e) {}
                 }
 
                 for(SharingEntity se : receivedEntities) {
@@ -840,9 +840,9 @@ public class Client implements Runnable
 
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){
-            try{
+//            try{
 //                Thread.sleep(500);
-            }catch (InterruptedException e) {}
+//            }catch (InterruptedException e) {}
         }
 
         Random r = new Random();
@@ -948,14 +948,14 @@ public class Client implements Runnable
                 }
 
                 // wait on shares
-                try{
+//                try{
 //                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
-                    try{
+//                    try{
 //                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    }catch (InterruptedException e) {}
                 }
 
                 System.out.println("ID: "+ID+" Received:");
@@ -995,14 +995,14 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-                try{
+//                try{
 //                    Thread.sleep(1000);
-                }catch (InterruptedException e) {}
+//                }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
-                    try{
+//                    try{
 //                        Thread.sleep(500);
-                    }catch (InterruptedException e) {}
+//                    }catch (InterruptedException e) {}
                 }
 
                 for(SharingEntity se : receivedEntities) {
@@ -1094,7 +1094,7 @@ public class Client implements Runnable
                     }
                 }
             } catch (Throwable e) { System.out.println("error"); }
-            System.out.println("Starting kprototypes");
+            System.out.println("kprototypes");
             client.kPrototypes(entitiesFromFile);
             System.out.println("Finished kprototypes");
         }
