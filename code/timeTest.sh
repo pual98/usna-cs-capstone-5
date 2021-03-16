@@ -9,6 +9,7 @@ fi
 tmp_dir1=$(mktemp -d -t ciXXXXXXXXXX)
 
 cp ./*".class" "$tmp_dir1/"
+
 HOST=$(hostname)
 
 trap "kill %1; killall java" SIGINT SIGTERM

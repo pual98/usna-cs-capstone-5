@@ -1,32 +1,32 @@
 #!/bin/bash
 
 # Colors
-
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 yellow=$(tput setaf 3)
 reset=$(tput sgr0)
 
+# The following is the execute sequence which will be executed on each of the
+# ssh connections, saved to the "EXECUTE" variable
 read -r -d '' EXECUTE <<- "SSH"
     killall java;
     sleep 1;
     WORK_DIRECTORY="$PWD/Documents/usna-cs-capstone-5/code/";
     cd "$WORK_DIRECTORY";
     ./timeTest.sh;
-    killall java;
 SSH
 
 echo -e "${green}Welcome to the Intrusion Detection System testing"
 echo -e "Authors: Laylon Mokry, Patrick Bishop, Paul Slife, Jose Quiroz"
 echo -e "\n${yellow}WARNING: Before running this script complete the following:"
 echo -e "setup ssh-keys by running the command: ssh-copy-id m2xxxxx@csmidn.academy.usn.edu"
-echo -e "If a key is generated, don't set a password (just click enter)"
-echo -e "Then, ssh into midn.cs.usna.edu and make sure the usna-cs-capstone-5\ngithub code is downloaded into your ~/Documents/ directory and checkout the\n'testBranch' branch"
+echo -e "You may have already completed this. If a key is generated, don't set a password (just click enter)"
+echo -e "Then, ssh into csmidn.academy.usna.edu and make sure the usna-cs-capstone-5\ngithub code is downloaded into your ~/Documents/ directory and checkout the\n'testBranch' branch"
 
+# Exit if the user is not ready
 echo -e -n "\nReady to begin [y/n] ${reset}"
 read -r CONTINUE
-
-if [ "$CONTINUE" == "n" ];
+if [ "$CONTINUE" != "y" ];
 then
     exit
 fi
@@ -37,6 +37,7 @@ echo -e -n "\n"
 echo -e -n "Enter username w/ m [m21xxxx]: "
 read -r USERNAME
 
+# Array of computers to connect to. One server, three clients
 declare -a computerList=(
 "$USERNAME@csmidn.academy.usna.edu"
 "$USERNAME@lnx1065211govt.academy.usna.edu"
@@ -44,12 +45,26 @@ declare -a computerList=(
 "$USERNAME@lnx1065864govt.academy.usna.edu"
 )
 
-trap "killall ssh" SIGINT SIGTERM EXIT
+# If this program received SIGINT, SIGTERM, EXIT, then run the kill_sequence
+# function
+trap "killall ssh; kill_sequence" SIGINT SIGTERM EXIT
 
+function kill_sequence()
+{
+    # Kill sequence makes sure the java programs are all closed on each of the
+    # computers
+    for i in "${!computerList[@]}"
+    do
+        ssh -f -X "${computerList[$i]}"  "killall java;" > /dev/null 2>&1;
+    done
+  exit
+}
+
+# Get len of computerClient list
 len=${#computerList[@]}
 for i in "${!computerList[@]}"
 do
-    if [ "${computerList[$i]}" == "midn.cs.usna.edu" ]
+    if [ "$i" -eq 0 ]
     then
         echo "Starting server"
         printf -v _ %q "$EXECUTE"
