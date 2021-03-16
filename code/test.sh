@@ -18,7 +18,7 @@ SSH
 echo -e "${green}Welcome to the Intrusion Detection System testing"
 echo -e "Authors: Laylon Mokry, Patrick Bishop, Paul Slife, Jose Quiroz"
 echo -e "\n${yellow}WARNING: Before running this script complete the following:"
-echo -e "setup ssh-keys by running the command: ssh-copy-id m2xxxxx@midn.cs.usn.edu"
+echo -e "setup ssh-keys by running the command: ssh-copy-id m2xxxxx@csmidn.academy.usn.edu"
 echo -e "If a key is generated, don't set a password (just click enter)"
 echo -e "Then, ssh into midn.cs.usna.edu and make sure the usna-cs-capstone-5\ngithub code is downloaded into your ~/Documents/ directory and checkout the\n'testBranch' branch"
 
@@ -37,7 +37,7 @@ echo -e -n "Enter username w/ m [m21xxxx]: "
 read -r USERNAME
 
 declare -a computerList=(
-"$USERNAME@midn.cs.usna.edu"
+"$USERNAME@csmidn.academy.usna.edu"
 "$USERNAME@lnx1065211govt.academy.usna.edu"
 "$USERNAME@lnx1065863govt.academy.usna.edu"
 "$USERNAME@lnx1065864govt.academy.usna.edu"
