@@ -314,7 +314,7 @@ public class Client implements Runnable
          */
         while (this.clusters == null){
             try{
-                Thread.sleep(500);
+//                Thread.sleep(500);
             }catch (InterruptedException e) {}
         }
 
@@ -372,11 +372,11 @@ public class Client implements Runnable
                 sendMessage(msg);
                 // wait on sums
                 try{
-                    Thread.sleep(1000);
+//                    Thread.sleep(1000);
                 }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities, itt, c.getId()) < 2){
                     try{
-                        Thread.sleep(500);
+//                        Thread.sleep(500);
                     }catch (InterruptedException e) {}
                 }
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
@@ -638,7 +638,7 @@ public class Client implements Runnable
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){
             try{
-                Thread.sleep(500);
+//                Thread.sleep(500);
             }catch (InterruptedException e) {}
         }
 
@@ -719,12 +719,12 @@ public class Client implements Runnable
 
                 // wait on shares
                 try{
-                    Thread.sleep(1000);
+//                    Thread.sleep(1000);
                 }catch (InterruptedException e) {}
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
                     try{
-                        Thread.sleep(500);
+//                        Thread.sleep(500);
                     }catch (InterruptedException e) {}
                 }
 
@@ -763,12 +763,12 @@ public class Client implements Runnable
 
                 confirmedSharingEntities.add(intermediateEntity);
                 try{
-                    Thread.sleep(1000);
+//                    Thread.sleep(1000);
                 }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
                     try{
-                        Thread.sleep(500);
+//                        Thread.sleep(500);
                     }catch (InterruptedException e) {}
                 }
 
@@ -841,7 +841,7 @@ public class Client implements Runnable
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){
             try{
-                Thread.sleep(500);
+//                Thread.sleep(500);
             }catch (InterruptedException e) {}
         }
 
@@ -949,12 +949,12 @@ public class Client implements Runnable
 
                 // wait on shares
                 try{
-                    Thread.sleep(1000);
+//                    Thread.sleep(1000);
                 }catch (InterruptedException e) {}
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
                     try{
-                        Thread.sleep(500);
+//                        Thread.sleep(500);
                     }catch (InterruptedException e) {}
                 }
 
@@ -996,12 +996,12 @@ public class Client implements Runnable
 
                 confirmedSharingEntities.add(intermediateEntity);
                 try{
-                    Thread.sleep(1000);
+//                    Thread.sleep(1000);
                 }catch (InterruptedException e) {}
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
                     LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
                     try{
-                        Thread.sleep(500);
+//                        Thread.sleep(500);
                     }catch (InterruptedException e) {}
                 }
 
@@ -1071,5 +1071,32 @@ public class Client implements Runnable
         Client client = new Client();
         Thread clientThread = new Thread(client);
         clientThread.start();
+        if (args[0].equals("-f")){
+            ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
+            String filename = args[1];
+            try{
+                FileReader fr = new FileReader(filename);
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                ArrayList<String> parsedLines = new ArrayList<String>();
+                while ((line = br.readLine()) != null) {
+                    AlertParser a = new AlertParser(line);
+                    a.parseLine();
+
+                    if(a.isTCP()) {
+                        //keep track of parsed lines as strings
+                        String parsedLine = a.genCSVOutput() + ";"+filename;
+                        parsedLines.add(parsedLine);
+                        //keep track of parsed lines as Entities
+                        Entity en = a.genEntityFromLine(parsedLine);
+                        if(en != null)
+                            entitiesFromFile.add(en);
+                    }
+                }
+            } catch (Throwable e) { System.out.println("error"); }
+            System.out.println("Starting kprototypes");
+            client.kPrototypes(entitiesFromFile);
+            System.out.println("Finished kprototypes");
+        }
     }
 }

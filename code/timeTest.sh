@@ -19,7 +19,8 @@ then
     cd "$tmp_dir1" || exit; java Server
 else
     cp "file.txt" "filterCommands.txt" "Fast Snort Data/file1.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
-    cd "$tmp_dir1" || exit; java IDS -f "$tmp_dir1/file1.txt"
+    # cd "$tmp_dir1" || exit; java IDS -f "$tmp_dir1/file1.txt"
+    cd "$tmp_dir1" || exit; java Client -f "$tmp_dir1/file1.txt"
 fi
 
 # ...

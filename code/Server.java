@@ -252,7 +252,7 @@ class ClientHandler implements Runnable
                 if((received.msg).contains("new name id")){ // this will always be TRUE
                     this.name = received.msg.split(":")[1];
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
-                }else if(received.equals("logout")){
+                }else if((received.msg).equals("logout")){
                     this.isloggedin=false;
                     this.s.close();
                     break;
