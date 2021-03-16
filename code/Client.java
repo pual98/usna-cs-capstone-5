@@ -1071,10 +1071,33 @@ public class Client implements Runnable
         Client client = new Client();
         Thread clientThread = new Thread(client);
         clientThread.start();
-        if (args[0].equals("-f")){
+        if (args[0].contains("-f")){
             ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
             String filename = args[1];
             try{
+                // Create group
+                String msg = "testing_group";
+                Message mmsg;
+                // Differential Privacy
+                // Secret Sharing
+                client.algorithm = "Distributed (none)";
+                client.NUM_CLUSTERS = 3;
+                client.inGroup = true; //used to check if Client tries to join more than one CIDS
+                client.groupname = "testing_group";
+
+                if (args[0].contains("-fh")){
+                    client.isCoordinator = true;
+                    mmsg = new Message(22, "testing_group:3:Distributed (none)", client.getID(), 0);
+                    client.sendMessage(mmsg);
+                }else{
+                    try{
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e) {}
+                    // Join group
+                    mmsg = new Message(23, "testing_group:"+client.getID(), client.getID(), 0);
+                    client.sendMessage(mmsg);
+                }
+
                 FileReader fr = new FileReader(filename);
                 BufferedReader br = new BufferedReader(fr);
                 String line;

@@ -239,6 +239,25 @@ class ClientHandler implements Runnable
         } else if(received.type == 21) {
             sendMessage(received);
           return;
+        } else if(received.type == 22) {
+            // NO AUTH version
+            String groupname = received.msg.split(":")[0];
+            int numClusters = Integer.parseInt(received.msg.split(":")[1]);
+            String algorithm = received.msg.split(":")[2];
+            //create new group
+            Server.groups.put(groupname,new ArrayList<String>());
+            //add client as the first member (coordinator)
+            Server.groups.get(groupname).add(Integer.toString(received.source));
+            sendMessage(received);
+          return;
+        } else if(received.type == 23) {
+            // NO AUTH version
+            String arr[] = (received.msg).split(":");
+            String groupname = arr[0];
+            String toAdd = arr[1];
+            if (Server.groups.containsKey(groupname))
+                Server.groups.get(groupname).add(toAdd);
+          return;
         }
     }
     @Override
