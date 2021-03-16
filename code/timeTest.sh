@@ -4,7 +4,7 @@ red=$(tput setaf 1)
 green=$(tput setaf 2)
 reset=$(tput sgr0)
 
-WORK_DIRECTORY="/home/m216240/Documents/usna-cs-capstone-5/code/"
+WORK_DIRECTORY="/home/mids/m216240/Documents/usna-cs-capstone-5/code"
 
 cd "$WORK_DIRECTORY" || exit
 
