@@ -1,0 +1,800 @@
+03/16-09:05:24.240000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.101:34523 -> 172.16.1.100:1521
+03/16-09:05:24.240000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:05:24.500000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:53387 -> 192.168.206.44:3306
+03/16-09:05:24.500000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:59026 -> 192.168.206.44:1521
+03/16-09:05:24.500000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:56941 -> 192.168.206.44:5432
+03/16-09:05:24.500000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:59971 -> 192.168.206.44:161
+03/16-09:05:24.510000  [**] [1:2002911:5] ET SCAN Potential VNC Scan 5900-5920 [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:47433 -> 192.168.206.44:5911
+03/16-09:05:24.510000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:42924 -> 192.168.206.44:705
+03/16-09:05:24.510000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:59863 -> 192.168.206.44:1433
+03/16-09:05:24.510000  [**] [1:2002910:5] ET SCAN Potential VNC Scan 5800-5820 [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:42353 -> 192.168.206.44:5802
+03/16-09:05:24.800000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:25.240000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.101:34524 -> 172.16.1.100:1521
+03/16-09:05:25.830000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:26.130000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:37358 -> 192.168.203.45:5432
+03/16-09:05:26.130000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:37358 -> 192.168.203.45:5432
+03/16-09:05:26.400000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:26.450000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:05:26.590000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:54388 -> 192.168.206.44:3306
+03/16-09:05:26.590000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:60172 -> 192.168.206.44:1521
+03/16-09:05:26.590000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:60986 -> 192.168.206.44:161
+03/16-09:05:26.590000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:60571 -> 192.168.206.44:1433
+03/16-09:05:26.610000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:58647 -> 192.168.206.44:5432
+03/16-09:05:26.620000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:44486 -> 192.168.206.44:705
+03/16-09:05:26.750000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:37359 -> 192.168.203.45:5432
+03/16-09:05:26.750000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:37359 -> 192.168.203.45:5432
+03/16-09:05:26.940000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.102:1035 -> 192.168.28.152:3306
+03/16-09:05:27.100000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:27.680000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:28.240000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:05:28.370000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:37360 -> 192.168.203.45:5432
+03/16-09:05:28.680000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:55409 -> 192.168.206.44:3306
+03/16-09:05:28.680000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:58909 -> 192.168.206.44:5432
+03/16-09:05:28.700000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:33422 -> 192.168.206.44:1521
+03/16-09:05:28.700000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:33957 -> 192.168.206.44:1433
+03/16-09:05:28.700000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:45374 -> 192.168.206.44:705
+03/16-09:05:28.700000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:34422 -> 192.168.206.44:161
+03/16-09:05:28.840000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:29.740000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.93
+03/16-09:05:30.250000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:05:30.770000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:56413 -> 192.168.206.44:3306
+03/16-09:05:30.770000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:60081 -> 192.168.206.44:5432
+03/16-09:05:30.770000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:34760 -> 192.168.206.44:161
+03/16-09:05:30.780000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:34062 -> 192.168.206.44:1521
+03/16-09:05:30.790000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:34847 -> 192.168.206.44:1433
+03/16-09:05:30.790000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:30.790000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:46403 -> 192.168.206.44:705
+03/16-09:05:31.940000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:05:32.420000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.420000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.420000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.430000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.430000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.430000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.440000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.440000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.440000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.450000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.450000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.450000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.460000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.460000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.460000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.460000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:05:32.470000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.470000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.470000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:05:32.650000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.101:21 -> 192.168.202.102:4970
+03/16-09:05:32.860000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:32965 -> 192.168.206.44:22
+03/16-09:05:32.860000  [**] [1:2001219:19] ET SCAN Potential SSH Scan [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:32965 -> 192.168.206.44:22
+03/16-09:05:32.860000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:57410 -> 192.168.206.44:3306
+03/16-09:05:32.860000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:46542 -> 192.168.206.44:705
+03/16-09:05:32.870000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:33008 -> 192.168.206.44:5432
+03/16-09:05:32.870000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:35505 -> 192.168.206.44:1433
+03/16-09:05:32.870000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:36194 -> 192.168.206.44:161
+03/16-09:05:32.880000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:35563 -> 192.168.206.44:1521
+03/16-09:05:33.250000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:33.960000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:34.820000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:34.940000  [**] [1:2013337:4] ET TROJAN PoisonIvy.E Keepalive to CnC [**] [Classification: A Network Trojan was Detected] [Priority: 1] {TCP} 192.168.27.100:1027 -> 192.168.202.92:22
+03/16-09:05:34.960000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:36895 -> 192.168.206.44:161
+03/16-09:05:34.960000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:47922 -> 192.168.206.44:705
+03/16-09:05:35.360000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:36.170000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:37.050000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:38161 -> 192.168.206.44:161
+03/16-09:05:37.050000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:49180 -> 192.168.206.44:705
+03/16-09:05:37.070000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:37.460000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:05:37.810000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:38.480000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:39.000000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:39.130000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:38822 -> 192.168.206.44:161
+03/16-09:05:39.140000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:49897 -> 192.168.206.44:705
+03/16-09:05:39.580000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:40.270000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:05:40.460000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:05:40.970000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:41.050000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1052 -> 192.168.21.101:80
+03/16-09:05:41.050000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1052 -> 192.168.21.101:80
+03/16-09:05:41.230000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:51148 -> 192.168.206.44:705
+03/16-09:05:41.230000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:40256 -> 192.168.206.44:161
+03/16-09:05:41.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:41.990000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:42.590000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:43.050000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1056 -> 192.168.21.101:80
+03/16-09:05:43.050000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1056 -> 192.168.21.101:80
+03/16-09:05:43.270000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:43.300000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:37968 -> 192.168.206.44:22
+03/16-09:05:43.300000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:40585 -> 192.168.206.44:161
+03/16-09:05:43.310000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:51699 -> 192.168.206.44:705
+03/16-09:05:43.810000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:44.500000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:44.760000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:05:44.760000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:05:44.760000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:05:44.760000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:05:44.760000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:05:44.760000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:05:44.970000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:1025
+03/16-09:05:45.010000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:45.040000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1069 -> 192.168.21.101:80
+03/16-09:05:45.040000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1069 -> 192.168.21.101:80
+03/16-09:05:45.410000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:52645 -> 192.168.206.44:705
+03/16-09:05:45.420000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:42215 -> 192.168.206.44:161
+03/16-09:05:45.610000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:46.140000  [**] [1:2925:3] INFO web bug 0x0 gif attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.78:80 -> 192.168.204.70:46004
+03/16-09:05:46.140000  [**] [1:2925:3] INFO web bug 0x0 gif attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.78:80 -> 192.168.204.70:46004
+03/16-09:05:46.260000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:46.470000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:05:46.840000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:47.020000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1074 -> 192.168.21.101:80
+03/16-09:05:47.020000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1074 -> 192.168.21.101:80
+03/16-09:05:47.500000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:53731 -> 192.168.206.44:705
+03/16-09:05:47.510000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:43024 -> 192.168.206.44:161
+03/16-09:05:47.560000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:05:48.070000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:48.590000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:48.970000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1081 -> 192.168.21.101:80
+03/16-09:05:48.970000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1081 -> 192.168.21.101:80
+03/16-09:05:49.180000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.80
+03/16-09:05:49.600000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:54923 -> 192.168.206.44:705
+03/16-09:05:49.600000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:44154 -> 192.168.206.44:161
+03/16-09:05:49.960000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:50.970000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1086 -> 192.168.21.101:80
+03/16-09:05:50.970000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1086 -> 192.168.21.101:80
+03/16-09:05:51.230000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:51.330000  [**] [1:2009363:7] ET WEB_SERVER Suspicious Chmod Usage in URI [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1087 -> 192.168.23.253:80
+03/16-09:05:51.470000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:05:51.700000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:56305 -> 192.168.206.44:705
+03/16-09:05:51.700000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:45461 -> 192.168.206.44:161
+03/16-09:05:51.720000  [**] [1:2925:3] INFO web bug 0x0 gif attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.78:80 -> 192.168.204.70:46017
+03/16-09:05:51.720000  [**] [1:2925:3] INFO web bug 0x0 gif attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.78:80 -> 192.168.204.70:46017
+03/16-09:05:52.260000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:52.850000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:52.880000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.101:21 -> 192.168.202.102:1048
+03/16-09:05:52.890000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1048 -> 192.168.28.101:21
+03/16-09:05:52.890000  [**] [1:1378:15] FTP wu-ftp bad file completion attempt { [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1048 -> 192.168.28.101:21
+03/16-09:05:52.890000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1048 -> 192.168.28.101:21
+03/16-09:05:52.970000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1091 -> 192.168.21.101:80
+03/16-09:05:52.970000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1091 -> 192.168.21.101:80
+03/16-09:05:53.420000  [**] [1:2001579:13] ET SCAN Behavioral Unusual Port 139 traffic, Potential Scan or Infection [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.204.45:54186 -> 192.168.27.25:139
+03/16-09:05:53.560000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:05:53.760000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:42994 -> 192.168.206.44:22
+03/16-09:05:53.770000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:45814 -> 192.168.206.44:161
+03/16-09:05:53.790000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:57292 -> 192.168.206.44:705
+03/16-09:05:54.290000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:05:54.470000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:05:55.040000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1097 -> 192.168.21.101:80
+03/16-09:05:55.040000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1097 -> 192.168.21.101:80
+03/16-09:05:55.290000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:05:55.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:05:55.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:05:55.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:05:55.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:05:55.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:05:55.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:05:55.860000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:57744 -> 192.168.206.44:705
+03/16-09:05:55.860000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:46955 -> 192.168.206.44:161
+03/16-09:05:55.950000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:05:57.020000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1102 -> 192.168.21.101:80
+03/16-09:05:57.020000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1102 -> 192.168.21.101:80
+03/16-09:05:57.160000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:57.280000  [**] [1:2012887:2] ET POLICY Http Client Body contains pass= in cleartext [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.202.102:1103 -> 192.168.22.152:80
+03/16-09:05:57.950000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:47737 -> 192.168.206.44:161
+03/16-09:05:57.960000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:59209 -> 192.168.206.44:705
+03/16-09:05:58.260000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:05:59.000000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1107 -> 192.168.21.101:80
+03/16-09:05:59.000000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1107 -> 192.168.21.101:80
+03/16-09:05:59.290000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:05:59.900000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:00.050000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:49149 -> 192.168.206.44:161
+03/16-09:06:00.050000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:60126 -> 192.168.206.44:705
+03/16-09:06:00.470000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:00.470000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:01.000000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1109 -> 192.168.21.101:80
+03/16-09:06:01.000000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1109 -> 192.168.21.101:80
+03/16-09:06:01.080000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:01.580000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:02.130000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:49894 -> 192.168.206.44:161
+03/16-09:06:02.140000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:32855 -> 192.168.206.44:705
+03/16-09:06:02.180000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:02.270000  [**] [1:1113:5] WEB-MISC http directory traversal [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.102:1111 -> 192.168.22.152:80
+03/16-09:06:02.680000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:03.000000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1112 -> 192.168.21.101:80
+03/16-09:06:03.000000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1112 -> 192.168.21.101:80
+03/16-09:06:03.280000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:03.780000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:04.210000  [**] [1:2013479:3] ET SCAN Behavioral Unusually fast Terminal Server Traffic, Potential Scan or Infection (Outbound) [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.83:45213 -> 192.168.206.44:3389
+03/16-09:06:04.210000  [**] [1:2001972:18] ET SCAN Behavioral Unusually fast Terminal Server Traffic, Potential Scan or Infection (Inbound) [**] [Classification: Detection of a Network Scan] [Priority: 3] {TCP} 192.168.202.83:45213 -> 192.168.206.44:3389
+03/16-09:06:04.210000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:48008 -> 192.168.206.44:22
+03/16-09:06:04.220000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:33671 -> 192.168.206.44:705
+03/16-09:06:04.230000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:51372 -> 192.168.206.44:161
+03/16-09:06:04.300000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:06:04.890000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:04.970000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1115 -> 192.168.21.101:80
+03/16-09:06:04.970000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1115 -> 192.168.21.101:80
+03/16-09:06:05.210000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:1068
+03/16-09:06:05.280000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1068 -> 192.168.24.101:21
+03/16-09:06:05.280000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1068 -> 192.168.24.101:21
+03/16-09:06:05.480000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:05.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:05.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:05.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:05.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:05.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:05.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:05.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:05.990000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:06.310000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:34583 -> 192.168.206.44:705
+03/16-09:06:06.320000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:52301 -> 192.168.206.44:161
+03/16-09:06:06.350000  [**] [1:2925:3] INFO web bug 0x0 gif attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.78:80 -> 192.168.204.70:46031
+03/16-09:06:06.350000  [**] [1:2925:3] INFO web bug 0x0 gif attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.78:80 -> 192.168.204.70:46031
+03/16-09:06:06.590000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:06.940000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1120 -> 192.168.21.101:80
+03/16-09:06:06.940000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1120 -> 192.168.21.101:80
+03/16-09:06:07.100000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:07.640000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:08.160000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:08.310000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.101:34523 -> 172.16.1.100:5432
+03/16-09:06:08.390000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:35363 -> 192.168.206.44:705
+03/16-09:06:08.390000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:52684 -> 192.168.206.44:161
+03/16-09:06:08.480000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:08.670000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:08.910000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1122 -> 192.168.21.101:80
+03/16-09:06:08.910000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1122 -> 192.168.21.101:80
+03/16-09:06:09.250000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:09.320000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.101:34524 -> 172.16.1.100:5432
+03/16-09:06:09.770000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:10.270000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:10.500000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:54163 -> 192.168.206.44:161
+03/16-09:06:10.510000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:37241 -> 192.168.206.44:705
+03/16-09:06:10.820000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:10.910000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1125 -> 192.168.21.101:80
+03/16-09:06:10.910000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1125 -> 192.168.21.101:80
+03/16-09:06:11.320000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:06:11.910000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:12.240000  [**] [1:1917:6] SCAN UPnP service discover attempt [**] [Classification: Detection of a Network Scan] [Priority: 3] {UDP} fe80::4c9b:aad8:8a6a:7bb0:58353 -> ff02::c:1900
+03/16-09:06:12.240000  [**] [1:1917:6] SCAN UPnP service discover attempt [**] [Classification: Detection of a Network Scan] [Priority: 3] {UDP} fe80::4c9b:aad8:8a6a:7bb0:58353 -> ff02::c:1900
+03/16-09:06:12.580000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:54916 -> 192.168.206.44:161
+03/16-09:06:12.590000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:38109 -> 192.168.206.44:705
+03/16-09:06:12.760000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.93
+03/16-09:06:12.910000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1128 -> 192.168.21.101:80
+03/16-09:06:12.910000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:1128 -> 192.168.21.101:80
+03/16-09:06:13.290000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:14.310000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:06:14.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:14.660000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:53016 -> 192.168.206.44:22
+03/16-09:06:14.670000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:38641 -> 192.168.206.44:705
+03/16-09:06:14.690000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:56578 -> 192.168.206.44:161
+03/16-09:06:14.910000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:15.240000  [**] [1:1917:6] SCAN UPnP service discover attempt [**] [Classification: Detection of a Network Scan] [Priority: 3] {UDP} fe80::4c9b:aad8:8a6a:7bb0:58353 -> ff02::c:1900
+03/16-09:06:15.240000  [**] [1:1917:6] SCAN UPnP service discover attempt [**] [Classification: Detection of a Network Scan] [Priority: 3] {UDP} fe80::4c9b:aad8:8a6a:7bb0:58353 -> ff02::c:1900
+03/16-09:06:15.730000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:15.740000  [**] [1:553:7] POLICY FTP anonymous login attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:15.790000  [**] [1:2003410:9] ET POLICY FTP Login Successful [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.22.101:21 -> 192.168.202.102:1100
+03/16-09:06:16.230000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:06:16.730000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:16.760000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:39709 -> 192.168.206.44:705
+03/16-09:06:16.760000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:57091 -> 192.168.206.44:161
+03/16-09:06:17.320000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.101
+03/16-09:06:17.820000  [**] [1:2002383:12] ET SCAN Potential FTP Brute-Force attempt response [**] [Classification: Unsuccessful User Privilege Gain] [Priority: 1] {TCP} 192.168.28.101:21 -> 192.168.202.102:1106
+03/16-09:06:17.820000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.101:21 -> 192.168.202.102:1106
+03/16-09:06:18.010000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:06:18.190000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.200000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.220000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.220000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.220000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.250000  [**] [1:1917:6] SCAN UPnP service discover attempt [**] [Classification: Detection of a Network Scan] [Priority: 3] {UDP} fe80::4c9b:aad8:8a6a:7bb0:58353 -> ff02::c:1900
+03/16-09:06:18.250000  [**] [1:1917:6] SCAN UPnP service discover attempt [**] [Classification: Detection of a Network Scan] [Priority: 3] {UDP} fe80::4c9b:aad8:8a6a:7bb0:58353 -> ff02::c:1900
+03/16-09:06:18.260000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.260000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.270000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.310000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.310000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.320000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.330000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.350000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.350000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.360000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.360000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.370000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.430000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.460000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.470000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.520000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.520000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.520000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.520000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.520000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.520000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.530000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.530000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.540000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.540000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.540000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.540000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.540000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.540000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.760000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.760000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.760000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.760000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:18.780000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.780000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.780000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.790000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.790000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:18.800000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.800000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.800000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.810000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.810000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.810000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.830000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.830000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.830000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.840000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.840000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.840000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:06:18.860000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:40989 -> 192.168.206.44:705
+03/16-09:06:18.870000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:58573 -> 192.168.206.44:161
+03/16-09:06:19.060000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.070000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.070000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.080000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.100000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.100000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.100000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.100000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.100000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.100000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.110000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.110000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.160000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.160000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.160000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.160000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.160000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.160000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.170000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.170000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.170000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.170000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.180000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.190000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.200000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.200000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.200000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.200000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.210000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.220000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.220000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.220000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.220000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.220000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.220000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.220000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.230000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.230000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.230000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.230000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.240000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.250000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.250000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.260000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.270000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.280000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.280000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.290000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:19.290000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.290000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.290000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.300000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.300000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.300000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.310000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.310000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.320000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.320000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.320000  [**] [1:2101975:9] GPL FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.320000  [**] [1:1975:8] FTP DELE overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.320000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.330000  [**] [1:2101976:10] GPL FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.330000  [**] [1:1976:9] FTP RMD overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.330000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.330000  [**] [1:2343:3] FTP STOR overflow attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.330000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.330000  [**] [1:2338:13] FTP LIST buffer overflow attempt [**] [Classification: Misc Attack] [Priority: 2] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.330000  [**] [1:1748:8] FTP command overflow attempt [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:1100 -> 192.168.22.101:21
+03/16-09:06:19.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:19.810000  [**] [1:2013337:4] ET TROJAN PoisonIvy.E Keepalive to CnC [**] [Classification: A Network Trojan was Detected] [Priority: 1] {TCP} 192.168.27.100:1027 -> 192.168.202.92:22
+03/16-09:06:19.950000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:20.910000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:20.950000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:42022 -> 192.168.206.44:705
+03/16-09:06:20.950000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:59495 -> 192.168.206.44:161
+03/16-09:06:22.050000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:22.070000  [**] [1:527:8] BAD-TRAFFIC same SRC/DST [**] [Classification: Potentially Bad Traffic] [Priority: 2] {IPV6-ICMP} :: -> ff02::1:ff8e:385a
+03/16-09:06:22.310000  [**] [1:527:8] BAD-TRAFFIC same SRC/DST [**] [Classification: Potentially Bad Traffic] [Priority: 2] {IPV6-ICMP} :: -> ff02::1:ff1a:aa3c
+03/16-09:06:22.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:22.610000  [**] [1:527:8] BAD-TRAFFIC same SRC/DST [**] [Classification: Potentially Bad Traffic] [Priority: 2] {UDP} 0.0.0.0:68 -> 255.255.255.255:67
+03/16-09:06:23.030000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:42715 -> 192.168.206.44:705
+03/16-09:06:23.030000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:59996 -> 192.168.206.44:161
+03/16-09:06:23.160000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:23.700000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.80
+03/16-09:06:24.260000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:24.960000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:25.110000  [**] [1:2002993:6] ET SCAN Rapid POP3S Connections - Possible Brute Force Attack [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.83:58668 -> 192.168.206.44:995
+03/16-09:06:25.110000  [**] [1:2002992:6] ET SCAN Rapid POP3 Connections - Possible Brute Force Attack [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.83:53613 -> 192.168.206.44:110
+03/16-09:06:25.110000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:54225 -> 192.168.206.44:3306
+03/16-09:06:25.110000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:58025 -> 192.168.206.44:22
+03/16-09:06:25.120000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:60544 -> 192.168.206.44:1433
+03/16-09:06:25.120000  [**] [1:2002911:5] ET SCAN Potential VNC Scan 5900-5920 [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:33434 -> 192.168.206.44:5906
+03/16-09:06:25.120000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:60210 -> 192.168.206.44:1521
+03/16-09:06:25.120000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:58218 -> 192.168.206.44:5432
+03/16-09:06:25.130000  [**] [1:2002910:5] ET SCAN Potential VNC Scan 5800-5820 [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:41311 -> 192.168.206.44:5800
+03/16-09:06:25.130000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:44134 -> 192.168.206.44:705
+03/16-09:06:25.130000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:33188 -> 192.168.206.44:161
+03/16-09:06:25.870000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:26.060000  [**] [1:2012088:1] ET SHELLCODE Possible Call with No Offset TCP Shellcode [**] [Classification: Executable Code was Detected] [Priority: 1] {TCP} 192.168.203.45:4545 -> 192.168.24.100:3122
+03/16-09:06:26.060000  [**] [1:2012088:1] ET SHELLCODE Possible Call with No Offset TCP Shellcode [**] [Classification: Executable Code was Detected] [Priority: 1] {TCP} 192.168.203.45:4545 -> 192.168.24.100:3122
+03/16-09:06:26.470000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:27.200000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:55211 -> 192.168.206.44:3306
+03/16-09:06:27.210000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:32817 -> 192.168.206.44:1521
+03/16-09:06:27.210000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:44602 -> 192.168.206.44:705
+03/16-09:06:27.210000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:33284 -> 192.168.206.44:1433
+03/16-09:06:27.210000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:59119 -> 192.168.206.44:5432
+03/16-09:06:27.210000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:33895 -> 192.168.206.44:161
+03/16-09:06:27.270000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:27.960000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:28.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:28.680000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.63
+03/16-09:06:29.180000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:29.290000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:56238 -> 192.168.206.44:3306
+03/16-09:06:29.290000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:59766 -> 192.168.206.44:5432
+03/16-09:06:29.290000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:33724 -> 192.168.206.44:1521
+03/16-09:06:29.300000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:34820 -> 192.168.206.44:161
+03/16-09:06:29.310000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:34742 -> 192.168.206.44:1433
+03/16-09:06:29.310000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:46185 -> 192.168.206.44:705
+03/16-09:06:29.690000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:30.280000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:30.790000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:06:31.220000  [**] [1:2009363:7] ET WEB_SERVER Suspicious Chmod Usage in URI [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.202.102:2216 -> 192.168.27.101:80
+03/16-09:06:31.380000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:57218 -> 192.168.206.44:3306
+03/16-09:06:31.380000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:34737 -> 192.168.206.44:1521
+03/16-09:06:31.380000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:46543 -> 192.168.206.44:705
+03/16-09:06:31.380000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:35607 -> 192.168.206.44:161
+03/16-09:06:31.390000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:31.390000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:33008 -> 192.168.206.44:5432
+03/16-09:06:31.400000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:35649 -> 192.168.206.44:1433
+03/16-09:06:31.890000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:32.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:32.990000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:33.470000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:58241 -> 192.168.206.44:3306
+03/16-09:06:33.470000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:36479 -> 192.168.206.44:161
+03/16-09:06:33.470000  [**] [1:2010936:2] ET POLICY Suspicious inbound to Oracle SQL port 1521 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:35721 -> 192.168.206.44:1521
+03/16-09:06:33.480000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:36338 -> 192.168.206.44:1433
+03/16-09:06:33.480000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:47860 -> 192.168.206.44:705
+03/16-09:06:33.490000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.83:34204 -> 192.168.206.44:5432
+03/16-09:06:33.490000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:33.500000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:33.530000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:1124
+03/16-09:06:33.730000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:1124
+03/16-09:06:34.100000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:34.280000  [**] [1:2012887:2] ET POLICY Http Client Body contains pass= in cleartext [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.202.102:2226 -> 192.168.22.101:80
+03/16-09:06:34.600000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:35.200000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:35.410000  [**] [1:2013337:4] ET TROJAN PoisonIvy.E Keepalive to CnC [**] [Classification: A Network Trojan was Detected] [Priority: 1] {TCP} 192.168.24.100:2956 -> 192.168.202.92:22
+03/16-09:06:35.560000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:34784 -> 192.168.206.44:22
+03/16-09:06:35.560000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:48545 -> 192.168.206.44:705
+03/16-09:06:35.580000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:38210 -> 192.168.206.44:161
+03/16-09:06:35.600000  [**] [1:2013337:4] ET TROJAN PoisonIvy.E Keepalive to CnC [**] [Classification: A Network Trojan was Detected] [Priority: 1] {TCP} 192.168.24.100:2956 -> 192.168.202.92:22
+03/16-09:06:35.710000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:36.280000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:36.500000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:36.810000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:37.650000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:38431 -> 192.168.206.44:161
+03/16-09:06:37.660000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:49792 -> 192.168.206.44:705
+03/16-09:06:37.900000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:38.450000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:39.020000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:39.250000  [**] [1:1113:5] WEB-MISC http directory traversal [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.102:2230 -> 192.168.22.101:80
+03/16-09:06:39.380000  [**] [1:553:7] POLICY FTP anonymous login attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.202.102:2072 -> 192.168.22.101:21
+03/16-09:06:39.380000  [**] [1:2003410:9] ET POLICY FTP Login Successful [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.22.101:21 -> 192.168.202.102:2072
+03/16-09:06:39.510000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:39.660000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.101:21 -> 192.168.202.102:1387
+03/16-09:06:39.750000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:50787 -> 192.168.206.44:705
+03/16-09:06:39.750000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:39890 -> 192.168.206.44:161
+03/16-09:06:39.860000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.101:21 -> 192.168.202.102:1387
+03/16-09:06:40.020000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:06:40.710000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.103:52831 -> 192.168.23.203:22
+03/16-09:06:40.710000  [**] [1:2001219:19] ET SCAN Potential SSH Scan [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.103:52831 -> 192.168.23.203:22
+03/16-09:06:41.220000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:41.280000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.203.1 -> 192.168.203.61
+03/16-09:06:41.800000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:41.840000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:40796 -> 192.168.206.44:161
+03/16-09:06:41.850000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:52060 -> 192.168.206.44:705
+03/16-09:06:42.320000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.93
+03/16-09:06:42.500000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:42.850000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:43.440000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:43.930000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:52722 -> 192.168.206.44:705
+03/16-09:06:43.930000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:41779 -> 192.168.206.44:161
+03/16-09:06:44.340000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:44.750000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:44.750000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:44.750000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:44.750000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:44.750000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:44.750000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:45.440000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:45.970000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:46.000000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:39797 -> 192.168.206.44:22
+03/16-09:06:46.010000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:42422 -> 192.168.206.44:161
+03/16-09:06:46.010000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:53492 -> 192.168.206.44:705
+03/16-09:06:46.220000  [**] [1:2505:9] WEB-MISC SSLv3 invalid data version attempt [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 192.168.202.76:57870 -> 192.168.22.254:443
+03/16-09:06:46.540000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:47.070000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.63
+03/16-09:06:47.190000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.203.1 -> 192.168.203.61
+03/16-09:06:47.500000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:47.590000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:48.100000  [**] [1:2102465:9] GPL NETBIOS SMB-DS IPC$ share access [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:2463 -> 192.168.28.25:445
+03/16-09:06:48.100000  [**] [1:2465:7] NETBIOS SMB-DS IPC$ share access [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 192.168.202.102:2463 -> 192.168.28.25:445
+03/16-09:06:48.100000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:54651 -> 192.168.206.44:705
+03/16-09:06:48.110000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.63
+03/16-09:06:48.120000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:44173 -> 192.168.206.44:161
+03/16-09:06:48.750000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:48.890000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.95:49798 -> 172.16.2.203:22
+03/16-09:06:48.890000  [**] [1:2001219:19] ET SCAN Potential SSH Scan [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.95:49798 -> 172.16.2.203:22
+03/16-09:06:49.370000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.63
+03/16-09:06:49.890000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.63
+03/16-09:06:50.190000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:44440 -> 192.168.206.44:161
+03/16-09:06:50.210000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:56092 -> 192.168.206.44:705
+03/16-09:06:50.450000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.103:3306
+03/16-09:06:50.450000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.202:3306
+03/16-09:06:50.450000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.254:3306
+03/16-09:06:50.450000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.102:3306
+03/16-09:06:50.450000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.203:3306
+03/16-09:06:50.450000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.253:22
+03/16-09:06:50.450000  [**] [1:2001219:19] ET SCAN Potential SSH Scan [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.253:22
+03/16-09:06:50.470000  [**] [1:2002911:5] ET SCAN Potential VNC Scan 5900-5920 [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.203:5900
+03/16-09:06:50.500000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:50.520000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.103:5432
+03/16-09:06:50.520000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.102:5432
+03/16-09:06:50.520000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.253:5432
+03/16-09:06:50.520000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.252:5432
+03/16-09:06:50.520000  [**] [1:2010939:2] ET POLICY Suspicious inbound to PostgreSQL port 5432 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.202:5432
+03/16-09:06:50.540000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:06:50.570000  [**] [1:2002910:5] ET SCAN Potential VNC Scan 5800-5820 [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.203:5800
+03/16-09:06:50.600000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.253:1433
+03/16-09:06:50.600000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.203:1433
+03/16-09:06:50.600000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.202:1433
+03/16-09:06:51.060000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:51.560000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:06:51.570000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.103:1433
+03/16-09:06:51.600000  [**] [1:2010935:2] ET POLICY Suspicious inbound to MSSQL port 1433 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:62182 -> 192.168.28.102:1433
+03/16-09:06:52.280000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:56694 -> 192.168.206.44:705
+03/16-09:06:52.290000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:45887 -> 192.168.206.44:161
+03/16-09:06:52.680000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:53.180000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:33753 -> 192.168.28.203:22
+03/16-09:06:53.250000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:54.060000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:54.370000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:46732 -> 192.168.206.44:161
+03/16-09:06:54.380000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:57849 -> 192.168.206.44:705
+03/16-09:06:54.630000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:55.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:55.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:55.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:06:55.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:55.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:55.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:06:55.530000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.89
+03/16-09:06:55.930000  [**] [1:2002383:12] ET SCAN Potential FTP Brute-Force attempt response [**] [Classification: Unsuccessful User Privilege Gain] [Priority: 1] {TCP} 192.168.24.101:21 -> 192.168.202.102:2224
+03/16-09:06:55.930000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:2224
+03/16-09:06:56.130000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:2224
+03/16-09:06:56.150000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:56.170000  [**] [1:402:7] ICMP Destination Unreachable Port Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.45 -> 192.168.28.103
+03/16-09:06:56.450000  [**] [1:2003068:6] ET SCAN Potential SSH Scan OUTBOUND [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:44819 -> 192.168.206.44:22
+03/16-09:06:56.480000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:48178 -> 192.168.206.44:161
+03/16-09:06:56.480000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:59242 -> 192.168.206.44:705
+03/16-09:06:56.510000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:06:56.780000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:57.300000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:57.670000  [**] [1:402:7] ICMP Destination Unreachable Port Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.45 -> 192.168.28.103
+03/16-09:06:57.880000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:58.190000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.203.1 -> 192.168.203.61
+03/16-09:06:58.550000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:48657 -> 192.168.206.44:161
+03/16-09:06:58.560000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:59806 -> 192.168.206.44:705
+03/16-09:06:58.700000  [**] [1:2010937:2] ET POLICY Suspicious inbound to mySQL port 3306 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.203.61:60759 -> 192.168.26.253:3306
+03/16-09:06:58.780000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:06:59.170000  [**] [1:2013929:2] ET POLICY HTTP traffic on port 443 (OPTIONS) [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:51715 -> 192.168.28.103:443
+03/16-09:06:59.170000  [**] [1:2100257:10] GPL DNS named version attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:37503 -> 192.168.28.102:53
+03/16-09:06:59.170000  [**] [1:257:9] DNS named version attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:37503 -> 192.168.28.102:53
+03/16-09:06:59.170000  [**] [1:2100257:10] GPL DNS named version attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:32813 -> 192.168.28.202:53
+03/16-09:06:59.170000  [**] [1:257:9] DNS named version attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:32813 -> 192.168.28.202:53
+03/16-09:06:59.210000  [**] [1:402:7] ICMP Destination Unreachable Port Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.45 -> 192.168.28.103
+03/16-09:06:59.210000  [**] [1:2100257:10] GPL DNS named version attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:45543 -> 192.168.28.203:53
+03/16-09:06:59.210000  [**] [1:257:9] DNS named version attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.204.45:45543 -> 192.168.28.203:53
+03/16-09:06:59.220000  [**] [1:2019416:3] ET POLICY SSLv3 outbound connection from client vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.102:993 -> 192.168.204.45:58745
+03/16-09:06:59.220000  [**] [1:2019415:3] ET POLICY SSLv3 inbound connection to server vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.102:993 -> 192.168.204.45:58745
+03/16-09:06:59.360000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:06:59.410000  [**] [1:2019416:3] ET POLICY SSLv3 outbound connection from client vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.103:443 -> 192.168.204.45:51742
+03/16-09:06:59.410000  [**] [1:2019415:3] ET POLICY SSLv3 inbound connection to server vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.103:443 -> 192.168.204.45:51742
+03/16-09:06:59.880000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.63
+03/16-09:07:00.410000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:00.640000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:60578 -> 192.168.206.44:705
+03/16-09:07:00.660000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:50220 -> 192.168.206.44:161
+03/16-09:07:00.720000  [**] [1:2010493:2] ET SCAN Non-Allowed Host Tried to Connect to MySQL Server [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.28.103:3306 -> 192.168.204.45:33413
+03/16-09:07:00.980000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:01.510000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:07:01.570000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:01.800000  [**] [1:2012887:2] ET POLICY Http Client Body contains pass= in cleartext [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.202.102:2477 -> 192.168.22.152:80
+03/16-09:07:02.090000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:02.220000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.101:21 -> 192.168.202.102:2231
+03/16-09:07:02.420000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.101:21 -> 192.168.202.102:2231
+03/16-09:07:02.730000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:33465 -> 192.168.206.44:705
+03/16-09:07:02.730000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:50781 -> 192.168.206.44:161
+03/16-09:07:02.940000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:03.530000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:04.300000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:04.510000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:07:04.790000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:04.820000  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:34396 -> 192.168.206.44:705
+03/16-09:07:04.820000  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.83:51726 -> 192.168.206.44:161
+03/16-09:07:04.830000  [**] [1:2013337:4] ET TROJAN PoisonIvy.E Keepalive to CnC [**] [Classification: A Network Trojan was Detected] [Priority: 1] {TCP} 192.168.24.100:2956 -> 192.168.202.92:22
+03/16-09:07:04.960000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:04.960000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:04.960000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:04.980000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:04.980000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:04.980000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.000000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.000000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.000000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.030000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.030000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.030000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.050000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.050000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.050000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.070000  [**] [1:2016303:4] ET INFO UPnP Discovery Search Response vulnerable UPnP device 2 [**] [Classification: Information Leak] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.070000  [**] [1:2101384:9] GPL MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.070000  [**] [1:1384:8] MISC UPnP malformed advertisement [**] [Classification: Misc Attack] [Priority: 2] {UDP} 192.168.1.254:1900 -> 239.255.255.250:1900
+03/16-09:07:05.180000  [**] [1:1201:7] ATTACK-RESPONSES 403 Forbidden [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.28.253:80 -> 192.168.204.45:60937
+03/16-09:07:05.180000  [**] [1:2101201:11] GPL WEB_SERVER 403 Forbidden [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.28.253:80 -> 192.168.204.45:60937
+03/16-09:07:05.180000  [**] [1:2013929:2] ET POLICY HTTP traffic on port 443 (OPTIONS) [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:60372 -> 192.168.28.253:443
+03/16-09:07:05.190000  [**] [1:2013929:2] ET POLICY HTTP traffic on port 443 (OPTIONS) [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.204.45:49160 -> 192.168.28.254:443
+03/16-09:07:05.190000  [**] [1:2013659:3] ET POLICY Self Signed SSL Certificate (SomeOrganizationalUnit) [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.253:443 -> 192.168.204.45:60400
+03/16-09:07:05.190000  [**] [1:2019416:3] ET POLICY SSLv3 outbound connection from client vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.253:443 -> 192.168.204.45:60400
+03/16-09:07:05.190000  [**] [1:2019415:3] ET POLICY SSLv3 inbound connection to server vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.253:443 -> 192.168.204.45:60400
+03/16-09:07:05.190000  [**] [1:2019416:3] ET POLICY SSLv3 outbound connection from client vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.254:443 -> 192.168.204.45:49185
+03/16-09:07:05.190000  [**] [1:2019415:3] ET POLICY SSLv3 inbound connection to server vulnerable to POODLE attack [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.254:443 -> 192.168.204.45:49185
+03/16-09:07:05.200000  [**] [1:2013659:3] ET POLICY Self Signed SSL Certificate (SomeOrganizationalUnit) [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.28.253:443 -> 192.168.204.45:60403
+03/16-09:07:05.370000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:05.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:07:05.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:07:05.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.20.250.49:161
+03/16-09:07:05.530000  [**] [1:2101411:12] GPL SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:07:05.530000  [**] [1:1411:10] SNMP public access udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:07:05.530000  [**] [1:1417:9] SNMP request udp [**] [Classification: Attempted Information Leak] [Priority: 2] {UDP} 192.168.202.89:58332 -> 10.50.253.160:161
+03/16-09:07:05.630000  [**] [1:2013337:4] ET TROJAN PoisonIvy.E Keepalive to CnC [**] [Classification: A Network Trojan was Detected] [Priority: 1] {TCP} 192.168.27.100:1027 -> 192.168.202.92:22
+03/16-09:07:06.300000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:06.790000  [**] [1:1113:5] WEB-MISC http directory traversal [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.102:2479 -> 192.168.22.152:80
+03/16-09:07:07.180000  [**] [1:1200:10] ATTACK-RESPONSES Invalid URL [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.28.102:3128 -> 192.168.204.45:53611
+03/16-09:07:07.340000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:07.920000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:08.510000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:08.700000  [**] [1:2010493:2] ET SCAN Non-Allowed Host Tried to Connect to MySQL Server [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.26.253:3306 -> 192.168.203.61:60759
+03/16-09:07:09.190000  [**] [1:2010493:2] ET SCAN Non-Allowed Host Tried to Connect to MySQL Server [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.28.253:3306 -> 192.168.204.45:56780
+03/16-09:07:09.220000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.57
+03/16-09:07:09.310000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.93
+03/16-09:07:10.520000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:07:10.560000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:11.130000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2484 -> 192.168.27.101:80
+03/16-09:07:11.130000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2484 -> 192.168.27.101:80
+03/16-09:07:11.720000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:12.190000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.203.1 -> 192.168.203.61
+03/16-09:07:12.310000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.93
+03/16-09:07:13.280000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2490 -> 192.168.27.101:80
+03/16-09:07:13.280000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2490 -> 192.168.27.101:80
+03/16-09:07:13.630000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:14.050000  [**] [1:1847:9] WEB-MISC webalizer access [**] [Classification: Access to a Potentially Vulnerable Web Application] [Priority: 2] {TCP} 192.168.202.112:35704 -> 192.168.23.152:80
+03/16-09:07:14.730000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:15.520000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:07:15.640000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:16.400000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2540 -> 192.168.27.101:80
+03/16-09:07:16.400000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2540 -> 192.168.27.101:80
+03/16-09:07:16.590000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:17.020000  [**] [1:2077:2] WEB-PHP Mambo upload.php access [**] [Classification: Access to a Potentially Vulnerable Web Application] [Priority: 2] {TCP} 192.168.202.102:2541 -> 192.168.24.253:80
+03/16-09:07:17.630000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:17.750000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:2473
+03/16-09:07:17.950000  [**] [1:2002383:12] ET SCAN Potential FTP Brute-Force attempt response [**] [Classification: Unsuccessful User Privilege Gain] [Priority: 1] {TCP} 192.168.24.101:21 -> 192.168.202.102:2473
+03/16-09:07:17.950000  [**] [1:491:8] INFO FTP Bad login [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.24.101:21 -> 192.168.202.102:2473
+03/16-09:07:18.210000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:18.520000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.204.1 -> 192.168.204.45
+03/16-09:07:18.570000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2545 -> 192.168.27.101:80
+03/16-09:07:18.570000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:2545 -> 192.168.27.101:80
+03/16-09:07:18.950000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:19.590000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:20.570000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:3387 -> 192.168.27.101:80
+03/16-09:07:20.570000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:3387 -> 192.168.27.101:80
+03/16-09:07:20.640000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:21.150000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71
+03/16-09:07:22.130000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:22.160000  [**] [1:2018359:1] ET INFO GENERIC SUSPICIOUS POST to Dotted Quad with Fake Browser 2 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.100:1093 -> 192.168.202.82:80
+03/16-09:07:22.570000  [**] [1:2018359:1] ET INFO GENERIC SUSPICIOUS POST to Dotted Quad with Fake Browser 2 [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.28.100:1094 -> 192.168.202.82:80
+03/16-09:07:22.570000  [**] [1:2021076:1] ET INFO SUSPICIOUS Dotted Quad Host MZ Response [**] [Classification: Potentially Bad Traffic] [Priority: 2] {TCP} 192.168.202.82:80 -> 192.168.28.100:1094
+03/16-09:07:22.570000  [**] [1:2018959:2] ET POLICY PE EXE or DLL Windows file download HTTP [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.202.82:80 -> 192.168.28.100:1094
+03/16-09:07:22.600000  [**] [1:1200:10] ATTACK-RESPONSES Invalid URL [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.202.82:80 -> 192.168.28.100:1094
+03/16-09:07:22.600000  [**] [1:2101334:7] GPL EXPLOIT echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:3392 -> 192.168.27.101:80
+03/16-09:07:22.600000  [**] [1:1334:5] WEB-ATTACKS echo command attempt [**] [Classification: Web Application Attack] [Priority: 1] {TCP} 192.168.202.102:3392 -> 192.168.27.101:80
+03/16-09:07:22.720000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.76
+03/16-09:07:22.930000  [**] [1:2012088:1] ET SHELLCODE Possible Call with No Offset TCP Shellcode [**] [Classification: Executable Code was Detected] [Priority: 1] {TCP} 192.168.202.68:8080 -> 192.168.28.100:1095
+03/16-09:07:22.980000  [**] [1:2101390:8] GPL SHELLCODE x86 inc ebx NOOP [**] [Classification: Executable Code was Detected] [Priority: 1] {TCP} 192.168.202.68:8080 -> 192.168.28.100:1095
+03/16-09:07:22.990000  [**] [1:2012086:1] ET SHELLCODE Possible Call with No Offset TCP Shellcode [**] [Classification: Executable Code was Detected] [Priority: 1] {TCP} 192.168.202.68:8080 -> 192.168.28.100:1095
+03/16-09:07:23.260000  [**] [1:399:6] ICMP Destination Unreachable Host Unreachable [**] [Classification: Misc activity] [Priority: 3] {ICMP} 192.168.202.1 -> 192.168.202.71

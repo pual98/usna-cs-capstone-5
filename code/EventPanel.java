@@ -44,7 +44,7 @@ public class EventPanel extends JPanel implements Runnable {
         fileUpload = new JPanel();
         browse = new JButton("Browse...");
         upload = new JButton("Upload");
-        fileLabel = new JLabel("Choose Snort Test File");
+        fileLabel = new JLabel("Choose Snort Text File");
         uploadTextField = new JTextField(25);
         uploadTextField.setEditable(false);
         fileChooser = new JFileChooser();
