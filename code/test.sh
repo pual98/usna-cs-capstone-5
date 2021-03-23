@@ -8,13 +8,30 @@ reset=$(tput sgr0)
 
 # The following is the execute sequence which will be executed on each of the
 # ssh connections, saved to the "EXECUTE" variable
+if [ "$1" == "-gui" ];
+then
 read -r -d '' EXECUTE <<- "SSH"
     killall java;
     sleep 1;
     WORK_DIRECTORY="$PWD/Documents/usna-cs-capstone-5/code/";
     cd "$WORK_DIRECTORY";
-    ./timeTest.sh;
+    ./timeTest.sh -gui;
 SSH
+elif [ "$1" == "-test" ]
+then
+    echo "test"
+read -r -d '' EXECUTE <<- "SSH"
+    killall java;
+    sleep 1;
+    WORK_DIRECTORY="$PWD/Documents/usna-cs-capstone-5/code/";
+    cd "$WORK_DIRECTORY";
+    ./timeTest.sh -test;
+SSH
+else
+    echo -e "This program runs a distributed version of the IDS.\nPlease run as a gui or as a test of the distribution"
+    echo "./timeTest.sh [-gui] OR [-test]"
+    exit;
+fi
 
 echo -e "${green}Welcome to the Intrusion Detection System testing"
 echo -e "Authors: Laylon Mokry, Patrick Bishop, Paul Slife, Jose Quiroz"
