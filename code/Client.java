@@ -1094,11 +1094,11 @@ public class Client implements Runnable
 //            }catch (InterruptedException e) {}
         }
         Message requestForPartners = new Message(5, groupname, ID, 0);
+        sendMessage(requestForPartners);
         //wait for server to respond
         while(numMembersinGroup < 3){
-          System.out.println("req for partners");
+//          System.out.println("req for partners");
           numMembersinGroup = memIDs.size();
-          sendMessage(requestForPartners);
 //            try{
 //                Thread.sleep(500);
 //            }catch (InterruptedException e) {}
