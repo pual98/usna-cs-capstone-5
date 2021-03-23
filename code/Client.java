@@ -1129,13 +1129,13 @@ public class Client implements Runnable
 
         // Client -testing -host -file [filename]
         if (args.length > 1){
-            if (args[1].contains("-testing")){
-                if (args[2].contains("-host")){
+            if (args[0].contains("-testing")){
+                if (args[1].contains("-host")){
                     client.isCoordinator = true;
-                    if (args[3].contains("-file"))
-                        client.filename = args[4];
-                } else if (args[2].contains("-file"))
+                    if (args[2].contains("-file"))
                         client.filename = args[3];
+                } else if (args[1].contains("-file"))
+                        client.filename = args[2];
                 client.initializePartyTestingConnection();
                 ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
                 System.out.println("kprototypes");
