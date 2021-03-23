@@ -13,6 +13,9 @@ read -r -d '' EXECUTE <<- "SSH"
     sleep 1;
     WORK_DIRECTORY="$PWD/Documents/usna-cs-capstone-5/code/";
     cd "$WORK_DIRECTORY";
+    git pull origin testBranch;
+    make clean;
+    make;
     ./timeTest.sh;
 SSH
 

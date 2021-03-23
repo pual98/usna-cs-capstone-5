@@ -245,10 +245,11 @@ class ClientHandler implements Runnable
             int numClusters = Integer.parseInt(received.msg.split(":")[1]);
             String algorithm = received.msg.split(":")[2];
             //create new group
-            Server.groups.put(groupname,new ArrayList<String>());
-            //add client as the first member (coordinator)
-            Server.groups.get(groupname).add(Integer.toString(received.source));
-            sendMessage(received);
+            if (!Server.groups.containsKey(groupname)){
+                Server.groups.put(groupname,new ArrayList<String>());
+                //add client as the first member (coordinator)
+                Server.groups.get(groupname).add(Integer.toString(received.source));
+            }
           return;
         } else if(received.type == 23) {
             // NO AUTH version
@@ -256,7 +257,8 @@ class ClientHandler implements Runnable
             String groupname = arr[0];
             String toAdd = arr[1];
             if (Server.groups.containsKey(groupname))
-                Server.groups.get(groupname).add(toAdd);
+                if (!Server.groups.get(groupname).contains(toAdd))
+                    Server.groups.get(groupname).add(toAdd);
           return;
         }
     }

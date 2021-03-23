@@ -278,6 +278,10 @@ public class Client implements Runnable
                                     receivedShares.add(msg.en);
                                     continue;
                                 }
+                                else if(msg.type == 24) {
+                                    setGroupStatus();
+                                    continue;
+                                }
                             } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
                         }
                     }
@@ -1083,6 +1087,12 @@ public class Client implements Runnable
                 this.sendMessage(mmsg);
             }
         }
+        Message requestForPartners = new Message(5, groupname, ID, 0);
+        //wait for server to respond
+        while(numMembersinGroup < 3){
+          numMembersinGroup = memIDs.size();
+          sendMessage(requestForPartners);
+        }
     }
     public ArrayList<Entity> getEntitiesFromFile(String filename){
         ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
@@ -1123,6 +1133,7 @@ public class Client implements Runnable
                     if (args[3].contains("-file"))
                         client.filename = args[4];
                 }
+                client.initializePartyTestingConnection();
                 ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
                 System.out.println("kprototypes");
                 client.kPrototypes(entitiesFromFile);
