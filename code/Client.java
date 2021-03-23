@@ -1081,9 +1081,11 @@ public class Client implements Runnable
 
         while (this.inGroup == false){
             if (this.isCoordinator){
+                System.out.println("req mesg coord");
                 mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
                 this.sendMessage(mmsg);
             }else{
+                System.out.println("req mesg non coord");
                 mmsg = new Message(23, "testing_group:"+this.getID(), this.getID(), 0);
                 this.sendMessage(mmsg);
             }
@@ -1091,6 +1093,7 @@ public class Client implements Runnable
         Message requestForPartners = new Message(5, groupname, ID, 0);
         //wait for server to respond
         while(numMembersinGroup < 3){
+            System.out.println("req for partners");
           numMembersinGroup = memIDs.size();
           sendMessage(requestForPartners);
         }
