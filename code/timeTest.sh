@@ -17,7 +17,7 @@ if [ "$HOST" == "csmidn" ];
 then
     cp "file.txt" "filterCommands.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
     cd "$tmp_dir1" || exit; java Server
-elif [ "$HOST" = "lnx1065211govt" ];
+elif [ "$HOST" == "lnx1065211govt" ];
 then
     cp "file.txt" "filterCommands.txt" "Fast Snort Data/file1.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
     # cd "$tmp_dir1" || exit; java IDS -f "$tmp_dir1/file1.txt"
