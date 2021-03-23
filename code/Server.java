@@ -249,6 +249,8 @@ class ClientHandler implements Runnable
                 Server.groups.put(groupname,new ArrayList<String>());
                 //add client as the first member (coordinator)
                 Server.groups.get(groupname).add(Integer.toString(received.source));
+                Message msg = new Message(24, groupname, 0, received.source);
+                sendMessage(msg);
             }
           return;
         } else if(received.type == 23) {
@@ -257,8 +259,11 @@ class ClientHandler implements Runnable
             String groupname = arr[0];
             String toAdd = arr[1];
             if (Server.groups.containsKey(groupname))
-                if (!Server.groups.get(groupname).contains(toAdd))
+                if (!Server.groups.get(groupname).contains(toAdd)){
                     Server.groups.get(groupname).add(toAdd);
+                    Message msg = new Message(24, groupname, 0, received.source);
+                    sendMessage(msg);
+                }
           return;
         }
     }
