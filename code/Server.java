@@ -263,6 +263,15 @@ class ClientHandler implements Runnable
                     Server.groups.get(groupname).add(toAdd);
                     Message msg = new Message(24, groupname, 0, received.source);
                     sendMessage(msg);
+                    ArrayList<String> partners = Server.groups.get(groupname);
+
+                    for (String p : partners){
+                        int dest = Integer.parseInt(p);
+                        Message m = new Message(6,"", 0, dest);
+                        m.setMembers(partners);
+                        this.sendMessage(m);
+                    }
+
                 }
           return;
         }

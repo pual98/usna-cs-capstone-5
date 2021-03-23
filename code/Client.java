@@ -1098,7 +1098,7 @@ public class Client implements Runnable
         //wait for server to respond
         while(numMembersinGroup < 3){
 //          System.out.println("req for partners");
-          numMembersinGroup = memIDs.size();
+            numMembersinGroup = memIDs.size();
 //            try{
 //                Thread.sleep(500);
 //            }catch (InterruptedException e) {}
