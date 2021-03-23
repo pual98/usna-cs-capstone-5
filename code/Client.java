@@ -1073,6 +1073,7 @@ public class Client implements Runnable
     }
 
     public void initializePartyTestingConnection(){
+        System.out.println("starting initialize");
         Message mmsg;
         this.algorithm = "Distributed (none)";
         this.NUM_CLUSTERS = 3;
@@ -1093,6 +1094,7 @@ public class Client implements Runnable
           numMembersinGroup = memIDs.size();
           sendMessage(requestForPartners);
         }
+        System.out.println("finished initialize");
     }
     public ArrayList<Entity> getEntitiesFromFile(String filename){
         ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
@@ -1132,7 +1134,8 @@ public class Client implements Runnable
                     client.isCoordinator = true;
                     if (args[3].contains("-file"))
                         client.filename = args[4];
-                }
+                } else if (args[2].contains("-file"))
+                        client.filename = args[3];
                 client.initializePartyTestingConnection();
                 ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
                 System.out.println("kprototypes");

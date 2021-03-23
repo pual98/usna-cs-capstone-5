@@ -17,10 +17,14 @@ if [ "$HOST" == "csmidn" ];
 then
     cp "file.txt" "filterCommands.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
     cd "$tmp_dir1" || exit; java Server
-else
+else if [ "$HOST" = "lnx1065211govt" ];
     cp "file.txt" "filterCommands.txt" "Fast Snort Data/file1.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
     # cd "$tmp_dir1" || exit; java IDS -f "$tmp_dir1/file1.txt"
-    cd "$tmp_dir1" || exit; java Client -f "$tmp_dir1/file1.txt"
+    cd "$tmp_dir1" || exit; java Client -testing -host -file "$tmp_dir1/file1.txt"
+then
+    cp "file.txt" "filterCommands.txt" "Fast Snort Data/file1.txt" "threeClusters.csv" "large.csv" "$tmp_dir1/"
+    # cd "$tmp_dir1" || exit; java IDS -f "$tmp_dir1/file1.txt"
+    cd "$tmp_dir1" || exit; java Client -testing -file "$tmp_dir1/file1.txt"
 fi
 
 # ...
