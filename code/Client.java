@@ -1079,19 +1079,19 @@ public class Client implements Runnable
         this.NUM_CLUSTERS = 3;
         this.groupname = "testing_group";
 
+        if (this.isCoordinator){
+            mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
+            this.sendMessage(mmsg);
+        }
+
         while (this.inGroup == false){
-            if (this.isCoordinator){
-                System.out.println("req mesg coord");
-                mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
-                this.sendMessage(mmsg);
-            }else{
-                System.out.println("req mesg non coord");
+            if (!this.isCoordinator){
                 mmsg = new Message(23, "testing_group:"+this.getID(), this.getID(), 0);
                 this.sendMessage(mmsg);
             }
-//            try{
-//                Thread.sleep(500);
-//            }catch (InterruptedException e) {}
+            try{
+                Thread.sleep(500);
+            }catch (InterruptedException e) {}
         }
         Message requestForPartners = new Message(5, groupname, ID, 0);
         sendMessage(requestForPartners);
