@@ -104,15 +104,27 @@ public class Entity implements Serializable
 
   public static Entity createRandomEntity(int d, int dCat, int seed)
   {
+    double[] baselineQualities = new double[]{0.75255, 0.75256, 0.0009815};
+    int[] baselineCategories = new int[]{2013659, 443, 80, 1};
+
     Random r = new Random(seed);
     ArrayList<Double> retQual = new ArrayList<Double>();
-    for(int i  = 0 ; i  < d ; i ++)
-    {
-      retQual.add(r.nextDouble());
+    for(int i  = 0 ; i  < d ; i ++) {
+      double toAdd = r.nextDouble();
+      if(toAdd > 0.5)
+        toAdd *= -1;
+        
+      if(i == 0)
+        toAdd = toAdd/10000 + baselineQualities[i];
+      if(i == 1)
+        toAdd = toAdd/10000 + baselineQualities[i];
+      if(i == 2)
+        toAdd = toAdd/1000000 + baselineQualities[i];
+      retQual.add(toAdd);
     }
+
     ArrayList<Integer> retCat = new ArrayList<Integer>();
-    for(int i  = 0 ; i  < dCat ; i ++)
-    {
+    for(int i  = 0 ; i  < dCat ; i ++) {
       retCat.add(r.nextInt(5));
     }
     return new Entity(retQual, retCat);

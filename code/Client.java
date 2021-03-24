@@ -174,7 +174,7 @@ public class Client implements Runnable
                                         groupname = gn;
                                     }
                                     else
-                                        JOptionPane.showMessageDialog(null, "You have been denied from group "+groupname+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "You have been denied from group "+gn+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
                                     //return;
                                     continue;
                                     //04: msg = GROUPNAME:TOADD

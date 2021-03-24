@@ -222,56 +222,11 @@ public class SharingEntity implements Serializable
   }
 
 
-  /* Method makes shares of a single hashmap*/
-  private ArrayList<HashMap<Integer, Integer>> splitMap(int shares, HashMap<Integer, Integer> map, Random rand){
-
-    // make empty list of hashmap shares
-    ArrayList<HashMap<Integer, Integer>> ret = new ArrayList<HashMap<Integer, Integer>>();
-    for(int i=0; i < shares ; i++){
-      ret.add(new HashMap<Integer, Integer>()) ;
-    }
-
-    // for every entry in map //
-    Set<Map.Entry<Integer, Integer>> pairs = map.entrySet();
-    for(Map.Entry<Integer, Integer> entry : pairs){
-
-      // make share of each value //
-      ArrayList<Integer> cquals = new ArrayList<Integer>();
-      int sum = 0 ;
-      for(int j=0; j < shares-1; j++){
-        int randomInt = rand.nextInt();
-        sum += randomInt ;
-        cquals.add(randomInt) ;
-      }
-      int finalShareOfVal = (int)entry.getValue() - sum ;
-      cquals.add(finalShareOfVal) ;
-
-      // add one share of each key-value pair to each hashmap //
-      for(int k=0; k < shares; k++){
-          ret.get(k).put((int)entry.getKey(), cquals.get(k)) ;
-      }
-    }
-    return ret ;
-  }
-
   public ArrayList<SharingEntity> makeShares(int shares, Random rand)
   {
     ArrayList<SharingEntity> ret = new ArrayList<SharingEntity>();
 
     // for each sharing entity, make a share //
-    ArrayList<ArrayList<HashMap<Integer,Integer>>> mapShares = new
-      ArrayList<ArrayList<HashMap<Integer,Integer>>>();
-    for(int j=0; j < shares; j++){
-      mapShares.add(new ArrayList<HashMap<Integer,Integer>>());
-    }
-    for(HashMap<Integer,Integer> hm : modeMap){
-      ArrayList<HashMap<Integer,Integer>> mapShare = splitMap(shares, hm,
-          rand);
-      for(int i=0; i < shares; i++){
-        mapShares.get(i).add(mapShare.get(i));
-      }
-    }
-
     for(int i = 0 ; i < shares-1; i++)
     {
 
@@ -288,7 +243,6 @@ public class SharingEntity implements Serializable
       toAdd.setConv(conv);
       toAdd.countShare = rand.nextInt();
       toAdd.setQuals(squal);
-      toAdd.setModeMap(mapShares.get(i));
       ret.add(toAdd);
     }
 
@@ -309,7 +263,6 @@ public class SharingEntity implements Serializable
 
     SharingEntity finalShare = new SharingEntity();
     finalShare.setQuals(finalShareQuals);
-    finalShare.setModeMap(mapShares.get(shares-1));
     finalShare.setClusterLabel(clusterLabel);
     finalShare.setConv(conv);
     finalShare.setIterationLabel(iterationLabel);
