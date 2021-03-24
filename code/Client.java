@@ -103,30 +103,6 @@ public class Client implements Runnable
         }
     }
     public void run() {
-        // sendMessage thread
-        Thread sendMessage = new Thread(new Runnable()
-                {
-                    @Override
-                    public void run() {
-                        try {
-                            LOGGER.log(Level.INFO, "Client requesting rename");
-                            System.out.flush();
-                            // write on the output stream
-                            Message m = new Message(1000, "new name id:"+ID, ID, 0);
-                            dos.writeObject(m);
-                        } catch (IOException e) { e.printStackTrace(); }
-
-                        while (true) {
-                            // read the message to deliver.
-                            try {
-                                String msg = scn.nextLine();
-                                Message m = new Message(1000, msg, ID, 0);
-                                dos.writeObject(msg);
-                            } catch (IOException e) { e.printStackTrace(); } catch (NoSuchElementException e) { }
-                        }
-                    }
-                });
-
         // readMessage thread
         Thread readMessage = new Thread(new Runnable()
                 {
@@ -293,7 +269,6 @@ public class Client implements Runnable
                     }
                 });
 
-        //sendMessage.start();
         readMessage.start();
 
     }
@@ -1042,23 +1017,20 @@ public class Client implements Runnable
                 mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
                 this.sendMessage(mmsg);
             }
-            try{
-                Thread.sleep(500);
-            }catch (InterruptedException e) {}
             if (!this.isCoordinator){
                 mmsg = new Message(23, "testing_group:"+this.getID(), this.getID(), 0);
                 this.sendMessage(mmsg);
             }
             try{
-                Thread.sleep(500);
+                Thread.sleep(100);
             }catch (InterruptedException e) {}
         }
         while(this.numMembersinGroup < 3){
-            try{
-                Thread.sleep(500);
-            }catch (InterruptedException e) {}
             mmsg = new Message(05,"testing_group", ID, 0);
             this.sendMessage(mmsg);
+            try{
+                Thread.sleep(100);
+            }catch (InterruptedException e) {}
         }
         System.out.println(ID+": finished initialize");
     }

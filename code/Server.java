@@ -22,14 +22,12 @@ function simply making an instance and running a thread
     or 2) Server is run by calling `java Server`, with the main acting as a
     central server
 */
-public class Server
-{
+public class Server {
 
     // Vector to store active clients
-    static Vector<ClientHandler> ar = new Vector<>();
+    static volatile Vector<ClientHandler> ar = new Vector<>();
     static volatile Map<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
     public synchronized static void main(String[] args) throws IOException
     {
         // server is listening on port 1234
@@ -67,8 +65,6 @@ public class Server
     }
 }
 
-
-
 // ClientHandler class
 class ClientHandler implements Runnable
 {
@@ -81,26 +77,18 @@ class ClientHandler implements Runnable
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // constructor
-    public ClientHandler(Socket s, ObjectInputStream dis,
-            ObjectOutputStream dos) {
+    public ClientHandler(Socket s, ObjectInputStream dis, ObjectOutputStream dos) {
         this.dis = dis;
         this.dos = dos;
         this.s = s;
         this.isloggedin=true;
 
-        /*
-        try{
-            Message m = (Message) this.dis.readObject();
-            if((m.msg).contains("new name id")){ // this will always be TRUE
-                this.name = m.msg.split(":")[1];
-                LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
-            }
-        } catch(Exception e) {}
-        */
     }
     // ClientHandler class
     public synchronized void sendMessage(Message m) throws IOException{
-        for (ClientHandler mc : Server.ar) {
+        ClientHandler mc;
+        for (int i = 0; i < Server.ar.size(); i++){
+            mc = Server.ar.get(i);
             if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
                 mc.dos.writeObject(m);
                 break;
@@ -177,7 +165,9 @@ class ClientHandler implements Runnable
 
                 if (Server.groups.containsKey(group_name)){
                     ArrayList<String> partners = Server.groups.get(group_name);
-                    for(String p : partners){
+                    String p;
+                    for(int i = 0; i < partners.size(); i++){
+                        p = partners.get(i);
                         if(Integer.parseInt(p) != received.source) {
                             Message m = new Message(10, message, received.source, Integer.parseInt(p));
                             this.sendMessage(m);
@@ -193,7 +183,9 @@ class ClientHandler implements Runnable
         }else if (received.type == 12) {
             if (Server.groups.containsKey(received.msg)){
                 ArrayList<String> partners = Server.groups.get(received.msg);
-                for ( String p : partners){
+                String p;
+                for(int i = 0; i < partners.size(); i++){
+                    p = partners.get(i);
                     if (Integer.parseInt(p) != received.source){
                         received.dest = Integer.parseInt(p);
                         this.sendMessage(received);
@@ -204,7 +196,9 @@ class ClientHandler implements Runnable
         } else if (received.type == 16) {
             if (Server.groups.containsKey(received.msg)){
                 ArrayList<String> partners = Server.groups.get(received.msg);
-                for ( String p : partners){
+                String p;
+                for(int i = 0; i < partners.size(); i++){
+                    p = partners.get(i);
                     if (Integer.parseInt(p) != received.source){
                         received.dest = Integer.parseInt(p);
                         this.sendMessage(received);
@@ -291,18 +285,14 @@ class ClientHandler implements Runnable
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
                 }else if((received.msg).equals("logout")){
                     this.isloggedin=false;
-                    this.s.close();
+//                    this.dis.close();
+//                    this.dos.close();
+//                    this.s.close();
                     break;
                 } else {
                     this.messageHandler(received);
                 }
             } catch (EOFException e) {} catch (IOException e) { e.printStackTrace(); } catch (ClassNotFoundException e) { }
-        } try{
-            // closing resources
-            this.dis.close();
-            this.dos.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        } 
     }
 }
