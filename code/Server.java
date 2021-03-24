@@ -27,10 +27,10 @@ public class Server
 
     // Vector to store active clients
     static Vector<ClientHandler> ar = new Vector<>();
-    static Map<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
+    static volatile Map<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public static void main(String[] args) throws IOException
+    public synchronized static void main(String[] args) throws IOException
     {
         // server is listening on port 1234
         ServerSocket ss = new ServerSocket(1234);
@@ -99,7 +99,7 @@ class ClientHandler implements Runnable
         */
     }
     // ClientHandler class
-    public void sendMessage(Message m) throws IOException{
+    public synchronized void sendMessage(Message m) throws IOException{
         for (ClientHandler mc : Server.ar) {
             if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
                 mc.dos.writeObject(m);
@@ -107,7 +107,7 @@ class ClientHandler implements Runnable
             }
         }
     }
-    public void messageHandler(Message received) throws IOException {
+    public synchronized void messageHandler(Message received) throws IOException {
         //01:FROM:GROUPNAME#0 - 01 message to server requesting to make GROUP, named
         if(received.type == 1){
             String groupname = received.msg;
@@ -240,16 +240,15 @@ class ClientHandler implements Runnable
             sendMessage(received);
           return;
         } else if(received.type == 22) {
-            // NO AUTH version
             String groupname = received.msg.split(":")[0];
             int numClusters = Integer.parseInt(received.msg.split(":")[1]);
             String algorithm = received.msg.split(":")[2];
+
             //create new group
             if (!Server.groups.containsKey(groupname)){
                 Server.groups.put(groupname,new ArrayList<String>());
-                //add client as the first member (coordinator)
                 Server.groups.get(groupname).add(Integer.toString(received.source));
-                Message msg = new Message(24, groupname, 0, received.source);
+                Message msg = new Message(24, Integer.toString(received.source), 0, received.source);
                 sendMessage(msg);
             }
           return;
@@ -258,26 +257,29 @@ class ClientHandler implements Runnable
             String arr[] = (received.msg).split(":");
             String groupname = arr[0];
             String toAdd = arr[1];
-            if (Server.groups.containsKey(groupname))
+            if (Server.groups.containsKey(groupname)){
                 if (!Server.groups.get(groupname).contains(toAdd)){
                     Server.groups.get(groupname).add(toAdd);
-                    Message msg = new Message(24, groupname, 0, received.source);
-                    sendMessage(msg);
-                    ArrayList<String> partners = Server.groups.get(groupname);
 
-                    for (String p : partners){
-                        int dest = Integer.parseInt(p);
-                        Message m = new Message(6,"", 0, dest);
-                        m.setMembers(partners);
+                    ArrayList<String> partners = Server.groups.get(groupname);
+                    Message m = new Message(24,toAdd, 0, 0);
+
+                    for (int i = 0; i < partners.size(); i++){
+                        int dest = Integer.parseInt(partners.get(i));
+                        m.dest = dest;
                         this.sendMessage(m);
                     }
 
+                    Message nm = new Message(06,"", 0, 0);
+                    nm.setMembers(partners);
+                    sendMessage(nm);
                 }
-          return;
+            }
+            return;
         }
     }
     @Override
-    public void run() {
+    public synchronized void run() {
         Message received;
         while (true) {
             try {
