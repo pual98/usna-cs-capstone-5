@@ -25,12 +25,12 @@ public class Client implements Runnable
     public ObjectOutputStream dos;
     public Scanner scn;
 
-    public ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
-    public ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
-    public ArrayList<EntityCluster> clusters = null;
-    public ArrayList<Integer> memIDs = new ArrayList<Integer>();
-    public ArrayList<Boolean> clustersPresent = new ArrayList<Boolean>();
-    public ArrayList<Entity> uploadedData = new ArrayList<Entity>();
+    public volatile ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
+    public volatile ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
+    public volatile ArrayList<EntityCluster> clusters = null;
+    public volatile ArrayList<Integer> memIDs = new ArrayList<Integer>();
+    public volatile ArrayList<Boolean> clustersPresent = new ArrayList<Boolean>();
+    public volatile ArrayList<Entity> uploadedData = new ArrayList<Entity>();
     public String filename;
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -75,8 +75,8 @@ public class Client implements Runnable
 
         try {
             // getting localhost ip
-            //InetAddress ip = InetAddress.getByName("localhost");
-            InetAddress ip = InetAddress.getByName("csmidn.academy.usna.edu");
+            InetAddress ip = InetAddress.getByName("localhost");
+            //InetAddress ip = InetAddress.getByName("csmidn.academy.usna.edu");
 
             // establish the connection
             Socket s = new Socket(ip, ServerPort);
@@ -131,7 +131,7 @@ public class Client implements Runnable
         Thread readMessage = new Thread(new Runnable()
                 {
                     @Override
-                    public void run() {
+                    public synchronized void run() {
 
                         while (true) {
                             try {
@@ -186,11 +186,10 @@ public class Client implements Runnable
                                 }else if(msg.type == 05){
                                     continue;
                                     //06: msg = MSG
-                                    //    response from server with comma seperated MSG as a list of people in
-                                    //    EXAMPLE: 12,13,1,2 where each is an ID
                                 }else if(msg.type == 06){
                                     ArrayList<String> mems = msg.members;
                                     numMembersinGroup = mems.size();
+                                    System.out.println(ID+": "+numMembersinGroup+" group mems "+mems.size());
                                     for(int i = 0; i < mems.size(); i++) {
                                         int idToAdd = Integer.parseInt(mems.get(i));
                                         if (!memIDs.contains(idToAdd)){
@@ -222,7 +221,7 @@ public class Client implements Runnable
                                     setAsCoordinator();
                                     JOptionPane.showMessageDialog(f, msg.msg, "Group Created", JOptionPane.INFORMATION_MESSAGE);
                                     groupname = (msg.msg.split(":")[1]).split(" ")[1];
-
+                                    continue;
                                 } else if(msg.type == 16){
                                     clusters = msg.clusters;
                                     continue;
@@ -239,6 +238,7 @@ public class Client implements Runnable
                                             sendMessage(m);
                                         }
                                     }
+                                    continue;
                                 }
                                 else if(msg.type == 19) {
                                     ArrayList<String> options = new ArrayList<String>();
@@ -273,13 +273,19 @@ public class Client implements Runnable
                                         Message m = new Message(20, msg.msg+":"+NUM_CLUSTERS+":"+algorithm, ID, 0);
                                         sendMessage(m);
                                     }
+                                    continue;
                                 }
                                 else if(msg.type == 21) {
                                     receivedShares.add(msg.en);
                                     continue;
                                 }
-                                else if(msg.type == 24) {
+                                else if(msg.type == 24){
                                     setGroupStatus();
+                                    int toAdd = Integer.parseInt(msg.msg);
+                                    if (!memIDs.contains(toAdd)){
+                                        memIDs.add(toAdd);
+                                        numMembersinGroup++;
+                                    }
                                     continue;
                                 }
                             } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
@@ -293,8 +299,9 @@ public class Client implements Runnable
     }
 
     public void kPrototypes(ArrayList<Entity> dataset) {
-        for(Entity e : dataset)
-          uploadedData.add(e);
+        for(int i = 0; i < dataset.size(); i++){
+          uploadedData.add(dataset.get(i));
+        }
 
 
         JFrame f = new JFrame();
@@ -314,14 +321,8 @@ public class Client implements Runnable
             msg.setClusters(this.clusters);
             sendMessage(msg);
         }
-        /*
-         * receive cents
-         */
-        while (this.clusters == null){
-//            try{
-//                Thread.sleep(500);
-//            }catch (InterruptedException e) {}
-        }
+
+        while (this.clusters == null){ }
 
         Random r = new Random(20);
         boolean converged = false;
@@ -332,8 +333,8 @@ public class Client implements Runnable
 
         while(!converged) {
             int clabel = 0;
-            for(EntityCluster c: clusters){
-                c.setId(clabel);
+            for(int i = 0; i<clusters.size(); i++){
+                clusters.get(i).setId(clabel);
                 clabel++;
             }
             for (int i = 0; i < NUM_CLUSTERS; i++)
@@ -341,14 +342,14 @@ public class Client implements Runnable
 
             converged = true;
 
-            for(Entity en : dataset) {
+            for(int i = 0; i < dataset.size(); i++){
                 //assign to cluster
                 if(itt == 0){
-                    assignRandomCluster(en,this.clusters,r);
+                    assignRandomCluster(dataset.get(i),this.clusters,r);
                     converged = false;
                 }
                 else{
-                    boolean interimConverged = assignCluster(en, this.clusters);
+                    boolean interimConverged = assignCluster(dataset.get(i), this.clusters);
                     //assign to cluster
                     if(!interimConverged)
                         converged = false;
@@ -358,8 +359,9 @@ public class Client implements Runnable
 
             //for each cluster:
             ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
-            for(EntityCluster c : this.clusters)
+            for(int i = 0; i < this.clusters.size(); i++)
             {
+                EntityCluster c = this.clusters.get(i);
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
                 // sumlocal
@@ -375,21 +377,16 @@ public class Client implements Runnable
                 msg.setEntity(clusterData);
                 LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
-                // wait on sums
-//                try{
-//                    Thread.sleep(1000);
-//                }catch (InterruptedException e) {}
-                while (countFromIteration(receivedEntities, itt, c.getId()) < 2){
-//                    try{
-//                        Thread.sleep(500);
-//                    }catch (InterruptedException e) {}
-                }
+                while (countFromIteration(receivedEntities, itt, c.getId()) < 2){ }
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
-                for(SharingEntity se : receivedEntities) {
+                SharingEntity se;
+                for (int j = 0; j < receivedEntities.size(); j++){
+                    se = receivedEntities.get(j);
                     if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
                         confirmedSharingEntities.add(se);
                 }
-                for(SharingEntity se : confirmedSharingEntities) {
+                for (int j = 0; j < confirmedSharingEntities.size(); j++){
+                    se = receivedEntities.get(j);
                     if(se.getConv() == false)
                         converged = false;
                     clusterData.addSharingEntity(se);
@@ -641,11 +638,7 @@ public class Client implements Runnable
         }
 
         // Wait to receive the clusters from the coordinator
-        while (this.clusters == null){
-//            try{
-//                Thread.sleep(500);
-//            }catch (InterruptedException e) {}
-        }
+        while (this.clusters == null){ }
 
         Random r = new Random(20);
         boolean converged = false;
@@ -722,16 +715,7 @@ public class Client implements Runnable
                     assignedShare++;
                 }
 
-                // wait on shares
-//                try{
-//                    Thread.sleep(1000);
-//                }catch (InterruptedException e) {}
-                while (countFromIteration(receivedShares, itt, c.getId()) < 3){
-//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
-//                    try{
-//                        Thread.sleep(500);
-//                    }catch (InterruptedException e) {}
-                }
+                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
 
                 System.out.println("ID: "+ID+" Received:");
                 for(SharingEntity e : receivedShares) {
@@ -767,15 +751,7 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-//                try{
-//                    Thread.sleep(1000);
-//                }catch (InterruptedException e) {}
-                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
-//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
-//                    try{
-//                        Thread.sleep(500);
-//                    }catch (InterruptedException e) {}
-                }
+                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
 
                 for(SharingEntity se : receivedEntities) {
                     if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
@@ -844,11 +820,7 @@ public class Client implements Runnable
         }
 
         // Wait to receive the clusters from the coordinator
-        while (this.clusters == null){
-//            try{
-//                Thread.sleep(500);
-//            }catch (InterruptedException e) {}
-        }
+        while (this.clusters == null){ }
 
         Random r = new Random();
         boolean converged = false;
@@ -952,16 +924,7 @@ public class Client implements Runnable
                     assignedShare++;
                 }
 
-                // wait on shares
-//                try{
-//                    Thread.sleep(1000);
-//                }catch (InterruptedException e) {}
-                while (countFromIteration(receivedShares, itt, c.getId()) < 3){
-//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedShares");
-//                    try{
-//                        Thread.sleep(500);
-//                    }catch (InterruptedException e) {}
-                }
+                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
 
                 System.out.println("ID: "+ID+" Received:");
                 for(SharingEntity e : receivedShares) {
@@ -1000,15 +963,7 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-//                try{
-//                    Thread.sleep(1000);
-//                }catch (InterruptedException e) {}
-                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){
-//                    LOGGER.log(Level.INFO, "ID: " + ID + " waiting for receivedEntities");
-//                    try{
-//                        Thread.sleep(500);
-//                    }catch (InterruptedException e) {}
-                }
+                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
 
                 for(SharingEntity se : receivedEntities) {
                     if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
@@ -1057,7 +1012,9 @@ public class Client implements Runnable
     }
     public static int countFromIteration(ArrayList<SharingEntity> se, int itt, int cl){
         int count = 0;
-        for ( SharingEntity e : se){
+        SharingEntity e;
+        for (int i = 0; i < se.size(); i++){
+            e = se.get(i);
             if (e.getIterationLabel() == itt && e.getClusterLabel()==cl)
                 count++;
         }
@@ -1073,18 +1030,21 @@ public class Client implements Runnable
     }
 
     public void initializePartyTestingConnection(){
-        System.out.println("starting initialize");
+        System.out.println(this.ID+": starting initialize");
         Message mmsg;
         this.algorithm = "Distributed (none)";
         this.NUM_CLUSTERS = 3;
         this.groupname = "testing_group";
 
-        if (this.isCoordinator){
-            mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
-            this.sendMessage(mmsg);
-        }
 
         while (this.inGroup == false){
+            if (this.isCoordinator){
+                mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
+                this.sendMessage(mmsg);
+            }
+            try{
+                Thread.sleep(500);
+            }catch (InterruptedException e) {}
             if (!this.isCoordinator){
                 mmsg = new Message(23, "testing_group:"+this.getID(), this.getID(), 0);
                 this.sendMessage(mmsg);
@@ -1093,17 +1053,14 @@ public class Client implements Runnable
                 Thread.sleep(500);
             }catch (InterruptedException e) {}
         }
-        Message requestForPartners = new Message(5, groupname, ID, 0);
-        sendMessage(requestForPartners);
-        //wait for server to respond
-        while(numMembersinGroup < 3){
-//          System.out.println("req for partners");
-            numMembersinGroup = memIDs.size();
-//            try{
-//                Thread.sleep(500);
-//            }catch (InterruptedException e) {}
+        while(this.numMembersinGroup < 3){
+            try{
+                Thread.sleep(500);
+            }catch (InterruptedException e) {}
+            mmsg = new Message(05,"testing_group", ID, 0);
+            this.sendMessage(mmsg);
         }
-        System.out.println("finished initialize");
+        System.out.println(ID+": finished initialize");
     }
     public ArrayList<Entity> getEntitiesFromFile(String filename){
         ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
@@ -1141,8 +1098,9 @@ public class Client implements Runnable
             if (args[0].contains("-testing")){
                 if (args[1].contains("-host")){
                     client.isCoordinator = true;
-                    if (args[2].contains("-file"))
+                    if (args[2].contains("-file")){
                         client.filename = args[3];
+                    }
                 } else if (args[1].contains("-file"))
                         client.filename = args[2];
                 client.initializePartyTestingConnection();
