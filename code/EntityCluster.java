@@ -3,6 +3,7 @@ import java.io.*;
 
 public class EntityCluster implements Serializable
 {
+  public static final long serialVersionUID=1L;
   public ArrayList<Entity> Entities;
   public Entity centroid;
   public int id;

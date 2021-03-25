@@ -8,6 +8,7 @@ import java.io.*;
 public class SharingEntity implements Serializable
 {
 
+  public static final long serialVersionUID=1L;
   private int countShare;
   private ArrayList<HashMap<Integer,Integer>> modeMap;
   private ArrayList<Double> qualities;

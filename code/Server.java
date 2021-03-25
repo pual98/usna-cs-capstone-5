@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.*;
 import java.net.*;
-
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.*;
@@ -14,13 +12,6 @@ Thank you, geeksforgreeks for the code example.
 Source code has been modified in the run() method to allow users to renaim
 themselves in the client vectos.
 
-TODO: Change main loop to be a function in a runnable class, with the main()
-function simply making an instance and running a thread
-    1) Two course of action would follow: every IDS is also a server. If they
-    are the main "collaborator," they are the server reached out to.
-    - The IDS.java file would instatiate a new Server()
-    or 2) Server is run by calling `java Server`, with the main acting as a
-    central server
 */
 public class Server {
 
@@ -44,11 +35,9 @@ public class Server {
             LOGGER.log(Level.INFO, "Server: New client request received. Creating a handler for the client.", s);
 
             // obtain input and output streams
-            ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
-            ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
 
             // Create a new handler object for handling this request.
-            ClientHandler mtch = new ClientHandler(s, dis, dos);
+            ClientHandler mtch = new ClientHandler(s);
 
             // Create a new Thread with this object.
             Thread t = new Thread(mtch);
@@ -71,14 +60,12 @@ class ClientHandler implements Runnable
     public String name;
     volatile ObjectInputStream dis;
     volatile ObjectOutputStream dos;
-    Socket s;
+    volatile Socket s;
     boolean isloggedin;
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // constructor
-    public ClientHandler(Socket s, ObjectInputStream dis, ObjectOutputStream dos) {
-        this.dis = dis;
-        this.dos = dos;
+    public ClientHandler(Socket s){//, ObjectInputStream dis, ObjectOutputStream dos) {
         this.s = s;
         this.isloggedin=true;
 
@@ -90,6 +77,7 @@ class ClientHandler implements Runnable
             mc = Server.ar.get(i);
             if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
                 mc.dos.writeObject(m);
+                mc.dos.flush();
                 break;
             }
         }
@@ -227,7 +215,6 @@ class ClientHandler implements Runnable
             Message success = new Message(15, "Success! You have created group: "+groupname, 0, received.source);
             this.sendMessage(success);
             return;
-            // TODO: Check for error w/ type code 21...make sure sending to
             // right dest
         } else if(received.type == 21) {
             sendMessage(received);
@@ -265,7 +252,7 @@ class ClientHandler implements Runnable
 
                     Message nm = new Message(06,"", 0, 0);
                     nm.setMembers(partners);
-                    sendMessage(nm);
+                    this.sendMessage(nm);
                 }
             }
             return;
@@ -273,20 +260,21 @@ class ClientHandler implements Runnable
     }
     @Override
     public synchronized void run() {
+
+        try{
+            dos = new ObjectOutputStream(s.getOutputStream());
+            dis = new ObjectInputStream(s.getInputStream());
+        }catch(IOException e) { System.exit(1); }
         Message received;
         while (true) {
             try {
                 // receive the string
-                //
                 received = (Message)dis.readObject();
                 if((received.msg).contains("new name id")){ // this will always be TRUE
                     this.name = received.msg.split(":")[1];
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
                 }else if((received.msg).equals("logout")){
                     this.isloggedin=false;
-//                    this.dis.close();
-//                    this.dos.close();
-//                    this.s.close();
                     break;
                 } else {
                     this.messageHandler(received);

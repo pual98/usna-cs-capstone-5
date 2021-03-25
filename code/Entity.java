@@ -9,6 +9,7 @@ import java.util.logging.*;
 
 public class Entity implements Serializable
 {
+  public static final long serialVersionUID=1L;
   private ArrayList<Double> qualities;
   private ArrayList<Integer> categories;
 

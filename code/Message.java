@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Message implements Serializable {
-    public static final long serialVersuionUID=1L;
+    public static final long serialVersionUID=1L;
     /*
     01: msg = GROUPNAME
         01 message to server requesting to make GROUP, named GROUPNAME

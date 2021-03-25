@@ -21,8 +21,8 @@ public class Client implements Runnable
     private boolean isCoordinator = false;
     public boolean inGroup = false; //used to check if Client tries to join more than one CIDS
     public String groupname = null;
-    public ObjectInputStream dis;
-    public ObjectOutputStream dos;
+    public volatile ObjectOutputStream dos;
+    public volatile ObjectInputStream dis;
     public Scanner scn;
 
     public volatile ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
@@ -80,6 +80,7 @@ public class Client implements Runnable
 
             // establish the connection
             Socket s = new Socket(ip, ServerPort);
+            while (!s.isConnected()){}
 
             // obtaining input and out streams
             dos = new ObjectOutputStream(s.getOutputStream());
@@ -90,6 +91,7 @@ public class Client implements Runnable
             // write on the output stream
             Message m = new Message(1000, "new name id:"+ID, ID, 0);
             dos.writeObject(m);
+            dos.flush();
         } catch(UnknownHostException e) {} catch (IOException e) {}
     }
     public int getID() {
@@ -98,179 +100,169 @@ public class Client implements Runnable
     public  void sendMessage(Message m) {
         try {
             dos.writeObject(m);
+            dos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public  void run() {
-        // readMessage thread
-        Thread readMessage = new Thread(new Runnable()
-                {
-                    @Override
-                    public  void run() {
+        while (true) {
+            try {
+                // read the message sent to this client
+                Message msg = (Message)dis.readObject();
+                JFrame f = new JFrame();
 
-                        while (true) {
-                            try {
-                                // read the message sent to this client
-                                Message msg = (Message)dis.readObject();
-                                JFrame f = new JFrame();
+                LOGGER.log(Level.INFO, ID+": client read msg: "+msg);
 
-                                LOGGER.log(Level.INFO, ID+": client read msg: "+msg);
-
-                                //01: msg = GROUPNAME
-                                //    01 message to server requesting to make GROUP, named GROUPNAME
-                                if(msg.type == 01){
-                                    continue;
-                                    //02: msg = GROUPNAME
-                                    //    02 request to join GROUPNAME - (server should forward to coordinator)
-                                }else if(msg.type == 02){
-                                    String gn = msg.msg;
-                                    int requestingID = msg.source;
-                                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+requestingID+" to join "+gn+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
-                                    if (reply == JOptionPane.YES_OPTION) {
-                                        Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS+":"+algorithm, ID, requestingID);
-                                        sendMessage(toSend);
-                                        toSend = new Message(04, gn+":"+requestingID, ID, 0);
-                                        sendMessage(toSend);
-                                        //                                        groupname = gn;
-                                    }else{
-                                        Message toSend = new Message(03, gn+":deny", ID, requestingID);
-                                        sendMessage(toSend);
-                                    }
-                                    continue;
-                                    //03: msg = MSG:"accept" || MSG:"deny"
-                                    //    03 response from coordinator to TO with "accept" or "deny"
-                                }else if(msg.type == 03){
-                                    String gn= msg.msg.split(":")[0];
-                                    if(msg.msg.contains("accept")) {
-                                        NUM_CLUSTERS = Integer.parseInt(msg.msg.split(":")[2]);
-                                        algorithm = msg.msg.split(":")[3];
-                                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS+"\n       Algorithm = "+algorithm, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                                        setGroupStatus();
-                                        groupname = gn;
-                                    }
-                                    else
-                                        JOptionPane.showMessageDialog(null, "You have been denied from group "+gn+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
-                                    //return;
-                                    continue;
-                                    //04: msg = GROUPNAME:TOADD
-                                    //    04 message from coordinator to server with ID TOADD to join have join the GROUPNAME
-                                }else if(msg.type == 04){
-                                    continue;
-                                    //05: msg = GROUPNAME
-                                    //    message to server requesting list of IDs in GROUPNAME
-                                }else if(msg.type == 05){
-                                    continue;
-                                    //06: msg = MSG
-                                }else if(msg.type == 06){
-                                    ArrayList<String> mems = msg.members;
-                                    numMembersinGroup = mems.size();
-                                    System.out.println(ID+": "+numMembersinGroup+" group mems "+mems.size());
-                                    for(int i = 0; i < mems.size(); i++) {
-                                        int idToAdd = Integer.parseInt(mems.get(i));
-                                        if (!memIDs.contains(idToAdd)){
-                                            memIDs.add(idToAdd);
-                                        }
-                                    }
-                                    //call function to send all IDs
-                                    continue;
-                                    //10: msg = MSG
-                                    //    10 Generic message. Send message to the TO
-                                }else if(msg.type == 10){
-                                    JOptionPane.showMessageDialog(f, msg.msg, "Message from "+msg.source, JOptionPane.INFORMATION_MESSAGE);
-                                    continue;
-                                    //12: msg = MSG#TO
-                                    //    Send clusterData object (sharingEntity)
-                                    //    should set entity
-                                }else if(msg.type == 12){
-                                    receivedEntities.add(msg.en);
-                                    continue;
-                                    //14: msg = Error Message to Client trying to Create/Join Group
-                                    //    Response from server to requesting client
-                                }else if(msg.type == 14){
-                                    JOptionPane.showMessageDialog(f, msg.msg, "Error!", JOptionPane.ERROR_MESSAGE);
-                                    continue;
-                                    //15: msg = "Success, you have created group:GROUPNAME"
-                                    //    Response from server to client after creatign a group
-                                }else if(msg.type == 15){
-                                    setGroupStatus();
-                                    setAsCoordinator();
-                                    JOptionPane.showMessageDialog(f, msg.msg, "Group Created", JOptionPane.INFORMATION_MESSAGE);
-                                    groupname = (msg.msg.split(":")[1]).split(" ")[1];
-                                    continue;
-                                } else if(msg.type == 16){
-                                    clusters = msg.clusters;
-                                    continue;
-                                } else if(msg.type == 18) {
-                                    String group_name = msg.msg;
-                                    msg.members.remove(Integer.toString(ID));
-                                    Object[] partners = msg.members.toArray();
-                                    String choice = (String) JOptionPane.showInputDialog(null, "Choose client in "+group_name, group_name+" clients", JOptionPane.INFORMATION_MESSAGE, null, partners, partners[0]);
-                                    if(choice != null) {
-                                        String message = null;
-                                        message = JOptionPane.showInputDialog("Desired Message");
-                                        if(!message.equals("") && message != null) {
-                                            Message m = new Message(10, message, ID, Integer.parseInt(choice));
-                                            sendMessage(m);
-                                        }
-                                    }
-                                    continue;
-                                }
-                                else if(msg.type == 19) {
-                                    ArrayList<String> options = new ArrayList<String>();
-                                    for(int i = 3; i < 11; i++)
-                                        options.add(""+i);
-                                    Object[] choices = options.toArray();
-                                    String prompt = "         Enter the number \nof clusters for k-Prototypes\n                  (3-10)";
-                                    String num = (String) JOptionPane.showInputDialog(null, prompt, "Select Cluster Number", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
-
-                                    int selectedAlg = 0;
-                                    do{
-                                        prompt = "Select the algorithm to be used";
-                                        options = new ArrayList<String>();
-                                        options.add("Distributed (none)");
-                                        options.add("Secret Sharing");
-                                        options.add("Differential Privacy");
-                                        choices = options.toArray();
-                                        algorithm = (String) JOptionPane.showInputDialog(null, prompt, "Select algorithm", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
-                                        if (algorithm.equals("Distributed (none)")){
-                                            selectedAlg = DISTRIBUTED;
-                                        }else if (algorithm.equals("Secret Sharing")){
-                                            selectedAlg = SECRET_SHARE;
-                                        }else if (algorithm.equals("Differential Privacy")){
-                                            selectedAlg = DIFFERENTIAL_PRIVACY;
-                                        }
-                                        if (selectedAlg == 0)
-                                            JOptionPane.showMessageDialog(null,"Selected algorithm not yet implemented; please choose another." , "Error!", JOptionPane.ERROR_MESSAGE);
-                                    }while(selectedAlg == 0);
-
-                                    if(num != null) {
-                                        NUM_CLUSTERS = Integer.parseInt(num);
-                                        Message m = new Message(20, msg.msg+":"+NUM_CLUSTERS+":"+algorithm, ID, 0);
-                                        sendMessage(m);
-                                    }
-                                    continue;
-                                }
-                                else if(msg.type == 21) {
-                                    receivedShares.add(msg.en);
-                                    continue;
-                                }
-                                else if(msg.type == 24){
-                                    setGroupStatus();
-                                    int toAdd = Integer.parseInt(msg.msg);
-                                    if (!memIDs.contains(toAdd)){
-                                        memIDs.add(toAdd);
-                                        numMembersinGroup++;
-                                    }
-                                    continue;
-                                }
-                            } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
+                //01: msg = GROUPNAME
+                //    01 message to server requesting to make GROUP, named GROUPNAME
+                if(msg.type == 01){
+                    continue;
+                    //02: msg = GROUPNAME
+                    //    02 request to join GROUPNAME - (server should forward to coordinator)
+                }else if(msg.type == 02){
+                    String gn = msg.msg;
+                    int requestingID = msg.source;
+                    int reply = JOptionPane.showConfirmDialog(f, "Do you want to allow ID: "+requestingID+" to join "+gn+"?\n", "Collaboration Request", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        Message toSend = new Message(03, gn+":accept:"+NUM_CLUSTERS+":"+algorithm, ID, requestingID);
+                        sendMessage(toSend);
+                        toSend = new Message(04, gn+":"+requestingID, ID, 0);
+                        sendMessage(toSend);
+                        //                                        groupname = gn;
+                    }else{
+                        Message toSend = new Message(03, gn+":deny", ID, requestingID);
+                        sendMessage(toSend);
+                    }
+                    continue;
+                    //03: msg = MSG:"accept" || MSG:"deny"
+                    //    03 response from coordinator to TO with "accept" or "deny"
+                }else if(msg.type == 03){
+                    String gn= msg.msg.split(":")[0];
+                    if(msg.msg.contains("accept")) {
+                        NUM_CLUSTERS = Integer.parseInt(msg.msg.split(":")[2]);
+                        algorithm = msg.msg.split(":")[3];
+                        JOptionPane.showMessageDialog(null, "You have been accepted into group "+gn+".\n          Number of clusters = "+NUM_CLUSTERS+"\n       Algorithm = "+algorithm, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                        setGroupStatus();
+                        groupname = gn;
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "You have been denied from group "+gn+".", "Denial", JOptionPane.INFORMATION_MESSAGE);
+                    //return;
+                    continue;
+                    //04: msg = GROUPNAME:TOADD
+                    //    04 message from coordinator to server with ID TOADD to join have join the GROUPNAME
+                }else if(msg.type == 04){
+                    continue;
+                    //05: msg = GROUPNAME
+                    //    message to server requesting list of IDs in GROUPNAME
+                }else if(msg.type == 05){
+                    continue;
+                    //06: msg = MSG
+                }else if(msg.type == 06){
+                    ArrayList<String> mems = msg.members;
+                    numMembersinGroup = mems.size();
+                    System.out.println(ID+": "+numMembersinGroup+" group mems "+mems.size());
+                    for(int i = 0; i < mems.size(); i++) {
+                        int idToAdd = Integer.parseInt(mems.get(i));
+                        if (!memIDs.contains(idToAdd)){
+                            memIDs.add(idToAdd);
                         }
                     }
-                });
+                    //call function to send all IDs
+                    continue;
+                    //10: msg = MSG
+                    //    10 Generic message. Send message to the TO
+                }else if(msg.type == 10){
+                    JOptionPane.showMessageDialog(f, msg.msg, "Message from "+msg.source, JOptionPane.INFORMATION_MESSAGE);
+                    continue;
+                    //12: msg = MSG#TO
+                    //    Send clusterData object (sharingEntity)
+                    //    should set entity
+                }else if(msg.type == 12){
+                    receivedEntities.add(msg.en);
+                    continue;
+                    //14: msg = Error Message to Client trying to Create/Join Group
+                    //    Response from server to requesting client
+                }else if(msg.type == 14){
+                    JOptionPane.showMessageDialog(f, msg.msg, "Error!", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                    //15: msg = "Success, you have created group:GROUPNAME"
+                    //    Response from server to client after creatign a group
+                }else if(msg.type == 15){
+                    setGroupStatus();
+                    setAsCoordinator();
+                    JOptionPane.showMessageDialog(f, msg.msg, "Group Created", JOptionPane.INFORMATION_MESSAGE);
+                    groupname = (msg.msg.split(":")[1]).split(" ")[1];
+                    continue;
+                } else if(msg.type == 16){
+                    clusters = msg.clusters;
+                    continue;
+                } else if(msg.type == 18) {
+                    String group_name = msg.msg;
+                    msg.members.remove(Integer.toString(ID));
+                    Object[] partners = msg.members.toArray();
+                    String choice = (String) JOptionPane.showInputDialog(null, "Choose client in "+group_name, group_name+" clients", JOptionPane.INFORMATION_MESSAGE, null, partners, partners[0]);
+                    if(choice != null) {
+                        String message = null;
+                        message = JOptionPane.showInputDialog("Desired Message");
+                        if(!message.equals("") && message != null) {
+                            Message m = new Message(10, message, ID, Integer.parseInt(choice));
+                            sendMessage(m);
+                        }
+                    }
+                    continue;
+                }
+                else if(msg.type == 19) {
+                    ArrayList<String> options = new ArrayList<String>();
+                    for(int i = 3; i < 11; i++)
+                        options.add(""+i);
+                    Object[] choices = options.toArray();
+                    String prompt = "         Enter the number \nof clusters for k-Prototypes\n                  (3-10)";
+                    String num = (String) JOptionPane.showInputDialog(null, prompt, "Select Cluster Number", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
 
-        readMessage.start();
+                    int selectedAlg = 0;
+                    do{
+                        prompt = "Select the algorithm to be used";
+                        options = new ArrayList<String>();
+                        options.add("Distributed (none)");
+                        options.add("Secret Sharing");
+                        options.add("Differential Privacy");
+                        choices = options.toArray();
+                        algorithm = (String) JOptionPane.showInputDialog(null, prompt, "Select algorithm", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
+                        if (algorithm.equals("Distributed (none)")){
+                            selectedAlg = DISTRIBUTED;
+                        }else if (algorithm.equals("Secret Sharing")){
+                            selectedAlg = SECRET_SHARE;
+                        }else if (algorithm.equals("Differential Privacy")){
+                            selectedAlg = DIFFERENTIAL_PRIVACY;
+                        }
+                        if (selectedAlg == 0)
+                            JOptionPane.showMessageDialog(null,"Selected algorithm not yet implemented; please choose another." , "Error!", JOptionPane.ERROR_MESSAGE);
+                    }while(selectedAlg == 0);
 
+                    if(num != null) {
+                        NUM_CLUSTERS = Integer.parseInt(num);
+                        Message m = new Message(20, msg.msg+":"+NUM_CLUSTERS+":"+algorithm, ID, 0);
+                        sendMessage(m);
+                    }
+                    continue;
+                }
+                else if(msg.type == 21) {
+                    receivedShares.add(msg.en);
+                    continue;
+                }
+                else if(msg.type == 24){
+                    setGroupStatus();
+                    int toAdd = Integer.parseInt(msg.msg);
+                    if (!memIDs.contains(toAdd)){
+                        memIDs.add(toAdd);
+                        numMembersinGroup++;
+                    }
+                    continue;
+                }
+            } catch (IOException e) { e.printStackTrace(); return;} catch (ClassNotFoundException e) { }
+        }
     }
 
     public  void kPrototypes(ArrayList<Entity> dataset) {
