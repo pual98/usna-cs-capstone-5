@@ -284,9 +284,9 @@ class ClientHandler implements Runnable
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
                 }else if((received.msg).equals("logout")){
                     this.isloggedin=false;
-                    this.dis.close();
-                    this.dos.close();
-                    this.s.close();
+//                    this.dis.close();
+//                    this.dos.close();
+//                    this.s.close();
                     break;
                 } else {
                     this.messageHandler(received);

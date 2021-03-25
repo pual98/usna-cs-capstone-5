@@ -95,19 +95,19 @@ public class Client implements Runnable
     public int getID() {
         return ID;
     }
-    public synchronized void sendMessage(Message m) {
+    public  void sendMessage(Message m) {
         try {
             dos.writeObject(m);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public synchronized void run() {
+    public  void run() {
         // readMessage thread
         Thread readMessage = new Thread(new Runnable()
                 {
                     @Override
-                    public synchronized void run() {
+                    public  void run() {
 
                         while (true) {
                             try {
@@ -273,7 +273,7 @@ public class Client implements Runnable
 
     }
 
-    public synchronized void kPrototypes(ArrayList<Entity> dataset) {
+    public  void kPrototypes(ArrayList<Entity> dataset) {
         for(int i = 0; i < dataset.size(); i++){
           uploadedData.add(dataset.get(i));
         }
@@ -536,7 +536,7 @@ public class Client implements Runnable
 
     public boolean getCoordinatorStatus() { return isCoordinator; }
 
-    public synchronized void correlateNewData(ArrayList<Entity> newData) {
+    public  void correlateNewData(ArrayList<Entity> newData) {
         ArrayList<Integer> newClusters = new ArrayList<Integer>();
 
         for(int i = 0; i < newData.size(); i++) {
@@ -590,7 +590,7 @@ public class Client implements Runnable
             JOptionPane.showMessageDialog(null, "Correlation Complete", "No New Alert Types Found!", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public synchronized void SecretSharing(ArrayList<Entity> dataset) {
+    public  void SecretSharing(ArrayList<Entity> dataset) {
         for(Entity e : dataset)
           uploadedData.add(e);
 
@@ -774,7 +774,7 @@ public class Client implements Runnable
         JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public synchronized void DifferentialPrivacy(ArrayList<Entity> dataset) {
+    public  void DifferentialPrivacy(ArrayList<Entity> dataset) {
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
         LOGGER.log(Level.WARNING, ID+": is COORDINATOR");
@@ -1004,7 +1004,7 @@ public class Client implements Runnable
       return uploadedData;
     }
 
-    public synchronized void initializePartyTestingConnection(){
+    public  void initializePartyTestingConnection(){
         System.out.println(this.ID+": starting initialize");
         Message mmsg;
         this.algorithm = "Distributed (none)";
