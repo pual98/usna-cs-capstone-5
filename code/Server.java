@@ -32,7 +32,6 @@ public class Server {
     {
         // server is listening on port 1234
         ServerSocket ss = new ServerSocket(1234);
-        Socket s;
         LOGGER.setLevel(Level.WARNING);
 
         // running infinite loop for getting
@@ -40,7 +39,7 @@ public class Server {
         while (true)
         {
             // Accept the incoming request
-            s = ss.accept();
+            Socket s = ss.accept();
 
             LOGGER.log(Level.INFO, "Server: New client request received. Creating a handler for the client.", s);
 
@@ -70,8 +69,8 @@ class ClientHandler implements Runnable
 {
     Scanner scn = new Scanner(System.in);
     public String name;
-    final ObjectInputStream dis;
-    final ObjectOutputStream dos;
+    volatile ObjectInputStream dis;
+    volatile ObjectOutputStream dos;
     Socket s;
     boolean isloggedin;
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -285,9 +284,9 @@ class ClientHandler implements Runnable
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
                 }else if((received.msg).equals("logout")){
                     this.isloggedin=false;
-//                    this.dis.close();
-//                    this.dos.close();
-//                    this.s.close();
+                    this.dis.close();
+                    this.dos.close();
+                    this.s.close();
                     break;
                 } else {
                     this.messageHandler(received);

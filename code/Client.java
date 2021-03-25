@@ -95,14 +95,14 @@ public class Client implements Runnable
     public int getID() {
         return ID;
     }
-    public void sendMessage(Message m) {
+    public synchronized void sendMessage(Message m) {
         try {
             dos.writeObject(m);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void run() {
+    public synchronized void run() {
         // readMessage thread
         Thread readMessage = new Thread(new Runnable()
                 {
@@ -273,7 +273,7 @@ public class Client implements Runnable
 
     }
 
-    public void kPrototypes(ArrayList<Entity> dataset) {
+    public synchronized void kPrototypes(ArrayList<Entity> dataset) {
         for(int i = 0; i < dataset.size(); i++){
           uploadedData.add(dataset.get(i));
         }
@@ -536,7 +536,7 @@ public class Client implements Runnable
 
     public boolean getCoordinatorStatus() { return isCoordinator; }
 
-    public void correlateNewData(ArrayList<Entity> newData) {
+    public synchronized void correlateNewData(ArrayList<Entity> newData) {
         ArrayList<Integer> newClusters = new ArrayList<Integer>();
 
         for(int i = 0; i < newData.size(); i++) {
@@ -590,7 +590,7 @@ public class Client implements Runnable
             JOptionPane.showMessageDialog(null, "Correlation Complete", "No New Alert Types Found!", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void SecretSharing(ArrayList<Entity> dataset) {
+    public synchronized void SecretSharing(ArrayList<Entity> dataset) {
         for(Entity e : dataset)
           uploadedData.add(e);
 
@@ -774,7 +774,7 @@ public class Client implements Runnable
         JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void DifferentialPrivacy(ArrayList<Entity> dataset) {
+    public synchronized void DifferentialPrivacy(ArrayList<Entity> dataset) {
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
         LOGGER.log(Level.WARNING, ID+": is COORDINATOR");
@@ -1004,7 +1004,7 @@ public class Client implements Runnable
       return uploadedData;
     }
 
-    public void initializePartyTestingConnection(){
+    public synchronized void initializePartyTestingConnection(){
         System.out.println(this.ID+": starting initialize");
         Message mmsg;
         this.algorithm = "Distributed (none)";
@@ -1017,12 +1017,15 @@ public class Client implements Runnable
                 mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
                 this.sendMessage(mmsg);
             }
+            try{
+                Thread.sleep(300);
+            }catch (InterruptedException e) {}
             if (!this.isCoordinator){
                 mmsg = new Message(23, "testing_group:"+this.getID(), this.getID(), 0);
                 this.sendMessage(mmsg);
             }
             try{
-                Thread.sleep(100);
+                Thread.sleep(300);
             }catch (InterruptedException e) {}
         }
         while(this.numMembersinGroup < 3){
