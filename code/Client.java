@@ -241,10 +241,10 @@ public class Client implements Runnable
                                 }
                                 else if(msg.type == 19) {
                                     ArrayList<String> options = new ArrayList<String>();
-                                    for(int i = 3; i < 11; i++)
+                                    for(int i = 3; i < 16; i++)
                                         options.add(""+i);
                                     Object[] choices = options.toArray();
-                                    String prompt = "         Enter the number \nof clusters for k-Prototypes\n                  (3-10)";
+                                    String prompt = "         Enter the number \nof clusters for k-Prototypes\n                  (3-15)";
                                     String num = (String) JOptionPane.showInputDialog(null, prompt, "Select Cluster Number", JOptionPane.INFORMATION_MESSAGE, null, choices, choices[0]);
 
                                     int selectedAlg = 0;
@@ -300,7 +300,8 @@ public class Client implements Runnable
             if(this.isCoordinator) {
                 for(int i = 0; i < NUM_CLUSTERS; i++) {
                     EntityCluster c = new EntityCluster(i);               //last param here is a seed for the random creation
-                    Entity randomCentroid = Entity.createRandomEntity(3,4,3+i); //params for createRandomEntity function depend on the # of attributes
+                    // Entity randomCentroid = Entity.createRandomEntity(3,4,3+i); //params for createRandomEntity function depend on the # of attributes
+                    Entity randomCentroid = null;
                     c.setCentroid(randomCentroid);
                     this.clusters.add(c);
                 }
@@ -318,7 +319,7 @@ public class Client implements Runnable
             }catch (InterruptedException e) {}
         }
 
-        Random r = new Random(20);
+        Random r = new Random();
         boolean converged = false;
         int itt = 0;
 
@@ -332,7 +333,7 @@ public class Client implements Runnable
                 clabel++;
             }
             for (int i = 0; i < NUM_CLUSTERS; i++)
-                LOGGER.log(Level.INFO, ID+": kPrototypes iteration "+itt+", cluster "+ i + ", centroid: "+ clusters.get(i).getCentroid());
+                // LOGGER.log(Level.INFO, ID+": kPrototypes iteration "+itt+", cluster "+ i + ", centroid: "+ clusters.get(i).getCentroid());
 
             converged = true;
 
@@ -389,7 +390,10 @@ public class Client implements Runnable
                         converged = false;
                     clusterData.addSharingEntity(se);
                 }
-                c = new EntityCluster(clusterData.toEntity(), c.getId());
+                Entity newCentroid = clusterData.toEntity();
+                if(!newCentroid.isNaN()) {
+                  c = new EntityCluster(clusterData.toEntity(), c.getId());
+                }
                 nc.add(c);
                 receivedEntities.removeAll(confirmedSharingEntities);
             }
