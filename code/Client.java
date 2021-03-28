@@ -7,7 +7,6 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.event.*;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.*;
@@ -15,14 +14,18 @@ import java.util.logging.*;
 public class Client implements Runnable
 {
     final static int ServerPort = 1234;
+    final static int CheckerPort = 1235;
     static int ID = 0;
     static int NUM_CLUSTERS = 0;
     static String algorithm = "";
     private boolean isCoordinator = false;
     public boolean inGroup = false; //used to check if Client tries to join more than one CIDS
     public String groupname = null;
-    public volatile ObjectOutputStream dos;
-    public volatile ObjectInputStream dis;
+    public volatile DataOutputStream dos;
+    public volatile DataInputStream dis;
+    public volatile Socket s;
+
+
     public Scanner scn;
 
     public volatile ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
@@ -79,37 +82,48 @@ public class Client implements Runnable
             //InetAddress ip = InetAddress.getByName("csmidn.academy.usna.edu");
 
             // establish the connection
-            Socket s = new Socket(ip, ServerPort);
+            s = new Socket(ip, ServerPort);
             while (!s.isConnected()){}
 
             // obtaining input and out streams
-            dos = new ObjectOutputStream(s.getOutputStream());
-            dis = new ObjectInputStream(s.getInputStream());
+            dos = new DataOutputStream(s.getOutputStream());
+            dis = new DataInputStream(s.getInputStream());
 
             LOGGER.log(Level.INFO, "Client requesting rename");
             System.out.flush();
             // write on the output stream
             Message m = new Message(1000, "new name id:"+ID, ID, 0);
-            dos.writeObject(m);
-            dos.flush();
+            sendMessage(m);
         } catch(UnknownHostException e) {} catch (IOException e) {}
     }
     public int getID() {
         return ID;
     }
     public  void sendMessage(Message m) {
+        byte[] yourBytes;
         try {
-            dos.writeObject(m);
+            yourBytes = serialize(m);
+
+            dos.writeInt(yourBytes.length);
             dos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            dos.write(yourBytes,0, yourBytes.length);
+            //dos.writeObject(m);
+            dos.flush();
+        } catch (IOException e) {} 
     }
     public  void run() {
+        Message msg;
         while (true) {
             try {
+                // https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
                 // read the message sent to this client
-                Message msg = (Message)dis.readObject();
+                
+                int size = dis.readInt();
+
+                byte[] yourBytes = new byte[size];
+                dis.read(yourBytes);
+                msg = (Message)deserialize(yourBytes);
+
                 JFrame f = new JFrame();
 
                 LOGGER.log(Level.INFO, ID+": client read msg: "+msg);
@@ -270,7 +284,6 @@ public class Client implements Runnable
           uploadedData.add(dataset.get(i));
         }
 
-
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
 
@@ -332,9 +345,9 @@ public class Client implements Runnable
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
                 // sumlocal
-                for(Entity en : dataset){
-                    if(en.getAssignedCluster() == c.getId()) {
-                      clusterData.addEntity(en);
+                for(int j = 0; j < dataset.size();j++){
+                    if(dataset.get(i).getAssignedCluster() == c.getId()) {
+                      clusterData.addEntity(dataset.get(i));
                     }
                 }
 
@@ -583,8 +596,9 @@ public class Client implements Runnable
     }
 
     public  void SecretSharing(ArrayList<Entity> dataset) {
-        for(Entity e : dataset)
-          uploadedData.add(e);
+        for(int i = 0; i < dataset.size(); i++){
+          uploadedData.add(dataset.get(i));
+        }
 
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
@@ -619,8 +633,8 @@ public class Client implements Runnable
             if(isCoordinator)
             LOGGER.log(Level.WARNING, "ID: START OF ITERATION "+itt+"\n");
             int clabel = 0;
-            for(EntityCluster c: clusters){
-                c.setId(clabel);
+            for(int i = 0; i<clusters.size(); i++){
+                clusters.get(i).setId(clabel);
                 clabel++;
             }
             for (int i = 0; i < NUM_CLUSTERS; i++)
@@ -628,7 +642,8 @@ public class Client implements Runnable
 
             converged = true;
 
-            for(Entity en : dataset) {
+            for(int i = 0; i < dataset.size(); i++){
+                Entity en = dataset.get(i);
                 //assign to cluster
                 if(itt == 0){
                     assignRandomCluster(en,this.clusters,r);
@@ -644,17 +659,18 @@ public class Client implements Runnable
 
             //for each cluster:
             ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
-            for(EntityCluster c : this.clusters)
+            for(int i = 0; i < this.clusters.size(); i++)
             {
+                EntityCluster c = this.clusters.get(i);
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
 
                 clusterData.setIterationLabel(itt);
                 clusterData.setClusterLabel(c.getId());
                 // sumlocal
-                for(Entity en : dataset){
-                    if(en.getAssignedCluster() == c.getId()) {
-                      clusterData.addEntity(en);
+                for(int j = 0; j < dataset.size();j++){
+                    if(dataset.get(i).getAssignedCluster() == c.getId()) {
+                      clusterData.addEntity(dataset.get(i));
                     }
                 }
 
@@ -668,7 +684,8 @@ public class Client implements Runnable
                 ArrayList<SharingEntity> shares = clusterData.makeShares(numMembersinGroup, new Random());
 
                 int assignedShare = 0;
-                for ( int id : memIDs ){
+                for (int j = 0; j<memIDs.size(); j++){
+                    int id = memIDs.get(j);
                     if (id == ID) {
                       receivedShares.add(shares.get(assignedShare));
                     }
@@ -685,7 +702,8 @@ public class Client implements Runnable
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
 
                 System.out.println("ID: "+ID+" Received:");
-                for(SharingEntity e : receivedShares) {
+                for (int j = 0; j < receivedShares.size(); j++){
+                    SharingEntity e = receivedShares.get(j);
                   System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
                 }
                 // All shares received by now
@@ -695,7 +713,8 @@ public class Client implements Runnable
                 intermediateEntity.setConv(converged);
                 ArrayList<SharingEntity> intermediateConfirmed = new ArrayList<SharingEntity>();
 
-                for (SharingEntity en : receivedShares){
+                for(int j = 0; j < receivedShares.size(); j++){
+                    SharingEntity en = receivedShares.get(j);
                     if(en.getClusterLabel() == c.getId() && en.getIterationLabel() == itt){
                       intermediateEntity.addSharingEntity(en);
                       intermediateConfirmed.add(en);
@@ -720,14 +739,16 @@ public class Client implements Runnable
                 confirmedSharingEntities.add(intermediateEntity);
                 while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
 
-                for(SharingEntity se : receivedEntities) {
+                for(int j = 0; j < receivedEntities.size(); j++){
+                    SharingEntity se = receivedEntities.get(j);
                     if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
                         confirmedSharingEntities.add(se);
                 }
 
                 clusterData = new SharingEntity();
                 clusterData.setConv(converged);
-                for(SharingEntity se : confirmedSharingEntities) {
+                for(int j = 0; j < confirmedSharingEntities.size(); j++){
+                    SharingEntity se = confirmedSharingEntities.get(j);
                     if(se.getConv() == false)
                         converged = false;
                     clusterData.addSharingEntity(se);
@@ -996,12 +1017,25 @@ public class Client implements Runnable
       return uploadedData;
     }
 
+    public static byte[] serialize(Object obj) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ObjectOutputStream os = new ObjectOutputStream(out);
+        os.writeObject(obj);
+        return out.toByteArray();
+    }
+
+    public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream in = new ByteArrayInputStream(data);
+        ObjectInputStream is = new ObjectInputStream(in);
+        return is.readObject();
+    }
+
     public  void initializePartyTestingConnection(){
-        System.out.println(this.ID+": starting initialize");
+        System.out.println(ID+": starting initialize");
         Message mmsg;
-        this.algorithm = "Distributed (none)";
-        this.NUM_CLUSTERS = 3;
-        this.groupname = "testing_group";
+        algorithm = "Distributed (none)";
+        NUM_CLUSTERS = 3;
+        groupname = "testing_group";
 
 
         while (this.inGroup == false){
@@ -1072,9 +1106,7 @@ public class Client implements Runnable
                         client.filename = args[2];
                 client.initializePartyTestingConnection();
                 ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
-                System.out.println("kprototypes");
-                client.kPrototypes(entitiesFromFile);
-                System.out.println("Finished kprototypes");
+                client.SecretSharing(entitiesFromFile);
             }
         }
     }

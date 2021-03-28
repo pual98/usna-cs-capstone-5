@@ -35,7 +35,6 @@ public class Server {
             LOGGER.log(Level.INFO, "Server: New client request received. Creating a handler for the client.", s);
 
             // obtain input and output streams
-
             // Create a new handler object for handling this request.
             ClientHandler mtch = new ClientHandler(s);
 
@@ -58,8 +57,10 @@ class ClientHandler implements Runnable
 {
     Scanner scn = new Scanner(System.in);
     public String name;
-    volatile ObjectInputStream dis;
-    volatile ObjectOutputStream dos;
+//    volatile ObjectInputStream dis;
+//    volatile ObjectOutputStream dos;
+    volatile DataInputStream dis;
+    volatile DataOutputStream dos;
     volatile Socket s;
     boolean isloggedin;
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -73,10 +74,16 @@ class ClientHandler implements Runnable
     // ClientHandler class
     public synchronized void sendMessage(Message m) throws IOException{
         ClientHandler mc;
+        
+        byte[] yourBytes;
+        yourBytes = Client.serialize(m);
+
         for (int i = 0; i < Server.ar.size(); i++){
             mc = Server.ar.get(i);
             if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
-                mc.dos.writeObject(m);
+                mc.dos.writeInt(yourBytes.length);
+                mc.dos.flush();
+                mc.dos.write(yourBytes, 0, yourBytes.length);
                 mc.dos.flush();
                 break;
             }
@@ -262,14 +269,20 @@ class ClientHandler implements Runnable
     public synchronized void run() {
 
         try{
-            dos = new ObjectOutputStream(s.getOutputStream());
-            dis = new ObjectInputStream(s.getInputStream());
+//            dos = new ObjectOutputStream(s.getOutputStream());
+//            dis = new ObjectInputStream(s.getInputStream());
+            dos = new DataOutputStream(s.getOutputStream());
+            dis = new DataInputStream(s.getInputStream());
         }catch(IOException e) { System.exit(1); }
         Message received;
         while (true) {
             try {
-                // receive the string
-                received = (Message)dis.readObject();
+                int size = dis.readInt();
+                byte[] yourBytes = new byte[size];
+                dis.read(yourBytes);
+                received = (Message)Client.deserialize(yourBytes); 
+
+                //                received = (Message)dis.readObject();
                 if((received.msg).contains("new name id")){ // this will always be TRUE
                     this.name = received.msg.split(":")[1];
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
