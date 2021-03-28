@@ -25,7 +25,7 @@ public class Client implements Runnable
     public volatile DataInputStream dis;
     public volatile Socket s;
     public long bytesSent = 0;
-    public Scanner scn;
+
     public volatile ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
     public volatile ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
     public volatile ArrayList<EntityCluster> clusters = null;
@@ -72,7 +72,6 @@ public class Client implements Runnable
                 bufferedWriter.write(fileContent);
             } catch (IOException e) { }
         }
-        scn = new Scanner(System.in);
 
         try {
             // getting localhost ip
@@ -84,8 +83,8 @@ public class Client implements Runnable
             while (!s.isConnected()){}
 
             // obtaining input and out streams
-            dos = new DataOutputStream(s.getOutputStream());
-            dis = new DataInputStream(s.getInputStream());
+            dos = new DataOutputStream(new BufferedOutputStream(s.getOutputStream()));
+            dis = new DataInputStream(new BufferedInputStream(s.getInputStream()));
 
             LOGGER.log(Level.INFO, "Client requesting rename");
             System.out.flush();
@@ -105,7 +104,6 @@ public class Client implements Runnable
             dos.writeInt(yourBytes.length);
             dos.flush();
             dos.write(yourBytes,0, yourBytes.length);
-            //dos.writeObject(m);
             dos.flush();
             bytesSent = bytesSent + yourBytes.length;
         } catch (IOException e) {} 
@@ -117,9 +115,25 @@ public class Client implements Runnable
                 // https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
                 // read the message sent to this client
                 
+                while (dis.available() == 0){}
                 int size = dis.readInt();
                 byte[] yourBytes = new byte[size];
+
+                dis.mark(2*size);
+                int available = 0;
+                while (available < size){
+                    try{
+                        dis.readByte();
+                        available++;
+                    }catch (EOFException e){
+                        available = 0;
+                        dis.reset();
+                        dis.mark(2*size);
+                    }
+                }
+                dis.reset();
                 dis.readFully(yourBytes);
+
                 msg = (Message)deserialize(yourBytes);
 
                 JFrame f = new JFrame();
@@ -1040,13 +1054,13 @@ public class Client implements Runnable
         System.out.println(ID+": starting initialize");
         Message mmsg;
         algorithm = "Distributed (none)";
-        NUM_CLUSTERS = 3;
+        NUM_CLUSTERS = 4;
         groupname = "testing_group";
 
 
         while (this.inGroup == false){
             if (this.isCoordinator){
-                mmsg = new Message(22, "testing_group:3:Distributed (none)", this.getID(), 0);
+                mmsg = new Message(22, "testing_group:4:Distributed (none)", this.getID(), 0);
                 this.sendMessage(mmsg);
             }
             try{
@@ -1113,11 +1127,11 @@ public class Client implements Runnable
                 client.initializePartyTestingConnection();
                 ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
                 long startTime = System.nanoTime();
-                client.kPrototypes(entitiesFromFile);
+                client.DifferentialPrivacy(entitiesFromFile);
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime); 
                 duration = duration / 1000000;
-                System.out.println(ID+": duration (ms) = "+duration+", mb shared = "+ client.bytesSent);
+                System.out.println(ID+": duration (ms) = "+duration+", bytes shared = "+ client.bytesSent);
             }
         }
     }

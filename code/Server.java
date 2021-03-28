@@ -55,7 +55,6 @@ public class Server {
 // ClientHandler class
 class ClientHandler implements Runnable
 {
-    Scanner scn = new Scanner(System.in);
     public String name;
 //    volatile ObjectInputStream dis;
 //    volatile ObjectOutputStream dos;
@@ -66,7 +65,7 @@ class ClientHandler implements Runnable
     private Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // constructor
-    public ClientHandler(Socket s){//, ObjectInputStream dis, ObjectOutputStream dos) {
+    public ClientHandler(Socket s){
         this.s = s;
         this.isloggedin=true;
 
@@ -271,14 +270,29 @@ class ClientHandler implements Runnable
         try{
 //            dos = new ObjectOutputStream(s.getOutputStream());
 //            dis = new ObjectInputStream(s.getInputStream());
-            dos = new DataOutputStream(s.getOutputStream());
-            dis = new DataInputStream(s.getInputStream());
+            dos = new DataOutputStream(new BufferedOutputStream(s.getOutputStream()));
+            dis = new DataInputStream(new BufferedInputStream(s.getInputStream()));
         }catch(IOException e) { System.exit(1); }
         Message received;
         while (true) {
             try {
+                while (dis.available() == 0){}
                 int size = dis.readInt();
                 byte[] yourBytes = new byte[size];
+
+                dis.mark(2*size);
+                int available = 0;
+                while (available < size){
+                    try{
+                        dis.readByte();
+                        available++;
+                    }catch (EOFException e){
+                        available = 0;
+                        dis.reset();
+                        dis.mark(2*size);
+                    }
+                }
+                dis.reset();
                 dis.readFully(yourBytes);
                 received = (Message)Client.deserialize(yourBytes); 
 

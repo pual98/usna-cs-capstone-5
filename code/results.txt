@@ -1,0 +1,67 @@
+Kproto, file 1 2 3, 3 clusters
+3073: duration (ms) = 753, bytes shared = 9032
+2004: duration (ms) = 664, bytes shared = 12487
+6992: duration (ms) = 659, bytes shared = 11848
+
+Kproto, file 1 2 3, 4 clusters
+2389: duration (ms) = 650, bytes shared = 14429
+1059: duration (ms) = 860, bytes shared = 10929
+1865: duration (ms) = 1019, bytes shared = 14186
+
+Kproto, file 1 2 3, 5 clusters
+2988: duration (ms) = 1270, bytes shared = 17423
+4191: duration (ms) = 2185, bytes shared = 21369
+7444: duration (ms) = 1080, bytes shared = 22378
+
+Kproto, file 1 2 3, 6 clusters
+1642: duration (ms) = 1102, bytes shared = 24722
+2566: duration (ms) = 1478, bytes shared = 24186
+7009: duration (ms) = 1339, bytes shared = 19947
+
+Kproto, file 1 2 3, 7 clusters
+9760: duration (ms) = 1359, bytes shared = 20960
+7638: duration (ms) = 1012, bytes shared = 20915
+7124: duration (ms) = 1277, bytes shared = 17345
+
+Kproto, file 1 2 3, 8 clusters
+4072: duration (ms) = 2136, bytes shared = 31636
+6140: duration (ms) = 2238, bytes shared = 36657
+2713: duration (ms) = 1948, bytes shared = 37791
+
+SecretShare 3 clusters
+9546: duration (ms) = 1318, bytes shared = 20442
+9879: duration (ms) = 1078, bytes shared = 20442
+9320: duration (ms) = 1405, bytes shared = 21218
+
+SecretShare 4 clusters
+8065: duration (ms) = 1542, bytes shared = 27009
+2436: duration (ms) = 1737, bytes shared = 27931
+5184: duration (ms) = 1414, bytes shared = 27009
+
+SecretShare 5 clusters
+8582: duration (ms) = 2334, bytes shared = 33576
+9449: duration (ms) = 3056, bytes shared = 34441
+9394: duration (ms) = 1648, bytes shared = 33763
+
+SecretShare 6 clusters
+3977: duration (ms) = 2405, bytes shared = 41352
+1058: duration (ms) = 2186, bytes shared = 40143
+1887: duration (ms) = 2369, bytes shared = 40143
+
+SecretShare 7 clusters
+3488: duration (ms) = 2355, bytes shared = 48060
+519: duration (ms) = 2524, bytes shared = 46707
+8210: duration (ms) = 2279, bytes shared = 46710
+
+SecretShare 8 clusters
+8259: duration (ms) = 2535, bytes shared = 53277
+1020: duration (ms) = 2711, bytes shared = 53277
+2969: duration (ms) = 2958, bytes shared = 54768
+
+DiffPriva 3 clusters
+3476: duration (ms) = 1174, bytes shared = 26062
+8739: duration (ms) = 1293, bytes shared = 22622
+6660: duration (ms) = 1409, bytes shared = 25598
+
+DiffPriva 4 clusters
+
