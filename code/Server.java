@@ -23,7 +23,7 @@ public class Server {
     {
         // server is listening on port 1234
         ServerSocket ss = new ServerSocket(1234);
-        LOGGER.setLevel(Level.WARNING);
+        LOGGER.setLevel(Level.SEVERE);
 
         // running infinite loop for getting
         // client request
@@ -279,7 +279,7 @@ class ClientHandler implements Runnable
             try {
                 int size = dis.readInt();
                 byte[] yourBytes = new byte[size];
-                dis.read(yourBytes);
+                dis.readFully(yourBytes);
                 received = (Message)Client.deserialize(yourBytes); 
 
                 //                received = (Message)dis.readObject();

@@ -24,10 +24,8 @@ public class Client implements Runnable
     public volatile DataOutputStream dos;
     public volatile DataInputStream dis;
     public volatile Socket s;
-
-
+    public long bytesSent = 0;
     public Scanner scn;
-
     public volatile ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
     public volatile ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
     public volatile ArrayList<EntityCluster> clusters = null;
@@ -43,7 +41,7 @@ public class Client implements Runnable
     public final static int DIFFERENTIAL_PRIVACY = 1;
 
     public Client() {
-        LOGGER.setLevel(Level.WARNING);
+        LOGGER.setLevel(Level.SEVERE);
         boolean haveID = false;
         try{
             File myFile = new File(".config");
@@ -109,6 +107,7 @@ public class Client implements Runnable
             dos.write(yourBytes,0, yourBytes.length);
             //dos.writeObject(m);
             dos.flush();
+            bytesSent = bytesSent + yourBytes.length;
         } catch (IOException e) {} 
     }
     public  void run() {
@@ -119,9 +118,8 @@ public class Client implements Runnable
                 // read the message sent to this client
                 
                 int size = dis.readInt();
-
                 byte[] yourBytes = new byte[size];
-                dis.read(yourBytes);
+                dis.readFully(yourBytes);
                 msg = (Message)deserialize(yourBytes);
 
                 JFrame f = new JFrame();
@@ -176,7 +174,7 @@ public class Client implements Runnable
                 }else if(msg.type == 06){
                     ArrayList<String> mems = msg.members;
                     numMembersinGroup = mems.size();
-                    System.out.println(ID+": "+numMembersinGroup+" group mems "+mems.size());
+//                    System.out.println(ID+": "+numMembersinGroup+" group mems "+mems.size());
                     for(int i = 0; i < mems.size(); i++) {
                         int idToAdd = Integer.parseInt(mems.get(i));
                         if (!memIDs.contains(idToAdd)){
@@ -346,8 +344,8 @@ public class Client implements Runnable
                 clusterData.setConv(converged);
                 // sumlocal
                 for(int j = 0; j < dataset.size();j++){
-                    if(dataset.get(i).getAssignedCluster() == c.getId()) {
-                      clusterData.addEntity(dataset.get(i));
+                    if(dataset.get(j).getAssignedCluster() == c.getId()) {
+                      clusterData.addEntity(dataset.get(j));
                     }
                 }
 
@@ -391,7 +389,7 @@ public class Client implements Runnable
             centroid.setCluster(i);
             centroidPopup += centroid.toString()+"\n";
         }
-        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
+        // JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void assignRandomCluster(Entity en, ArrayList<EntityCluster> clusters, Random r) {
@@ -447,7 +445,7 @@ public class Client implements Runnable
 
             if(cluster != en.getAssignedCluster()) {
                 converged = false;
-                System.out.println("Entity: "+ en + " new assignment: "+cluster);
+//                System.out.println("Entity: "+ en + " new assignment: "+cluster);
             }
             en.setCluster(cluster);
         }
@@ -669,8 +667,8 @@ public class Client implements Runnable
                 clusterData.setClusterLabel(c.getId());
                 // sumlocal
                 for(int j = 0; j < dataset.size();j++){
-                    if(dataset.get(i).getAssignedCluster() == c.getId()) {
-                      clusterData.addEntity(dataset.get(i));
+                    if(dataset.get(j).getAssignedCluster() == c.getId()) {
+                      clusterData.addEntity(dataset.get(j));
                     }
                 }
 
@@ -701,10 +699,10 @@ public class Client implements Runnable
 
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
 
-                System.out.println("ID: "+ID+" Received:");
+//                System.out.println("ID: "+ID+" Received:");
                 for (int j = 0; j < receivedShares.size(); j++){
                     SharingEntity e = receivedShares.get(j);
-                  System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
+//                  System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
                 }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
@@ -720,7 +718,7 @@ public class Client implements Runnable
                       intermediateConfirmed.add(en);
                     }
                 }
-                System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
+//                System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
 
 
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
@@ -784,7 +782,7 @@ public class Client implements Runnable
             centroid.setCluster(i);
             centroidPopup += centroid.toString()+"\n";
         }
-        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
+//        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public  void DifferentialPrivacy(ArrayList<Entity> dataset) {
@@ -914,9 +912,9 @@ public class Client implements Runnable
 
                 while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
 
-                System.out.println("ID: "+ID+" Received:");
+//                System.out.println("ID: "+ID+" Received:");
                 for(SharingEntity e : receivedShares) {
-                  System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
+//                  System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
                 }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
@@ -932,7 +930,7 @@ public class Client implements Runnable
                     }
                 }
 
-                System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
+//                System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
 
 
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
@@ -996,7 +994,7 @@ public class Client implements Runnable
             centroid.setCluster(i);
             centroidPopup += centroid.toString()+"\n";
         }
-        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
+//        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
     public static int countFromIteration(ArrayList<SharingEntity> se, int itt, int cl){
         int count = 0;
@@ -1019,15 +1017,23 @@ public class Client implements Runnable
 
     public static byte[] serialize(Object obj) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        out.flush();
         ObjectOutputStream os = new ObjectOutputStream(out);
         os.writeObject(obj);
-        return out.toByteArray();
+        os.flush();
+        byte[] toReturn = out.toByteArray();
+        out.close();
+        os.close();
+        return toReturn;
     }
 
     public static Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(data);
         ObjectInputStream is = new ObjectInputStream(in);
-        return is.readObject();
+        Object toReturn = is.readObject();
+        in.close();
+        is.close();
+        return toReturn;
     }
 
     public  void initializePartyTestingConnection(){
@@ -1106,7 +1112,12 @@ public class Client implements Runnable
                         client.filename = args[2];
                 client.initializePartyTestingConnection();
                 ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
-                client.SecretSharing(entitiesFromFile);
+                long startTime = System.nanoTime();
+                client.kPrototypes(entitiesFromFile);
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime); 
+                duration = duration / 1000000;
+                System.out.println(ID+": duration (ms) = "+duration+", mb shared = "+ client.bytesSent);
             }
         }
     }

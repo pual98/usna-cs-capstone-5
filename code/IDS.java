@@ -17,7 +17,7 @@ import java.util.logging.*;
 public class IDS {
     private static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static void main(String[] args) {
-        LOGGER.setLevel(Level.WARNING);
+        LOGGER.setLevel(Level.SEVERE);
 
         boolean haveID = false;
         int ID=0;
