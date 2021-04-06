@@ -108,6 +108,10 @@ public class Client implements Runnable
             bytesSent = bytesSent + yourBytes.length;
         } catch (IOException e) {} 
     }
+    public void logout(){
+        Message m = new Message(0,"logout",ID,0);
+        sendMessage(m);
+    }
     public  void run() {
         Message msg;
         while (true) {
@@ -1052,24 +1056,23 @@ public class Client implements Runnable
         return toReturn;
     }
 
-    public  void initializePartyTestingConnection(){
-        System.out.println(ID+": starting initialize");
+    public  void initializePartyTestingConnection(int clusters, String algorithm){
+//        System.out.println(ID+": starting initialize");
         Message mmsg;
-        algorithm = "Distributed (none)";
-        NUM_CLUSTERS = 8;
-        groupname = "testing_group";
-
+        //algorithm = "Distributed (none)";
+        NUM_CLUSTERS = clusters;
+        groupname = "testing_group"+algorithm+clusters;
 
         while (this.inGroup == false){
             if (this.isCoordinator){
-                mmsg = new Message(22, "testing_group:8:Distributed (none)", this.getID(), 0);
+                mmsg = new Message(22, groupname+":"+clusters+":"+algorithm, this.getID(), 0);
                 this.sendMessage(mmsg);
             }
             try{
                 Thread.sleep(300);
             }catch (InterruptedException e) {}
             if (!this.isCoordinator){
-                mmsg = new Message(23, "testing_group:"+this.getID(), this.getID(), 0);
+                mmsg = new Message(23, groupname+":"+this.getID(), this.getID(), 0);
                 this.sendMessage(mmsg);
             }
             try{
@@ -1077,13 +1080,13 @@ public class Client implements Runnable
             }catch (InterruptedException e) {}
         }
         while(this.numMembersinGroup < 3){
-            mmsg = new Message(05,"testing_group", ID, 0);
+            mmsg = new Message(05,groupname, ID, 0);
             this.sendMessage(mmsg);
             try{
                 Thread.sleep(100);
             }catch (InterruptedException e) {}
         }
-        System.out.println(ID+": finished initialize");
+//        System.out.println(ID+": finished initialize");
     }
     public ArrayList<Entity> getEntitiesFromFile(String filename){
         ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
@@ -1116,24 +1119,41 @@ public class Client implements Runnable
         Thread clientThread = new Thread(client);
         clientThread.start();
 
+        String algorithm = "Distributed (none)";
         // Client -testing -host -file [filename]
-        if (args.length > 1){
-            if (args[0].contains("-testing")){
-                if (args[1].contains("-host")){
-                    client.isCoordinator = true;
-                    if (args[2].contains("-file")){
-                        client.filename = args[3];
+        for (int i = 3; i < 9; i++){
+            for (int j = 0; j < 3; j++){
+                if (j == 0)
+                    algorithm = "Distributed (none)";
+                else if (j == 1)
+                    algorithm = "Secret Sharing";
+                else if (j == 2 )
+                    algorithm = "Differential Privacy";
+                if (args.length > 1){
+                    if (args[0].contains("-testing")){
+                        if (args[1].contains("-host")){
+                            client.isCoordinator = true;
+                            if (args[2].contains("-file")){
+                                client.filename = args[3];
+                            }
+                        } else if (args[1].contains("-file"))
+                            client.filename = args[2];
+                        client.initializePartyTestingConnection(i, algorithm);
+                        ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
+                        long startTime = System.nanoTime();
+                        client.DifferentialPrivacy(entitiesFromFile);
+                        long endTime = System.nanoTime();
+                        long duration = (endTime - startTime); 
+                        duration = duration / 1000000;
+                        System.out.println(algorithm+"\t"+i+"\tduration (ms) =\t"+duration+"\tbytes shared =\t"+ client.bytesSent);
+                        System.out.flush();
                     }
-                } else if (args[1].contains("-file"))
-                        client.filename = args[2];
-                client.initializePartyTestingConnection();
-                ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
-                long startTime = System.nanoTime();
-                client.DifferentialPrivacy(entitiesFromFile);
-                long endTime = System.nanoTime();
-                long duration = (endTime - startTime); 
-                duration = duration / 1000000;
-                System.out.println(ID+": duration (ms) = "+duration+", bytes shared = "+ client.bytesSent);
+                }
+                clientThread.stop();
+                client.logout();
+                client = new Client();
+                clientThread = new Thread(client);
+                clientThread.start();
             }
         }
     }

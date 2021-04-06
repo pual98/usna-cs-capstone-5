@@ -237,7 +237,9 @@ class ClientHandler implements Runnable
                 Server.groups.put(groupname,new ArrayList<String>());
                 Server.groups.get(groupname).add(Integer.toString(received.source));
                 Message msg = new Message(24, Integer.toString(received.source), 0, received.source);
-                sendMessage(msg);
+                try{
+                    sendMessage(msg);
+                } catch (SocketException sce) {}
             }
           return;
         } else if(received.type == 23) {
@@ -304,7 +306,10 @@ class ClientHandler implements Runnable
                     LOGGER.log(Level.INFO, "Server: client id initialied: "+ this.name);
                 }else if((received.msg).equals("logout")){
                     this.isloggedin=false;
-                    break;
+                    dos.close();
+                    dis.close();
+                    s.close();
+                    return;
                 } else {
                     this.messageHandler(received);
                 }
