@@ -1054,13 +1054,13 @@ public class Client implements Runnable
         System.out.println(ID+": starting initialize");
         Message mmsg;
         algorithm = "Distributed (none)";
-        NUM_CLUSTERS = 4;
+        NUM_CLUSTERS = 8;
         groupname = "testing_group";
 
 
         while (this.inGroup == false){
             if (this.isCoordinator){
-                mmsg = new Message(22, "testing_group:4:Distributed (none)", this.getID(), 0);
+                mmsg = new Message(22, "testing_group:8:Distributed (none)", this.getID(), 0);
                 this.sendMessage(mmsg);
             }
             try{

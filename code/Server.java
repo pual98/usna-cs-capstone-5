@@ -79,12 +79,14 @@ class ClientHandler implements Runnable
 
         for (int i = 0; i < Server.ar.size(); i++){
             mc = Server.ar.get(i);
-            if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
-                mc.dos.writeInt(yourBytes.length);
-                mc.dos.flush();
-                mc.dos.write(yourBytes, 0, yourBytes.length);
-                mc.dos.flush();
-                break;
+            synchronized(mc.dos){
+                if (m.dest == Integer.parseInt(mc.name) && mc.isloggedin==true) {
+                    mc.dos.writeInt(yourBytes.length);
+                    mc.dos.flush();
+                    mc.dos.write(yourBytes, 0, yourBytes.length);
+                    mc.dos.flush();
+                    break;
+                }
             }
         }
     }
