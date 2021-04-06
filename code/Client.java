@@ -1013,11 +1013,13 @@ public class Client implements Runnable
     public static int countFromIteration(ArrayList<SharingEntity> se, int itt, int cl){
         int count = 0;
         SharingEntity e;
-        for (int i = 0; i < se.size(); i++){
-            e = se.get(i);
-            if (e.getIterationLabel() == itt && e.getClusterLabel()==cl)
-                count++;
-        }
+        try{
+            for (int i = 0; i < se.size(); i++){
+                e = se.get(i);
+                if (e.getIterationLabel() == itt && e.getClusterLabel()==cl)
+                    count++;
+            }
+        } catch (NullPointerException npe) { return 0; }
         return count;
     }
 
