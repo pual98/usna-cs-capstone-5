@@ -64,4 +64,7 @@ DiffPriva 3 clusters
 6660: duration (ms) = 1409, bytes shared = 25598
 
 DiffPriva 4 clusters
+6415: duration (ms) = 2810, bytes shared = 29386
+2134: duration (ms) = 2306, bytes shared = 33098
+9525: duration (ms) = 2919, bytes shared = 32659
 
