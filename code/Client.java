@@ -1141,11 +1141,16 @@ public class Client implements Runnable
                         client.initializePartyTestingConnection(i, algorithm);
                         ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
                         long startTime = System.nanoTime();
-                        client.DifferentialPrivacy(entitiesFromFile);
+                        if (j == 0)
+                            client.kPrototypes(entitiesFromFile);
+                        else if (j == 1)
+                            client.SecretSharing(entitiesFromFile);
+                        else if (j == 2 )
+                            client.DifferentialPrivacy(entitiesFromFile);
                         long endTime = System.nanoTime();
                         long duration = (endTime - startTime); 
                         duration = duration / 1000000;
-                        System.out.println(algorithm+"\t"+i+"\tduration (ms) =\t"+duration+"\tbytes shared =\t"+ client.bytesSent);
+                        System.out.println(algorithm+","+i+",duration (ms) =,"+duration+",bytes shared =,"+ client.bytesSent);
                         System.out.flush();
                     }
                 }
