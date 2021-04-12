@@ -373,7 +373,8 @@ public class Client implements Runnable
                 msg.setEntity(clusterData);
                 LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
-                while (countFromIteration(receivedEntities, itt, c.getId()) < 2){ }
+//                while (countFromIteration(receivedEntities, itt, c.getId()) < 2){ }
+                while (countFromIteration(receivedEntities, itt, c.getId()) < memIDs.size()-1){ }
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
                 SharingEntity se;
                 for (int j = 0; j < receivedEntities.size(); j++){
@@ -715,7 +716,8 @@ public class Client implements Runnable
                     assignedShare++;
                 }
 
-                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
+//                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
+                while (countFromIteration(receivedShares, itt, c.getId()) < memIDs.size()){ }
 
 //                System.out.println("ID: "+ID+" Received:");
                 for (int j = 0; j < receivedShares.size(); j++){
@@ -753,7 +755,8 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
+//                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
+                while (countFromIteration(receivedEntities,itt, c.getId()) < memIDs.size()-1){ }
 
                 for(int j = 0; j < receivedEntities.size(); j++){
                     SharingEntity se = receivedEntities.get(j);
@@ -928,7 +931,8 @@ public class Client implements Runnable
                     assignedShare++;
                 }
 
-                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
+//                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
+                while (countFromIteration(receivedShares, itt, c.getId()) < memIDs.size()){ }
 
 //                System.out.println("ID: "+ID+" Received:");
                 for(SharingEntity e : receivedShares) {
@@ -967,7 +971,8 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
+//                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
+                while (countFromIteration(receivedEntities,itt, c.getId()) < memIDs.size()-1){ }
 
                 for(SharingEntity se : receivedEntities) {
                     if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
