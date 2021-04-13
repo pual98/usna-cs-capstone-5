@@ -24,7 +24,7 @@ public class Client implements Runnable
     public volatile DataOutputStream dos;
     public volatile DataInputStream dis;
     public volatile Socket s;
-    public long bytesSent = 0;
+    public volatile long bytesSent = 0;
 
     public volatile ArrayList<SharingEntity> receivedEntities = new ArrayList<SharingEntity>();
     public volatile ArrayList<SharingEntity> receivedShares = new ArrayList<SharingEntity>();
@@ -373,7 +373,7 @@ public class Client implements Runnable
                 msg.setEntity(clusterData);
                 LOGGER.log(Level.WARNING, "ID: " + ID + " iteration " + itt + " cluster " + c.getId() + " sending " + clusterData.toEntity() );
                 sendMessage(msg);
-//                while (countFromIteration(receivedEntities, itt, c.getId()) < 2){ }
+
                 while (countFromIteration(receivedEntities, itt, c.getId()) < memIDs.size()-1){ }
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
                 SharingEntity se;
@@ -650,8 +650,8 @@ public class Client implements Runnable
             if(isCoordinator)
             LOGGER.log(Level.WARNING, "ID: START OF ITERATION "+itt+"\n");
             int clabel = 0;
-            for(int i = 0; i< clusters.size(); i++){
-                clusters.get(i).setId(clabel);
+            for(EntityCluster c: clusters){
+                c.setId(clabel);
                 clabel++;
             }
             for (int i = 0; i < NUM_CLUSTERS; i++)
@@ -698,8 +698,7 @@ public class Client implements Runnable
                 ArrayList<SharingEntity> shares = clusterData.makeShares(numMembersinGroup, new Random());
 
                 int assignedShare = 0;
-                for (int j = 0; j<memIDs.size(); j++){
-                    int id = memIDs.get(j);
+                for (int id : memIDs){
                     if (id == ID) {
                       receivedShares.add(shares.get(assignedShare));
                     }
@@ -752,8 +751,7 @@ public class Client implements Runnable
 
                 clusterData = new SharingEntity();
                 clusterData.setConv(converged);
-                for(int j = 0; j < confirmedSharingEntities.size(); j++){
-                    SharingEntity se = confirmedSharingEntities.get(j);
+                for(SharingEntity se : confirmedSharingEntities) {
                     if(se.getConv() == false)
                         converged = false;
                     clusterData.addSharingEntity(se);
