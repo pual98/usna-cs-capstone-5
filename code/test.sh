@@ -62,6 +62,10 @@ declare -a computerList=(
 "$USERNAME@lnx1065864govt.academy.usna.edu"
 )
 
+#"$USERNAME@lnx1065866govt.academy.usna.edu"
+#"$USERNAME@lnx1065868govt.academy.usna.edu"
+#"$USERNAME@lnx1065870govt.academy.usna.edu"
+
 # If this program received SIGINT, SIGTERM, EXIT, then run the kill_sequence
 # function
 trap "killall ssh; kill_sequence" SIGINT SIGTERM EXIT

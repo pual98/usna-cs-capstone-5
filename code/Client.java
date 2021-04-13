@@ -105,7 +105,7 @@ public class Client implements Runnable
             dos.flush();
             dos.write(yourBytes,0, yourBytes.length);
             dos.flush();
-            bytesSent = bytesSent + yourBytes.length;
+            this.bytesSent = this.bytesSent + yourBytes.length;
         } catch (IOException e) {} 
     }
     public void logout(){
