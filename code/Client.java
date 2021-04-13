@@ -650,7 +650,7 @@ public class Client implements Runnable
             if(isCoordinator)
             LOGGER.log(Level.WARNING, "ID: START OF ITERATION "+itt+"\n");
             int clabel = 0;
-            for(int i = 0; i<clusters.size(); i++){
+            for(int i = 0; i< clusters.size(); i++){
                 clusters.get(i).setId(clabel);
                 clabel++;
             }
@@ -659,8 +659,7 @@ public class Client implements Runnable
 
             converged = true;
 
-            for(int i = 0; i < dataset.size(); i++){
-                Entity en = dataset.get(i);
+            for(Entity en : dataset) {
                 //assign to cluster
                 if(itt == 0){
                     assignRandomCluster(en,this.clusters,r);
@@ -673,21 +672,19 @@ public class Client implements Runnable
                         converged = false;
                 }
             }
-
             //for each cluster:
             ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
-            for(int i = 0; i < this.clusters.size(); i++)
+            for(EntityCluster c : this.clusters)
             {
-                EntityCluster c = this.clusters.get(i);
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
 
                 clusterData.setIterationLabel(itt);
                 clusterData.setClusterLabel(c.getId());
                 // sumlocal
-                for(int j = 0; j < dataset.size();j++){
-                    if(dataset.get(j).getAssignedCluster() == c.getId()) {
-                      clusterData.addEntity(dataset.get(j));
+                for(Entity en : dataset){
+                    if(en.getAssignedCluster() == c.getId()) {
+                      clusterData.addEntity(en);
                     }
                 }
 
@@ -716,14 +713,8 @@ public class Client implements Runnable
                     assignedShare++;
                 }
 
-//                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
                 while (countFromIteration(receivedShares, itt, c.getId()) < memIDs.size()){ }
 
-//                System.out.println("ID: "+ID+" Received:");
-                for (int j = 0; j < receivedShares.size(); j++){
-                    SharingEntity e = receivedShares.get(j);
-//                  System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
-                }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
 
@@ -731,15 +722,12 @@ public class Client implements Runnable
                 intermediateEntity.setConv(converged);
                 ArrayList<SharingEntity> intermediateConfirmed = new ArrayList<SharingEntity>();
 
-                for(int j = 0; j < receivedShares.size(); j++){
-                    SharingEntity en = receivedShares.get(j);
+                for (SharingEntity en : receivedShares){
                     if(en.getClusterLabel() == c.getId() && en.getIterationLabel() == itt){
                       intermediateEntity.addSharingEntity(en);
                       intermediateConfirmed.add(en);
                     }
                 }
-//                System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
-
 
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
 
@@ -755,11 +743,9 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-//                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
                 while (countFromIteration(receivedEntities,itt, c.getId()) < memIDs.size()-1){ }
 
-                for(int j = 0; j < receivedEntities.size(); j++){
-                    SharingEntity se = receivedEntities.get(j);
+                for(SharingEntity se : receivedEntities) {
                     if(se.getClusterLabel() == c.getId() && se.getIterationLabel() == itt)
                         confirmedSharingEntities.add(se);
                 }
@@ -781,7 +767,6 @@ public class Client implements Runnable
                 receivedEntities.removeAll(confirmedSharingEntities);
                 receivedShares.removeAll(intermediateConfirmed);
                 LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
-                // if (isCoordinator)
                 LOGGER.log(Level.WARNING, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
             }
             if (isCoordinator)
@@ -803,10 +788,13 @@ public class Client implements Runnable
             centroid.setCluster(i);
             centroidPopup += centroid.toString()+"\n";
         }
-//        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public  void DifferentialPrivacy(ArrayList<Entity> dataset) {
+        for(int i = 0; i < dataset.size(); i++){
+          uploadedData.add(dataset.get(i));
+        }
+
         JFrame f = new JFrame();
         /* if coordinator then choose starting centroids, distribute starting cent, sigstart*/
         LOGGER.log(Level.WARNING, ID+": is COORDINATOR");
@@ -931,13 +919,8 @@ public class Client implements Runnable
                     assignedShare++;
                 }
 
-//                while (countFromIteration(receivedShares, itt, c.getId()) < 3){ }
                 while (countFromIteration(receivedShares, itt, c.getId()) < memIDs.size()){ }
 
-//                System.out.println("ID: "+ID+" Received:");
-                for(SharingEntity e : receivedShares) {
-//                  System.out.println(e.toEntity().toString() + " with countShare: "+e.getCountShare());
-                }
                 // All shares received by now
                 LOGGER.log(Level.INFO, "ID: " + ID + " received 3 shares (including own)");
 
@@ -951,9 +934,6 @@ public class Client implements Runnable
                       intermediateConfirmed.add(en);
                     }
                 }
-
-//                System.out.println("ID: "+ID+" has countShare = "+intermediateEntity.getCountShare() + "\n intermediateEntity = "+intermediateEntity.toEntity()+"\n");
-
 
                 ArrayList<SharingEntity> confirmedSharingEntities = new ArrayList<SharingEntity>();
 
@@ -971,7 +951,6 @@ public class Client implements Runnable
                 sendMessage(msg);
 
                 confirmedSharingEntities.add(intermediateEntity);
-//                while (countFromIteration(receivedEntities,itt, c.getId()) < 2){ }
                 while (countFromIteration(receivedEntities,itt, c.getId()) < memIDs.size()-1){ }
 
                 for(SharingEntity se : receivedEntities) {
@@ -995,7 +974,6 @@ public class Client implements Runnable
                 receivedEntities.removeAll(confirmedSharingEntities);
                 receivedShares.removeAll(intermediateConfirmed);
                 LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
-                // if (isCoordinator)
                 LOGGER.log(Level.WARNING, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
             }
             if (isCoordinator)
@@ -1017,7 +995,6 @@ public class Client implements Runnable
             centroid.setCluster(i);
             centroidPopup += centroid.toString()+"\n";
         }
-//        JOptionPane.showMessageDialog(null, centroidPopup, "Cluster Centroids", JOptionPane.INFORMATION_MESSAGE);
     }
     public static int countFromIteration(ArrayList<SharingEntity> se, int itt, int cl){
         int count = 0;
