@@ -325,6 +325,7 @@ public class SharingEntity implements Serializable
 
   public ArrayList<Integer> getFrequencies(){ 
     ArrayList<Integer> modeKeys = KMode.modes(modeMap);
+    System.out.println("modeKeys: " + modeKeys);
     ArrayList<Integer> frequencies = new ArrayList<Integer>(4);
     for(int k=0; k < 4 ; k++)
       frequencies.add(0) ;  
