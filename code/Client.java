@@ -324,7 +324,7 @@ public class Client implements Runnable
         // create array of sharingentity //
         clusterEntity = new ArrayList<SharingEntity>(NUM_CLUSTERS);
         for(int i=0; i < NUM_CLUSTERS; i++){
-            clusterEntity.add(new SharingEntity());
+            clusterEntity.add(new SharingEntity()) ;
         }
 
         while (this.clusters == null){ }
@@ -647,6 +647,12 @@ public class Client implements Runnable
             sendMessage(msg);
         }
 
+        // create array of sharingentity //
+        clusterEntity = new ArrayList<SharingEntity>(NUM_CLUSTERS);
+        for(int i=0; i < NUM_CLUSTERS; i++){
+            clusterEntity.add(new SharingEntity()) ;
+        }
+
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){ }
 
@@ -824,6 +830,12 @@ public class Client implements Runnable
             sendMessage(msg);
         }
 
+        // create array of sharingentity //
+        clusterEntity = new ArrayList<SharingEntity>(NUM_CLUSTERS);
+        for(int i=0; i < NUM_CLUSTERS; i++){
+            clusterEntity.add(new SharingEntity()) ;
+        }
+        
         // Wait to receive the clusters from the coordinator
         while (this.clusters == null){ }
 
@@ -1106,14 +1118,29 @@ public class Client implements Runnable
 
     }
 
+    public ArrayList<ArrayList<Integer>> getFrequencies(){
+        ArrayList<ArrayList<Integer>> freq = new ArrayList<ArrayList<Integer>>(NUM_CLUSTERS);
+        for(int i=0; i < NUM_CLUSTERS; i++){
+            ArrayList<Integer> clusterFreq = clusterEntity.get(i).getFrequencies();
+            freq.add(clusterFreq) ;
+        }
+        return freq;
+    }
+
     public static void main(String args[]) throws UnknownHostException, IOException {
         Client client = new Client();
         Thread clientThread = new Thread(client);
         clientThread.start();
 
+        // Create file to save frequencies //
+        BufferedWriter bw = null;
+        try{
+            bw = new BufferedWriter(new FileWriter("frequencies.txt"));
+        }catch(IOException e){;}
+
         String algorithm = "Distributed (none)";
         // Client -testing -host -file [filename]
-        for (int i = 3; i < 9; i++){
+        for (int i = 3; i < 5; i++){
             for (int j = 0; j < 3; j++){
                 if (j == 0)
                     algorithm = "Distributed (none)";
@@ -1142,8 +1169,16 @@ public class Client implements Runnable
                         long endTime = System.nanoTime();
                         long duration = (endTime - startTime); 
                         duration = duration / 1000000;
-                        System.out.println(algorithm+","+i+",duration (ms) =,"+duration+",bytes shared =,"+ client.bytesSent);
-                        System.out.flush();
+                        //System.out.println(algorithm+","+i+",duration (ms) =,"+duration+",bytes shared =,"+ client.bytesSent);
+                        //System.out.flush();
+
+                        //write down frequencies //
+                        if(client.getCoordinatorStatus()){
+                            String header = "Algorithm: "+ algorithm + " Clusters: " + String.valueOf(i) ; 
+                            System.out.println(header);
+                            ArrayList<ArrayList<Integer>> frequencies = client.getFrequencies();
+                            System.out.println("frequencies = " + frequencies);
+                        } 
                     }
                 }
                 clientThread.stop();

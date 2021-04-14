@@ -323,7 +323,24 @@ public class SharingEntity implements Serializable
     return ret;
   }
 
-  public ArrayList<Integer> getFrequencies(){ return }
+  public ArrayList<Integer> getFrequencies(){ 
+    ArrayList<Integer> modeKeys = KMode.modes(modeMap);
+    ArrayList<Integer> frequencies = new ArrayList<Integer>(4);
+    for(int k=0; k < 4 ; k++)
+      frequencies.add(0) ;  
+    
+    // find key (mode) in map and get frequency //
+    for(int i=0; i < modeMap.size(); i++){
+      HashMap<Integer,Integer> hm = modeMap.get(i);
+      for(int j=0; j < modeKeys.size(); j++){
+        int mode = modeKeys.get(j);
+        if(hm.containsKey(mode)){
+          frequencies.set(j, hm.get(mode));
+        }
+      }      
+    }
+    return frequencies ;
+  }
   public static void main(String[] args)
   {
     System.out.println("testing share splitting");
