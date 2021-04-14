@@ -40,6 +40,9 @@ public class Client implements Runnable
     public final static int SECRET_SHARE = 1;
     public final static int DIFFERENTIAL_PRIVACY = 1;
 
+    // for purposes of calculating MSE //
+    public ArrayList<SharingEntity> clusterEntity  ;
+    
     public Client() {
         LOGGER.setLevel(Level.SEVERE);
         boolean haveID = false;
@@ -317,6 +320,12 @@ public class Client implements Runnable
             msg.setClusters(this.clusters);
             sendMessage(msg);
         }
+        
+        // create array of sharingentity //
+        clusterEntity = new ArrayList<SharingEntity>(NUM_CLUSTERS);
+        for(int i=0; i < NUM_CLUSTERS; i++){
+            clusterEntity.add(new SharingEntity());
+        }
 
         while (this.clusters == null){ }
 
@@ -391,6 +400,9 @@ public class Client implements Runnable
                 c = new EntityCluster(clusterData.toEntity(), c.getId());
                 nc.add(c);
                 receivedEntities.removeAll(confirmedSharingEntities);
+
+                // save copy of sharing entity //
+                clusterEntity.set(i, clusterData); 
             }
             this.clusters = nc;
         }

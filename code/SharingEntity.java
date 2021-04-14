@@ -323,6 +323,7 @@ public class SharingEntity implements Serializable
     return ret;
   }
 
+  public ArrayList<Integer> getFrequencies(){ return }
   public static void main(String[] args)
   {
     System.out.println("testing share splitting");
