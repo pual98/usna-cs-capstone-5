@@ -42,6 +42,7 @@ public class Client implements Runnable
 
     // for purposes of calculating MSE //
     public ArrayList<SharingEntity> clusterEntity  ;
+    private double epsilon = 1.0 ;
     
     public Client() {
         LOGGER.setLevel(Level.SEVERE);
@@ -494,8 +495,7 @@ public class Client implements Runnable
         // Based on max port number
         Random rand = new Random();
         double p = 1/2;
-        double epsilon = 1;
-        double q = 1/(java.lang.Math.exp(epsilon) + 1);
+        double q = 1/(java.lang.Math.exp(this.epsilon) + 1);
         if (vector.get(c) == 1)
             if(rand.nextFloat() <= p)
                 vector.put(c, 0);
@@ -503,8 +503,7 @@ public class Client implements Runnable
     }
     public int decodeHash(ArrayList<HashMap<Integer,Integer>> vectorAggregate, int c){
         double p = 1/2;
-        double epsilon = 1;
-        double q = 1/(java.lang.Math.exp(epsilon) + 1);
+        double q = 1/(java.lang.Math.exp(this.epsilon) + 1);
 
         int count_vPrime = 0;
         for (HashMap<Integer,Integer> hm : vectorAggregate){
@@ -535,8 +534,7 @@ public class Client implements Runnable
     public int[] perturb(int[] vector){
         Random rand = new Random();
         double p = 1/2;
-        double epsilon = 1;
-        double q = 1/(java.lang.Math.exp(epsilon) + 1);
+        double q = 1/(java.lang.Math.exp(this.epsilon) + 1);
         for (int i = 0; i < vector.length; i++)
             if (vector[i] == 1){
                 if(rand.nextFloat() <= p)
@@ -550,8 +548,7 @@ public class Client implements Runnable
         if (c >= 65535)
             return 1;
         double p = 1/2;
-        double epsilon = 1;
-        double q = 1/(java.lang.Math.exp(epsilon) + 1);
+        double q = 1/(java.lang.Math.exp(this.epsilon) + 1);
 
         int count_vPrime = 0;
         for (int[] v : vectorAggregate){
@@ -692,8 +689,9 @@ public class Client implements Runnable
             }
             //for each cluster:
             ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
-            for(EntityCluster c : this.clusters)
+            for(int i=0; i < this.clusters.size(); i++)
             {
+                EntityCluster c = this.clusters.get(i);
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
 
@@ -784,6 +782,9 @@ public class Client implements Runnable
                 receivedShares.removeAll(intermediateConfirmed);
                 LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
                 LOGGER.log(Level.WARNING, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
+                
+                // save copy of sharing entity //
+                clusterEntity.set(i, clusterData);                 
             }
             if (isCoordinator)
             LOGGER.log(Level.WARNING, "ID: END OF ITERATION "+itt+"\n\n\n");
@@ -876,8 +877,9 @@ public class Client implements Runnable
 
             //for each cluster:
             ArrayList<EntityCluster> nc = new ArrayList<EntityCluster>();
-            for(EntityCluster c : this.clusters)
+            for(int i=0; i < this.clusters.size(); i++)
             {
+                EntityCluster c = this.clusters.get(i) ;
                 SharingEntity clusterData = new SharingEntity();
                 clusterData.setConv(converged);
 
@@ -902,7 +904,7 @@ public class Client implements Runnable
                         ArrayList<HashMap<Integer,Integer>> toAdd = new ArrayList<HashMap<Integer,Integer>>();
 
                         int number = m.get(key);
-                        for (int i = 0; i < number; i++){
+                        for (int j = 0; j< number; j++){
                             //int vector[] = unaryEncode(key);
                             //vector = perturb(vector);
                             //toAdd.add(vector);
@@ -997,6 +999,9 @@ public class Client implements Runnable
                 receivedShares.removeAll(intermediateConfirmed);
                 LOGGER.log(Level.INFO, "ID: " + ID + " completed one revolution");
                 LOGGER.log(Level.WARNING, "ID: " + ID + " final centroid val: "+ c.getCentroid().toString() + " iteration = "+itt);
+                
+                // save copy of sharing entity //
+                clusterEntity.set(i, clusterData); 
             }
             if (isCoordinator)
             LOGGER.log(Level.WARNING, "ID: END OF ITERATION "+itt+"\n\n\n");
@@ -1060,12 +1065,13 @@ public class Client implements Runnable
         return toReturn;
     }
 
-    public  void initializePartyTestingConnection(int clusters, String algorithm){
+    public  void initializePartyTestingConnection(int clusters, String algorithm, double epsi){
 //        System.out.println(ID+": starting initialize");
         Message mmsg;
         //algorithm = "Distributed (none)";
         NUM_CLUSTERS = clusters;
         groupname = "testing_group"+algorithm+clusters;
+        this.epsilon = epsi ;
 
         while (this.inGroup == false){
             if (this.isCoordinator){
@@ -1092,6 +1098,7 @@ public class Client implements Runnable
         }
 //        System.out.println(ID+": finished initialize");
     }
+    
     public ArrayList<Entity> getEntitiesFromFile(String filename){
         ArrayList<Entity> entitiesFromFile = new ArrayList<Entity>();
         try{
@@ -1127,11 +1134,25 @@ public class Client implements Runnable
         return freq;
     }
 
+    public ArrayList<ArrayList<Integer>> getDiffFrequencies(){
+        ArrayList<ArrayList<Integer>> freq = new ArrayList<ArrayList<Integer>>(NUM_CLUSTERS);
+        int[][] mode = {{2010935, 80, 55845, 1},
+                            {2013659, 443, 445, 1},
+                            {2003068, 3859, 80, 1}};
+        freq.add(clusterEntity.get(0).getFrequencies(mode[0]));
+        freq.add(clusterEntity.get(1).getFrequencies(mode[1]));
+        freq.add(clusterEntity.get(2).getFrequencies(mode[2]));
+        return freq;
+    }
+
+
     public static void main(String args[]) throws UnknownHostException, IOException {
         Client client = new Client();
         Thread clientThread = new Thread(client);
         clientThread.start();
-
+        
+        // epsilon values //
+        double [] epsilon = {0.5, 1, 2, 5, 10, 20};
         // Create file to save frequencies //
         BufferedWriter bw = null;
         try{
@@ -1140,7 +1161,7 @@ public class Client implements Runnable
 
         String algorithm = "Distributed (none)";
         // Client -testing -host -file [filename]
-        for (int i = 3; i < 5; i++){
+        for (int i = 0; i < epsilon.length; i++){
             for (int j = 0; j < 3; j++){
                 if (j == 0)
                     algorithm = "Distributed (none)";
@@ -1157,7 +1178,7 @@ public class Client implements Runnable
                             }
                         } else if (args[1].contains("-file"))
                             client.filename = args[2];
-                        client.initializePartyTestingConnection(i, algorithm);
+                        client.initializePartyTestingConnection(3, algorithm, epsilon[i]);
                         ArrayList<Entity> entitiesFromFile = client.getEntitiesFromFile(client.filename);
                         long startTime = System.nanoTime();
                         if (j == 0)
@@ -1176,8 +1197,20 @@ public class Client implements Runnable
                         if(client.getCoordinatorStatus()){
                             String header = "Algorithm: "+ algorithm + " Clusters: " + String.valueOf(i) ; 
                             System.out.println(header);
+
+                            if(algorithm.equals("Distributed (none)")){
+                                ArrayList<ArrayList<Integer>> frequencies = client.getFrequencies();
+                                System.out.println("frequencies = " + frequencies);
+                            }
+                            else{
+                                ArrayList<ArrayList<Integer>> frequencies = client.getDiffFrequencies();
+                                System.out.println("frequencies = " + frequencies);
+                            }
+
+                            /*
                             ArrayList<ArrayList<Integer>> frequencies = client.getFrequencies();
                             System.out.println("frequencies = " + frequencies);
+                            */
                         } 
                     }
                 }
