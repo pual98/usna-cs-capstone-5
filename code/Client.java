@@ -871,26 +871,48 @@ public class Client implements Runnable
                 // Confusing, but each integer should be mapped to an aggregate (arraylist) of unary encoded values
                 ArrayList<HashMap<Integer,Integer>> categoricalDeduced = new ArrayList<HashMap<Integer, Integer>>();
 
+                int epsilon = 1;
+                int alpha = (int)java.lang.Math.exp(-epsilon);
+
+                Random rand = new Random();
                 for (HashMap<Integer,Integer> m : categoricalModeMap){
                     HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
                     for (int key : m.keySet()){
-                        //ArrayList<int[]> toAdd = new ArrayList<int[]>();
-                        ArrayList<HashMap<Integer,Integer>> toAdd = new ArrayList<HashMap<Integer,Integer>>();
-
                         int number = m.get(key);
-                        for (int i = 0; i < number; i++){
-                            //int vector[] = unaryEncode(key);
-                            //vector = perturb(vector);
-                            //toAdd.add(vector);
-                            HashMap<Integer,Integer> binaryHashMap = binaryLocalHash(key);
-                            binaryHashMap = perturbHash(binaryHashMap, key);
-                            toAdd.add(binaryHashMap);
-                        }
-                        //nmap.put(key,decode(toAdd, key));
-                        nmap.put(key,decodeHash(toAdd, key));
+                        double prob = 0;
+                        int delta = 0;
+                        do{
+                            delta = rand.nextInt(5);
+                            prob = ((1-alpha)/(1+alpha))*(Math.pow(alpha, delta));
+                        } while (rand.nextDouble() >= prob);
+
+                        if ( rand.nextInt(1) == 1 )
+                            delta*=-1;
+                        number += delta;
+                        if (number < 0)
+                            number = 0;
+                        nmap.put(key,number);
                     }
                     categoricalDeduced.add(nmap);
                 }
+
+                
+//                for (HashMap<Integer,Integer> m : categoricalModeMap){
+//                    HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
+//                    for (int key : m.keySet()){
+//                        ArrayList<HashMap<Integer,Integer>> toAdd = new ArrayList<HashMap<Integer,Integer>>();
+//
+//                        int number = m.get(key);
+//                        for (int i = 0; i < number; i++){
+//                            HashMap<Integer,Integer> binaryHashMap = binaryLocalHash(key);
+//                            binaryHashMap = perturbHash(binaryHashMap, key);
+//                            toAdd.add(binaryHashMap);
+//                        }
+//                        //nmap.put(key,decode(toAdd, key));
+//                        nmap.put(key,decodeHash(toAdd, key));
+//                    }
+//                    categoricalDeduced.add(nmap);
+//                }
 
                 Message requestForPartners = new Message(5, groupname, ID, 0);
                 sendMessage(requestForPartners);
