@@ -871,8 +871,8 @@ public class Client implements Runnable
                 // Confusing, but each integer should be mapped to an aggregate (arraylist) of unary encoded values
                 ArrayList<HashMap<Integer,Integer>> categoricalDeduced = new ArrayList<HashMap<Integer, Integer>>();
 
-                int epsilon = 1;
-                int alpha = (int)java.lang.Math.exp(-epsilon);
+                double epsilon = 0.7;
+                double alpha = java.lang.Math.exp(-epsilon);
 
                 Random rand = new Random();
                 for (HashMap<Integer,Integer> m : categoricalModeMap){
@@ -882,11 +882,13 @@ public class Client implements Runnable
                         double prob = 0;
                         int delta = 0;
                         do{
-                            double accuracy = number * 0.15 ; 
-                            int scale = (int) java.lang.Math.ceil(accuracy);
-                            if(scale == 0){ scale = 1;}
-                            delta = rand.nextInt(scale);
+                            //double accuracy = number * 0.15 ; 
+                            //int scale = (int) java.lang.Math.ceil(accuracy);
+                            //if(scale == 0){ scale = 1;}
+                            delta = rand.nextInt(number+1);
+                            //System.out.println("Delta after random assignment: "+delta); 
                             prob = ((1-alpha)/(1+alpha))*(Math.pow(alpha, delta));
+                        
                         } while (rand.nextDouble() >= prob);
 
                         if ( rand.nextInt(1) == 1 )
