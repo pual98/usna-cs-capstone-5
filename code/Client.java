@@ -882,7 +882,10 @@ public class Client implements Runnable
                         double prob = 0;
                         int delta = 0;
                         do{
-                            delta = rand.nextInt(5);
+                            double accuracy = number * 0.15 ; 
+                            int scale = (int) java.lang.Math.ceil(accuracy);
+                            if(scale == 0){ scale = 1;}
+                            delta = rand.nextInt(scale);
                             prob = ((1-alpha)/(1+alpha))*(Math.pow(alpha, delta));
                         } while (rand.nextDouble() >= prob);
 
@@ -891,6 +894,10 @@ public class Client implements Runnable
                         number += delta;
                         if (number < 0)
                             number = 0;
+                        if(number > clusterData.getCountShare()){
+                            number = clusterData.getCountShare();
+                        }
+                        System.out.println("Frequency: " + number + " Delta: " + delta);
                         nmap.put(key,number);
                     }
                     categoricalDeduced.add(nmap);
