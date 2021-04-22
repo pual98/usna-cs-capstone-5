@@ -106,7 +106,7 @@ public class Client implements Runnable
             dos.write(yourBytes,0, yourBytes.length);
             dos.flush();
             this.bytesSent = this.bytesSent + yourBytes.length;
-        } catch (IOException e) {} 
+        } catch (IOException e) {}
     }
     public void logout(){
         Message m = new Message(0,"logout",ID,0);
@@ -118,7 +118,7 @@ public class Client implements Runnable
             try {
                 // https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
                 // read the message sent to this client
-                
+
                 while (dis.available() == 0){}
                 int size = dis.readInt();
                 byte[] yourBytes = new byte[size];
@@ -874,38 +874,78 @@ public class Client implements Runnable
                 double epsilon = 0.7;
                 double alpha = java.lang.Math.exp(-epsilon);
 
+                //With changes from Chen's recent emails
                 Random rand = new Random();
                 for (HashMap<Integer,Integer> m : categoricalModeMap){
                     HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
-                    for (int key : m.keySet()){
-                        int number = m.get(key);
-                        double prob = 0;
-                        int delta = 0;
-                        do{
-                            //double accuracy = number * 0.15 ; 
-                            //int scale = (int) java.lang.Math.ceil(accuracy);
-                            //if(scale == 0){ scale = 1;}
-                            delta = rand.nextInt(number+1);
-                            //System.out.println("Delta after random assignment: "+delta); 
-                            prob = ((1-alpha)/(1+alpha))*(Math.pow(alpha, delta));
-                        
-                        } while (rand.nextDouble() >= prob);
 
-                        if ( rand.nextInt(1) == 1 )
-                            delta*=-1;
-                        number += delta;
-                        if (number < 0)
-                            number = 0;
-                        if(number > clusterData.getCountShare()){
-                            number = clusterData.getCountShare();
-                        }
-                        System.out.println("Frequency: " + number + " Delta: " + delta);
-                        nmap.put(key,number);
+                    for(int key : m.keySet()){
+                      int frequency = m.get(key);
+
+                      double x1 = rand.nextDouble();
+                      double check = (1-alpha)/(1+alpha);
+                      if(x1 <= check) {
+                        //Add zero noise
+                        nmap.put(key,frequency);
+                      }
+
+                      double p = 1-alpha;
+                      double u = rand.nextDouble();
+                      double x2 = Math.ceil(Math.log(u)/(Math.log(1-p)));
+
+                      double posOrNeg = rand.nextDouble();
+                      if(posOrNeg <= 0.5)
+                        x2 *= -1; //change to negative noise with 50% probability
+
+                      int newFrequency;
+                      if(x2 + frequency < 0)
+                        newFrequency = 0; //set min
+                      else if(x2 + frequency > clusterData.getCountShare())
+                        newFrequency = clusterData.getCountShare();  //set max
+                      else
+                        newFrequency = frequency + (int)x2;
+
+                      System.out.println("Original = "+frequency+ " Perturbed = "+newFrequency);
+                      nmap.put(key,newFrequency);
                     }
                     categoricalDeduced.add(nmap);
                 }
 
-                
+
+
+                //
+                // Random rand = new Random();
+                // for (HashMap<Integer,Integer> m : categoricalModeMap){
+                //     HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
+                //     for (int key : m.keySet()){
+                //         int number = m.get(key);
+                //         double prob = 0;
+                //         int delta = 0;
+                //         do{
+                //             //double accuracy = number * 0.15 ;
+                //             //int scale = (int) java.lang.Math.ceil(accuracy);
+                //             //if(scale == 0){ scale = 1;}
+                //             delta = rand.nextInt(number+1);
+                //             //System.out.println("Delta after random assignment: "+delta);
+                //             prob = ((1-alpha)/(1+alpha))*(Math.pow(alpha, delta));
+                //
+                //         } while (rand.nextDouble() >= prob);
+                //
+                //         if ( rand.nextInt(1) == 1 )
+                //             delta*=-1;
+                //         number += delta;
+                //         if (number < 0)
+                //             number = 0;
+                //         if(number > clusterData.getCountShare()){
+                //             number = clusterData.getCountShare();
+                //         }
+                //         System.out.println("Frequency: " + number + " Delta: " + delta);
+                //         nmap.put(key,number);
+                //     }
+                //     categoricalDeduced.add(nmap);
+                // }
+
+
 //                for (HashMap<Integer,Integer> m : categoricalModeMap){
 //                    HashMap<Integer, Integer> nmap = new HashMap<Integer,Integer>();
 //                    for (int key : m.keySet()){
@@ -1159,7 +1199,7 @@ public class Client implements Runnable
                         else if (j == 2 )
                             client.DifferentialPrivacy(entitiesFromFile);
                         long endTime = System.nanoTime();
-                        long duration = (endTime - startTime); 
+                        long duration = (endTime - startTime);
                         duration = duration / 1000000;
                         System.out.println(algorithm+","+i+",duration (ms) =,"+duration+",bytes shared =,"+ client.bytesSent);
                         System.out.flush();
