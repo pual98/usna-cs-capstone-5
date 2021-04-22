@@ -888,25 +888,26 @@ public class Client implements Runnable
                         //Add zero noise
                         nmap.put(key,frequency);
                       }
+                      else {
+                        double p = 1-alpha;
+                        double u = rand.nextDouble();
+                        double x2 = Math.ceil(Math.log(u)/(Math.log(1-p)));
 
-                      double p = 1-alpha;
-                      double u = rand.nextDouble();
-                      double x2 = Math.ceil(Math.log(u)/(Math.log(1-p)));
-
-                      double posOrNeg = rand.nextDouble();
-                      if(posOrNeg <= 0.5)
+                        double posOrNeg = rand.nextDouble();
+                        if(posOrNeg <= 0.5)
                         x2 *= -1; //change to negative noise with 50% probability
 
-                      int newFrequency;
-                      if(x2 + frequency < 0)
+                        int newFrequency;
+                        if(x2 + frequency < 0)
                         newFrequency = 0; //set min
-                      else if(x2 + frequency > clusterData.getCountShare())
+                        else if(x2 + frequency > clusterData.getCountShare())
                         newFrequency = clusterData.getCountShare();  //set max
-                      else
+                        else
                         newFrequency = frequency + (int)x2;
 
-                      System.out.println("Original = "+frequency+ " Perturbed = "+newFrequency);
-                      nmap.put(key,newFrequency);
+                        System.out.println("Original = "+frequency+ " Perturbed = "+newFrequency);
+                        nmap.put(key,newFrequency);
+                      }
                     }
                     categoricalDeduced.add(nmap);
                 }
