@@ -5,8 +5,6 @@
 
 [Capston Proposal](https://docs.google.com/document/d/1QKcD0Lqw-2c5aZu2ejlGHw5TbhZ1CWGY7aEYPHTbhmk/edit?usp=sharing)
 
-[Group Capstone Meeting Notes](meeting_notes.md)
-
 ## Other
 
 + Background material:
@@ -18,12 +16,4 @@
     + [Differential Privacy Tutorial](research/differential_privacy_tutorial.pdf)
     + [Locally Differentially Private Protocols for Frequency Estimation](research/sec17-wang-tianhao.pdf)
 
-## Milestone 7
-
-+ Active Git branches:
-    + Master - static branch master
-    + Dev - working branch master
-    + differentialPrivacy - working on diff priv
-
 + [Functional requirements trace table](https://docs.google.com/spreadsheets/d/1YPr3v7LRzJZG3VP-RFwnwrRitj4HEj1ryLTDtZEbtS8/edit?usp=sharing)
-+ [Milestone-7 assignment](https://docs.google.com/presentation/d/16VzU-3wbWz0Dfgpwj108qTSYcgCt0TeQNXReAiIcZtc/edit?usp=sharing)
